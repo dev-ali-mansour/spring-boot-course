@@ -1,0 +1,7 @@
+package com.lose.coupling
+
+class NewDatabaseProvider : UserDataProvider {
+    override fun getUserDetails(): String {
+        return "New Database in action"
+    }
+}
