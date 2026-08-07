@@ -11,22 +11,35 @@ import org.springframework.web.server.ResponseStatusException
 class CategoryController(private val categoryService: CategoryService, service: CategoryService) {
 
     @GetMapping("/api/public/categories")
-    fun getCategories(): List<Category> = categoryService.getCategories()
+    fun getCategories(): ResponseEntity<List<Category>> =
+        ResponseEntity
+            .status(HttpStatus.OK)
+            .body(categoryService.getCategories())
 
     @PostMapping("/api/public/categories")
-    fun createCategory(@RequestBody category: Category): String {
+    fun createCategory(@RequestBody category: Category): ResponseEntity<String> {
         categoryService.createCategory(category)
-        return "Category added successfully!"
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body("Category added successfully!")
     }
 
     @DeleteMapping("/api/admin/categories/{categoryId}")
-    fun deleteCategory(@PathVariable categoryId: Long): ResponseEntity<String> {
-        return runCatching {
-            ResponseEntity(categoryService.deleteCategory(categoryId), HttpStatus.OK)
+    fun deleteCategory(@PathVariable categoryId: Long): ResponseEntity<String> =
+        runCatching {
+//            ResponseEntity(categoryService.deleteCategory(categoryId), HttpStatus.OK)
+//            ResponseEntity.ok(categoryService.deleteCategory(categoryId))
+            ResponseEntity
+                .status(HttpStatus.OK)
+                .body(categoryService.deleteCategory(categoryId))
         }.getOrElse { t ->
             if (t is ResponseStatusException) {
-                ResponseEntity(t.reason, t.statusCode)
-            } else ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
+                ResponseEntity
+                    .status(t.statusCode)
+                    .body(t.reason)
+
+            } else ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(t.message)
         }
-    }
 }
