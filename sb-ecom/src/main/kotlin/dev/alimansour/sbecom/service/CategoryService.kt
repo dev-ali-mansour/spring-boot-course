@@ -6,4 +6,5 @@ interface CategoryService {
     fun getCategories(): List<Category>
     fun createCategory(category: Category)
     fun deleteCategory(categoryId: Long): String
+    fun updateCategory(category: Category, categoryId: Long): Category
 }

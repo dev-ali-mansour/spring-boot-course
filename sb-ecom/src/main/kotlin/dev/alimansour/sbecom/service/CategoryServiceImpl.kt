@@ -4,22 +4,35 @@ import dev.alimansour.sbecom.model.Category
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
+import java.util.*
 
 @Service
 class CategoryServiceImpl : CategoryService {
-    private val categories: MutableList<Category> = mutableListOf()
+    private val categories: MutableList<Category> = Collections.synchronizedList(mutableListOf())
     private var nextId: Long = 1
 
-    override fun getCategories(): List<Category> = categories
+    override fun getCategories(): List<Category> = categories.toList()
 
     override fun createCategory(category: Category) {
         categories.add(category.copy(id = nextId++))
     }
 
     override fun deleteCategory(categoryId: Long): String {
-        return categories.firstOrNull { it.id == categoryId }?.let { category ->
-            categories.remove(category)
-            "Category with categoryId $categoryId deleted successfully!"
-        } ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Category Not Found!")
+        val category = categories.firstOrNull { it.id == categoryId }
+            ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Category Not Found!")
+
+        categories.remove(category)
+        return "Category with categoryId $categoryId deleted successfully!"
+    }
+
+    override fun updateCategory(category: Category, categoryId: Long): Category {
+        val existingCategory = categories.firstOrNull { it.id == categoryId }
+            ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Category Not Found!")
+
+        val index = categories.indexOf(existingCategory)
+        val updatedCategory = category.copy(id = categoryId)
+        categories[index] = updatedCategory
+        return updatedCategory
     }
 }
+
