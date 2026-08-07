@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class HelloController {
     @GetMapping("/hello")
-    fun hello() = "Hello World!"
+    fun hello(): HelloResponse = HelloResponse(message = "Hello, World!")
 
     @PostMapping("/hello")
-    fun helloPost(@RequestBody name: String) = "Hello $name!"
+    fun helloPost(@RequestBody name: String): HelloResponse = HelloResponse(message = "Hello, $name!")
 }
