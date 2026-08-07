@@ -1,8 +1,9 @@
 package dev.alimansour.sbecom.service
 
 import dev.alimansour.sbecom.model.Category
-import org.springframework.context.annotation.Bean
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import org.springframework.web.server.ResponseStatusException
 
 @Service
 class CategoryServiceImpl : CategoryService {
@@ -13,5 +14,12 @@ class CategoryServiceImpl : CategoryService {
 
     override fun createCategory(category: Category) {
         categories.add(category.copy(id = nextId++))
+    }
+
+    override fun deleteCategory(categoryId: Long): String {
+        return categories.firstOrNull { it.id == categoryId }?.let { category ->
+            categories.remove(category)
+            "Category with categoryId $categoryId deleted successfully!"
+        } ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Category Not Found!")
     }
 }
