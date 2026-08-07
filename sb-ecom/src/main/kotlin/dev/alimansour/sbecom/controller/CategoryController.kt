@@ -8,15 +8,16 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 
 @RestController
+@RequestMapping("/api")
 class CategoryController(private val categoryService: CategoryService) {
 
-    @GetMapping("/api/public/categories")
+    @GetMapping("/public/categories")
     fun getCategories(): ResponseEntity<List<Category>> =
         ResponseEntity
             .status(HttpStatus.OK)
             .body(categoryService.getCategories())
 
-    @PostMapping("/api/public/categories")
+    @PostMapping("/admin/categories")
     fun createCategory(@RequestBody category: Category): ResponseEntity<String> {
         categoryService.createCategory(category)
         return ResponseEntity
@@ -24,7 +25,7 @@ class CategoryController(private val categoryService: CategoryService) {
             .body("Category added successfully!")
     }
 
-    @DeleteMapping("/api/admin/categories/{categoryId}")
+    @DeleteMapping("/admin/categories/{categoryId}")
     fun deleteCategory(@PathVariable categoryId: Long): ResponseEntity<String> =
         runCatching {
 //            ResponseEntity(categoryService.deleteCategory(categoryId), HttpStatus.OK)
@@ -43,7 +44,7 @@ class CategoryController(private val categoryService: CategoryService) {
                 .body(t.message)
         }
 
-    @PutMapping("/api/admin/categories/{categoryId}")
+    @PutMapping("/admin/categories/{categoryId}")
     fun updateCategory(@RequestBody category: Category, @PathVariable categoryId: Long): ResponseEntity<String> =
         runCatching {
             val savedCategory = categoryService.updateCategory(category,categoryId)
