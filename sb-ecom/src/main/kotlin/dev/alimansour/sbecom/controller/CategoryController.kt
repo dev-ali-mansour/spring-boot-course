@@ -2,6 +2,7 @@ package dev.alimansour.sbecom.controller
 
 import dev.alimansour.sbecom.model.Category
 import dev.alimansour.sbecom.service.CategoryService
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -18,7 +19,7 @@ class CategoryController(private val categoryService: CategoryService) {
             .body(categoryService.getCategories())
 
     @PostMapping("/admin/categories")
-    fun createCategory(@RequestBody category: Category): ResponseEntity<String> {
+    fun createCategory(@Valid @RequestBody category: Category): ResponseEntity<String> {
         categoryService.createCategory(category)
         return ResponseEntity
             .status(HttpStatus.CREATED)
@@ -47,7 +48,7 @@ class CategoryController(private val categoryService: CategoryService) {
     @PutMapping("/admin/categories/{categoryId}")
     fun updateCategory(@RequestBody category: Category, @PathVariable categoryId: Long): ResponseEntity<String> =
         runCatching {
-            val savedCategory = categoryService.updateCategory(category,categoryId)
+            val savedCategory = categoryService.updateCategory(category, categoryId)
             ResponseEntity
                 .status(HttpStatus.OK)
                 .body("Category with category id: ${savedCategory.id} updated successfully!")
