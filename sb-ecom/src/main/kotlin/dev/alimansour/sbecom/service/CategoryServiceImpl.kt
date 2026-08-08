@@ -16,18 +16,20 @@ class CategoryServiceImpl(private val categoryRepository: CategoryRepository) : 
     }
 
     override fun deleteCategory(categoryId: Long): String {
-        val categories = categoryRepository.findAll()
-        categories.firstOrNull { it.id == categoryId }
-            ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Category Not Found!")
+        categoryRepository.findById(categoryId)
+            .orElseThrow {
+                ResponseStatusException(HttpStatus.NOT_FOUND, "Category Not Found!")
+            }
 
         categoryRepository.deleteById(categoryId)
         return "Category with categoryId $categoryId deleted successfully!"
     }
 
     override fun updateCategory(category: Category, categoryId: Long): Category {
-        val categories = categoryRepository.findAll()
-        categories.firstOrNull { it.id == categoryId }
-            ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Category Not Found!")
+        categoryRepository.findById(categoryId)
+            .orElseThrow {
+                ResponseStatusException(HttpStatus.NOT_FOUND, "Category Not Found!")
+            }
 
         category.id = categoryId
         return categoryRepository.save(category)
