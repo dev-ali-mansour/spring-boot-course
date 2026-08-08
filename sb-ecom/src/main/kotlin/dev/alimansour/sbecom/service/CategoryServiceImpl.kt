@@ -14,7 +14,8 @@ class CategoryServiceImpl : CategoryService {
     override fun getCategories(): List<Category> = categories.toList()
 
     override fun createCategory(category: Category) {
-        categories.add(category.copy(id = nextId++))
+        category.id = nextId++
+        categories.add(category)
     }
 
     override fun deleteCategory(categoryId: Long): String {
@@ -30,9 +31,9 @@ class CategoryServiceImpl : CategoryService {
             ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Category Not Found!")
 
         val index = categories.indexOf(existingCategory)
-        val updatedCategory = category.copy(id = categoryId)
-        categories[index] = updatedCategory
-        return updatedCategory
+        category.id = categoryId
+        categories[index] = category
+        return category
     }
 }
 

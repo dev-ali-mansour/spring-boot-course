@@ -1,6 +1,11 @@
 package dev.alimansour.sbecom.model
 
-data class Category(
-    val id: Long = 0,
-    val name: String = "",
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
+
+@Entity(name = "categories")
+class Category(
+    @Id
+    var id: Long = 0,
+    var name: String = "",
 )
