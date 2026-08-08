@@ -13,7 +13,7 @@ class Category(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0,
 
-    @NotBlank
+    @NotBlank(message = "Name cannot be blank")
     @Size(min = 5, message = "Category name must be at least 5 characters")
     var name: String = "",
 )

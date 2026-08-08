@@ -1,24 +1,33 @@
 package dev.alimansour.sbecom.service
 
+import dev.alimansour.sbecom.exception.APIException
+import dev.alimansour.sbecom.exception.ResourceNotFoundException
 import dev.alimansour.sbecom.model.Category
 import dev.alimansour.sbecom.repository.CategoryRepository
-import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
-import org.springframework.web.server.ResponseStatusException
 
 @Service
 class CategoryServiceImpl(private val categoryRepository: CategoryRepository) : CategoryService {
 
-    override fun getCategories(): List<Category> = categoryRepository.findAll()
+    override fun getCategories(): List<Category> {
+        val categories = categoryRepository.findAll()
+        if (categories.isEmpty()) {
+            throw APIException("No category created till now.")
+        }
+        return categories
+    }
 
     override fun createCategory(category: Category) {
-        categoryRepository.save(category)
+        val savedCategory = categoryRepository.findByName(category.name)
+        savedCategory?.let {
+            throw APIException(message = "Category with name '${category.name}' already exists!!!")
+        } ?: categoryRepository.save(category)
     }
 
     override fun deleteCategory(categoryId: Long): String {
         categoryRepository.findById(categoryId)
             .orElseThrow {
-                ResponseStatusException(HttpStatus.NOT_FOUND, "Category Not Found!")
+                ResourceNotFoundException("Category", "id", categoryId)
             }
 
         categoryRepository.deleteById(categoryId)
@@ -28,7 +37,7 @@ class CategoryServiceImpl(private val categoryRepository: CategoryRepository) : 
     override fun updateCategory(category: Category, categoryId: Long): Category {
         categoryRepository.findById(categoryId)
             .orElseThrow {
-                ResponseStatusException(HttpStatus.NOT_FOUND, "Category Not Found!")
+                ResourceNotFoundException("Category", "id", categoryId)
             }
 
         category.id = categoryId

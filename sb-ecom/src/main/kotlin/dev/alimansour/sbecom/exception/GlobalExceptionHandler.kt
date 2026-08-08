@@ -2,7 +2,6 @@ package dev.alimansour.sbecom.exception
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.validation.FieldError
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -11,13 +10,23 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
-    fun methodArgumentNotValidException(e: MethodArgumentNotValidException): ResponseEntity<Map<String, String>> {
-        val response = HashMap<String, String>()
+    fun methodArgumentNotValidException(e: MethodArgumentNotValidException): ResponseEntity< String> {
+        val response = StringBuilder()
         e.bindingResult.allErrors.forEach { error ->
-            val fieldName = (error as FieldError).field
-            val message = error.defaultMessage.orEmpty()
-            response[fieldName] = message
+            response.appendLine(error.defaultMessage.orEmpty())
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response)
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response.toString())
     }
+
+    @ExceptionHandler(ResourceNotFoundException::class)
+    fun resourceNotFoundException(e: ResourceNotFoundException): ResponseEntity<String> =
+        ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.message)
+
+    @ExceptionHandler(APIException::class)
+    fun apiException(e: APIException): ResponseEntity<String> =
+        ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.message)
+
+    @ExceptionHandler(Throwable::class)
+    fun anyOtherThrowable(e: Throwable): ResponseEntity<String> =
+        ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Please contact the server administrator!")
 }
