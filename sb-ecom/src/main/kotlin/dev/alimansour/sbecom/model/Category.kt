@@ -11,7 +11,7 @@ import jakarta.validation.constraints.Size
 class Category(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long = 0,
+    var id: Long? = null,
 
     @NotBlank(message = "Name cannot be blank")
     @Size(min = 5, message = "Category name must be at least 5 characters")

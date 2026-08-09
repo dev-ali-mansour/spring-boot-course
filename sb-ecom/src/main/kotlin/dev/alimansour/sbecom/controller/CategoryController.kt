@@ -35,6 +35,9 @@ class CategoryController(private val categoryService: CategoryService) {
         @PathVariable categoryId: Long,
         @Valid @RequestBody categoryDTO: CategoryDTO
     ): ResponseEntity<CategoryDTO> {
+        if (categoryDTO.id != null && categoryDTO.id != categoryId) {
+            return ResponseEntity(HttpStatus.BAD_REQUEST)
+        }
         val savedCategoryDTO = categoryService.updateCategory(categoryId, categoryDTO)
         return ResponseEntity(savedCategoryDTO, HttpStatus.OK)
     }

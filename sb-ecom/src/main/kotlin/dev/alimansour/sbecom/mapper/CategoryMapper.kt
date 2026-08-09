@@ -1,4 +1,4 @@
-package dev.alimansour.sbecom
+package dev.alimansour.sbecom.mapper
 
 import dev.alimansour.sbecom.model.Category
 import dev.alimansour.sbecom.payload.CategoryDTO
