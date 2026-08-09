@@ -25,9 +25,9 @@ class CategoryController(private val categoryService: CategoryService) {
     }
 
     @DeleteMapping("/admin/categories/{categoryId}")
-    fun deleteCategory(@PathVariable categoryId: Long): ResponseEntity<String> {
-        val response = categoryService.deleteCategory(categoryId)
-        return ResponseEntity(response, HttpStatus.OK)
+    fun deleteCategory(@PathVariable categoryId: Long): ResponseEntity<CategoryDTO> {
+        val deletedCategory = categoryService.deleteCategory(categoryId)
+        return ResponseEntity(deletedCategory, HttpStatus.OK)
     }
 
     @PutMapping("/admin/categories/{categoryId}")

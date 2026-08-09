@@ -29,13 +29,13 @@ class CategoryServiceImpl(private val categoryRepository: CategoryRepository) : 
         return savedCategory.toCategoryDTO()
     }
 
-    override fun deleteCategory(categoryId: Long): String {
-        categoryRepository.findById(categoryId).orElseThrow {
+    override fun deleteCategory(categoryId: Long): CategoryDTO {
+        val category = categoryRepository.findById(categoryId).orElseThrow {
             ResourceNotFoundException("Category", "id", categoryId)
         }
 
         categoryRepository.deleteById(categoryId)
-        return "Category with categoryId $categoryId deleted successfully!"
+        return category.toCategoryDTO()
     }
 
     override fun updateCategory(categoryId: Long, categoryDTO: CategoryDTO): CategoryDTO {
