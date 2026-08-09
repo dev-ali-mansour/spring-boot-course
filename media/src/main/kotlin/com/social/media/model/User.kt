@@ -10,4 +10,7 @@ class User(
 
     @OneToOne(mappedBy = "user")
     var profile: Profile? = null,
+
+    @OneToMany(mappedBy = "user")
+    var posts: MutableList<Post> = mutableListOf(),
 )
