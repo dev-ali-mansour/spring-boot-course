@@ -1,6 +1,7 @@
 package dev.alimansour.sbecom.controller
 
 import dev.alimansour.sbecom.model.Category
+import dev.alimansour.sbecom.payload.CategoryDTO
 import dev.alimansour.sbecom.payload.CategoryResponse
 import dev.alimansour.sbecom.service.CategoryService
 import jakarta.validation.Valid
@@ -15,32 +16,27 @@ class CategoryController(private val categoryService: CategoryService) {
     @GetMapping("/public/categories")
     fun getCategories(): ResponseEntity<CategoryResponse> {
         val response = categoryService.getCategories()
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(response)
+        return ResponseEntity(response, HttpStatus.OK)
     }
 
     @PostMapping("/admin/categories")
-    fun createCategory(@Valid @RequestBody category: Category): ResponseEntity<String> {
-        categoryService.createCategory(category)
-        return ResponseEntity
-            .status(HttpStatus.CREATED)
-            .body("Category added successfully!")
+    fun createCategory(@Valid @RequestBody categoryDTO: CategoryDTO): ResponseEntity<CategoryDTO> {
+        val savedCategory = categoryService.createCategory(categoryDTO)
+        return ResponseEntity(savedCategory, HttpStatus.CREATED)
     }
 
     @DeleteMapping("/admin/categories/{categoryId}")
     fun deleteCategory(@PathVariable categoryId: Long): ResponseEntity<String> {
         val category = categoryService.deleteCategory(categoryId)
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(category)
+        return ResponseEntity(category, HttpStatus.OK)
     }
 
     @PutMapping("/admin/categories/{categoryId}")
     fun updateCategory(@Valid @RequestBody category: Category, @PathVariable categoryId: Long): ResponseEntity<String> {
         val savedCategory = categoryService.updateCategory(category, categoryId)
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body("Category with category id: ${savedCategory.id} updated successfully!")
+        return ResponseEntity(
+            "Category with category id: ${savedCategory.id} updated successfully!",
+            HttpStatus.OK
+        )
     }
 }

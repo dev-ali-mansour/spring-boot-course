@@ -3,8 +3,10 @@ package dev.alimansour.sbecom.service
 import dev.alimansour.sbecom.exception.APIException
 import dev.alimansour.sbecom.exception.ResourceNotFoundException
 import dev.alimansour.sbecom.model.Category
+import dev.alimansour.sbecom.payload.CategoryDTO
 import dev.alimansour.sbecom.payload.CategoryResponse
 import dev.alimansour.sbecom.repository.CategoryRepository
+import dev.alimansour.sbecom.toCategory
 import dev.alimansour.sbecom.toCategoryDTO
 import org.springframework.stereotype.Service
 
@@ -19,11 +21,13 @@ class CategoryServiceImpl(private val categoryRepository: CategoryRepository) : 
         return CategoryResponse(content = categories)
     }
 
-    override fun createCategory(category: Category) {
-        val savedCategory = categoryRepository.findByName(category.name)
-        savedCategory?.let {
-            throw APIException(message = "Category with name '${category.name}' already exists!!!")
-        } ?: categoryRepository.save(category)
+    override fun createCategory(categoryDTO: CategoryDTO): CategoryDTO {
+        val category = categoryDTO.toCategory()
+        categoryRepository.findByName(category.name)?.let {
+            throw APIException(message = "Category with name '${categoryDTO.name}' already exists!!!")
+        }
+        val savedCategoryDTO = categoryRepository.save(category)
+        return savedCategoryDTO.toCategoryDTO()
     }
 
     override fun deleteCategory(categoryId: Long): String {
