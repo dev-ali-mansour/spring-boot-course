@@ -7,17 +7,27 @@ import dev.alimansour.sbecom.mapper.toCategoryDTO
 import dev.alimansour.sbecom.payload.CategoryDTO
 import dev.alimansour.sbecom.payload.CategoryResponse
 import dev.alimansour.sbecom.repository.CategoryRepository
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 
 @Service
 class CategoryServiceImpl(private val categoryRepository: CategoryRepository) : CategoryService {
 
-    override fun getCategories(): CategoryResponse {
-        val categories = categoryRepository.findAll().map { it.toCategoryDTO() }
+    override fun getCategories(page: Int, size: Int): CategoryResponse {
+        val pageDetails = PageRequest.of(page, size)
+        val page = categoryRepository.findAll(pageDetails)
+        val categories = page.content.map { it.toCategoryDTO() }
         if (categories.isEmpty()) {
             throw APIException("No category created till now.")
         }
-        return CategoryResponse(content = categories)
+        return CategoryResponse(
+            content = categories,
+            pageNumber = page.number,
+            pageSize = page.size,
+            totalPages = page.totalPages,
+            totalElements = page.totalElements,
+            lastPage = page.isLast
+        )
     }
 
     override fun createCategory(categoryDTO: CategoryDTO): CategoryDTO {

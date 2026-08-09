@@ -1,5 +1,6 @@
 package dev.alimansour.sbecom.controller
 
+import dev.alimansour.sbecom.config.AppConstants
 import dev.alimansour.sbecom.payload.CategoryDTO
 import dev.alimansour.sbecom.payload.CategoryResponse
 import dev.alimansour.sbecom.service.CategoryService
@@ -13,8 +14,11 @@ import org.springframework.web.bind.annotation.*
 class CategoryController(private val categoryService: CategoryService) {
 
     @GetMapping("/public/categories")
-    fun getCategories(): ResponseEntity<CategoryResponse> {
-        val response = categoryService.getCategories()
+    fun getCategories(
+        @RequestParam(value = "page", defaultValue = AppConstants.PAGE_NUMBER, required = false) page: Int,
+        @RequestParam(value = "size", defaultValue = AppConstants.PAGE_SIZE, required = false) size: Int,
+    ): ResponseEntity<CategoryResponse> {
+        val response = categoryService.getCategories(page, size)
         return ResponseEntity(response, HttpStatus.OK)
     }
 
