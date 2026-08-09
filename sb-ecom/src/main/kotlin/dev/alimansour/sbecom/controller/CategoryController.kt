@@ -1,6 +1,7 @@
 package dev.alimansour.sbecom.controller
 
 import dev.alimansour.sbecom.model.Category
+import dev.alimansour.sbecom.payload.CategoryResponse
 import dev.alimansour.sbecom.service.CategoryService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
@@ -12,11 +13,11 @@ import org.springframework.web.bind.annotation.*
 class CategoryController(private val categoryService: CategoryService) {
 
     @GetMapping("/public/categories")
-    fun getCategories(): ResponseEntity<List<Category>> {
-        val categories = categoryService.getCategories()
+    fun getCategories(): ResponseEntity<CategoryResponse> {
+        val response = categoryService.getCategories()
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(categories)
+            .body(response)
     }
 
     @PostMapping("/admin/categories")
