@@ -17,8 +17,9 @@ class CategoryController(private val categoryService: CategoryService) {
     fun getCategories(
         @RequestParam(value = "page", defaultValue = AppConstants.PAGE_NUMBER, required = false) page: Int,
         @RequestParam(value = "size", defaultValue = AppConstants.PAGE_SIZE, required = false) size: Int,
+        @RequestParam(value = "sort", defaultValue = AppConstants.SORT_CATEGORIES, required = false) sort: String,
     ): ResponseEntity<CategoryResponse> {
-        val response = categoryService.getCategories(page, size)
+        val response = categoryService.getCategories(page, size, sort)
         return ResponseEntity(response, HttpStatus.OK)
     }
 
