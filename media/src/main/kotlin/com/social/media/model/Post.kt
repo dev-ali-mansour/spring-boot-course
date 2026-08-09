@@ -1,5 +1,6 @@
 package com.social.media.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 
 @Entity
@@ -10,5 +11,6 @@ class Post(
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     var user: User,
 )
