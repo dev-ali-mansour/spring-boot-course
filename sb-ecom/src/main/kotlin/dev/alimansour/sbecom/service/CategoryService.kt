@@ -8,5 +8,5 @@ interface CategoryService {
     fun getCategories(): CategoryResponse
     fun createCategory(categoryDTO: CategoryDTO): CategoryDTO
     fun deleteCategory(categoryId: Long): String
-    fun updateCategory(category: Category, categoryId: Long): Category
+    fun updateCategory(categoryId: Long, categoryDTO: CategoryDTO): CategoryDTO
 }

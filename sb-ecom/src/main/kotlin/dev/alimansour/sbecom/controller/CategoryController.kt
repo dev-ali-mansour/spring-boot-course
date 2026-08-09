@@ -1,6 +1,5 @@
 package dev.alimansour.sbecom.controller
 
-import dev.alimansour.sbecom.model.Category
 import dev.alimansour.sbecom.payload.CategoryDTO
 import dev.alimansour.sbecom.payload.CategoryResponse
 import dev.alimansour.sbecom.service.CategoryService
@@ -21,22 +20,22 @@ class CategoryController(private val categoryService: CategoryService) {
 
     @PostMapping("/admin/categories")
     fun createCategory(@Valid @RequestBody categoryDTO: CategoryDTO): ResponseEntity<CategoryDTO> {
-        val savedCategory = categoryService.createCategory(categoryDTO)
-        return ResponseEntity(savedCategory, HttpStatus.CREATED)
+        val savedCategoryDTO = categoryService.createCategory(categoryDTO)
+        return ResponseEntity(savedCategoryDTO, HttpStatus.CREATED)
     }
 
     @DeleteMapping("/admin/categories/{categoryId}")
     fun deleteCategory(@PathVariable categoryId: Long): ResponseEntity<String> {
-        val category = categoryService.deleteCategory(categoryId)
-        return ResponseEntity(category, HttpStatus.OK)
+        val response = categoryService.deleteCategory(categoryId)
+        return ResponseEntity(response, HttpStatus.OK)
     }
 
     @PutMapping("/admin/categories/{categoryId}")
-    fun updateCategory(@Valid @RequestBody category: Category, @PathVariable categoryId: Long): ResponseEntity<String> {
-        val savedCategory = categoryService.updateCategory(category, categoryId)
-        return ResponseEntity(
-            "Category with category id: ${savedCategory.id} updated successfully!",
-            HttpStatus.OK
-        )
+    fun updateCategory(
+        @PathVariable categoryId: Long,
+        @Valid @RequestBody categoryDTO: CategoryDTO
+    ): ResponseEntity<CategoryDTO> {
+        val savedCategoryDTO = categoryService.updateCategory(categoryId, categoryDTO)
+        return ResponseEntity(savedCategoryDTO, HttpStatus.OK)
     }
 }

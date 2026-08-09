@@ -2,7 +2,6 @@ package dev.alimansour.sbecom.service
 
 import dev.alimansour.sbecom.exception.APIException
 import dev.alimansour.sbecom.exception.ResourceNotFoundException
-import dev.alimansour.sbecom.model.Category
 import dev.alimansour.sbecom.payload.CategoryDTO
 import dev.alimansour.sbecom.payload.CategoryResponse
 import dev.alimansour.sbecom.repository.CategoryRepository
@@ -22,12 +21,12 @@ class CategoryServiceImpl(private val categoryRepository: CategoryRepository) : 
     }
 
     override fun createCategory(categoryDTO: CategoryDTO): CategoryDTO {
-        val category = categoryDTO.toCategory()
-        categoryRepository.findByName(category.name)?.let {
+        categoryRepository.findByName(categoryDTO.name)?.let {
             throw APIException(message = "Category with name '${categoryDTO.name}' already exists!!!")
         }
-        val savedCategoryDTO = categoryRepository.save(category)
-        return savedCategoryDTO.toCategoryDTO()
+        val category = categoryDTO.toCategory()
+        val savedCategory = categoryRepository.save(category)
+        return savedCategory.toCategoryDTO()
     }
 
     override fun deleteCategory(categoryId: Long): String {
@@ -39,12 +38,13 @@ class CategoryServiceImpl(private val categoryRepository: CategoryRepository) : 
         return "Category with categoryId $categoryId deleted successfully!"
     }
 
-    override fun updateCategory(category: Category, categoryId: Long): Category {
+    override fun updateCategory(categoryId: Long, categoryDTO: CategoryDTO): CategoryDTO {
         categoryRepository.findById(categoryId).orElseThrow {
             ResourceNotFoundException("Category", "id", categoryId)
         }
-
+        val category = categoryDTO.toCategory()
         category.id = categoryId
-        return categoryRepository.save(category)
+        val savedCategory = categoryRepository.save(category)
+        return savedCategory.toCategoryDTO()
     }
 }
