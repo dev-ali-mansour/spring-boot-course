@@ -1,6 +1,7 @@
 package dev.alimansour.sbecom.controller
 
 import dev.alimansour.sbecom.config.AppConstants
+import dev.alimansour.sbecom.exception.APIException
 import dev.alimansour.sbecom.payload.CategoryDTO
 import dev.alimansour.sbecom.payload.CategoryResponse
 import dev.alimansour.sbecom.service.CategoryService
@@ -37,11 +38,10 @@ class CategoryController(private val categoryService: CategoryService) {
 
     @PutMapping("/admin/categories/{categoryId}")
     fun updateCategory(
-        @PathVariable categoryId: Long,
-        @Valid @RequestBody categoryDTO: CategoryDTO
+        @PathVariable categoryId: Long, @Valid @RequestBody categoryDTO: CategoryDTO
     ): ResponseEntity<CategoryDTO> {
         if (categoryDTO.id != null && categoryDTO.id != categoryId) {
-            return ResponseEntity(HttpStatus.BAD_REQUEST)
+            throw APIException(message = "Resource ID mismatch: URL path specifies id $categoryId, but the request body contains ${categoryDTO.id}")
         }
         val savedCategoryDTO = categoryService.updateCategory(categoryId, categoryDTO)
         return ResponseEntity(savedCategoryDTO, HttpStatus.OK)
