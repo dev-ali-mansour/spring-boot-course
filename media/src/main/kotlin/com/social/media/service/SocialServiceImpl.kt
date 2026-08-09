@@ -11,6 +11,11 @@ class SocialServiceImpl(
     override fun getAllUsers(): List<User> =
         userRepository.findAll()
 
-    override fun saveUser(user: User): User =
-        userRepository.save(user)
+    override fun saveUser(user: User): User {
+        if (user.id != null && !userRepository.existsById(user.id!!)) {
+            user.id = null
+            user.profile?.id = null
+        }
+        return userRepository.save(user)
+    }
 }

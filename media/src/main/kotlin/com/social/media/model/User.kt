@@ -1,6 +1,5 @@
 package com.social.media.model
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import org.hibernate.proxy.HibernateProxy
 import java.util.*
@@ -10,12 +9,18 @@ class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
-
-    @OneToOne(mappedBy = "user")
-    var profile: Profile? = null,
+) {
+    @OneToOne(mappedBy = "user", cascade = [(CascadeType.ALL)])
+    var profile: Profile? = null
+        set(value) {
+            field = value
+            if (value != null && value.user != this) {
+                value.user = this
+            }
+        }
 
     @OneToMany(mappedBy = "user")
-    var posts: MutableList<Post> = mutableListOf(),
+    var posts: MutableList<Post> = mutableListOf()
 
     @ManyToMany
     @JoinTable(
@@ -24,7 +29,7 @@ class User(
         inverseJoinColumns = [JoinColumn(name = "group_id")]
     )
     var groups: MutableSet<Group> = mutableSetOf()
-) {
+
     override fun hashCode(): Int {
         return Objects.hash(id)
     }

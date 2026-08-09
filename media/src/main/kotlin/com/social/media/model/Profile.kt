@@ -9,8 +9,16 @@ class Profile(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
 
+    var description: String = "",
+) {
     @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     @JsonIgnore
-    var user: User,
-)
+    var user: User? = null
+        set(value) {
+            field = value
+            if (value != null && value.profile != this) {
+                value.profile = this
+            }
+        }
+}

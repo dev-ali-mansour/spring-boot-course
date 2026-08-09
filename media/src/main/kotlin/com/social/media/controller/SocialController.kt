@@ -20,5 +20,4 @@ class SocialController(private val socialService: SocialService) {
     @PostMapping("/social/users")
     fun saveUser(@Validated @RequestBody user: User): ResponseEntity<User> =
         ResponseEntity(socialService.saveUser(user), HttpStatus.OK)
-
 }

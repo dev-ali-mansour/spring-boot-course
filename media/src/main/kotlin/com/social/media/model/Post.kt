@@ -8,9 +8,9 @@ class Post(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Int? = null,
-
+) {
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     @JsonIgnore
-    var user: User,
-)
+    lateinit var user: User
+}

@@ -8,8 +8,8 @@ class Group(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
-
+) {
     @ManyToMany(mappedBy = "groups")
     @JsonIgnore
-    var users: MutableSet<User> = mutableSetOf(),
-)
+    var users: MutableSet<User> = mutableSetOf()
+}
