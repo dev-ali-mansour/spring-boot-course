@@ -4,6 +4,7 @@ import dev.alimansour.sbecom.exception.ResourceNotFoundException
 import dev.alimansour.sbecom.mapper.toDTO
 import dev.alimansour.sbecom.model.Product
 import dev.alimansour.sbecom.payload.ProductDTO
+import dev.alimansour.sbecom.payload.ProductResponse
 import dev.alimansour.sbecom.repository.CategoryRepository
 import dev.alimansour.sbecom.repository.ProductRepository
 import org.springframework.stereotype.Service
@@ -26,6 +27,11 @@ class ProductServiceImpl(
         product.specialPrice = specialPrice
         val savedProduct = productRepository.save(product)
         return savedProduct.toDTO()
+    }
+
+    override fun getAllProducts(): ProductResponse {
+        val products = productRepository.findAll().map { it.toDTO() }
+        return ProductResponse(content = products)
     }
 
 }

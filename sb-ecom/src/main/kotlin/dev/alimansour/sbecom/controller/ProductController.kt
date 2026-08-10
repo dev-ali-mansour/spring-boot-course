@@ -2,6 +2,7 @@ package dev.alimansour.sbecom.controller
 
 import dev.alimansour.sbecom.model.Product
 import dev.alimansour.sbecom.payload.ProductDTO
+import dev.alimansour.sbecom.payload.ProductResponse
 import dev.alimansour.sbecom.service.ProductService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -20,4 +21,9 @@ class ProductController(private val productService: ProductService) {
         val productDTO = productService.addProduct(categoryId, product)
         return ResponseEntity(productDTO, HttpStatus.CREATED)
     }
+
+    @GetMapping("/public/products")
+    fun getAllProducts(): ResponseEntity<ProductResponse> =
+        ResponseEntity(productService.getAllProducts(), HttpStatus.OK)
+
 }
