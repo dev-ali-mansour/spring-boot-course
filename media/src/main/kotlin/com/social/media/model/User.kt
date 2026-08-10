@@ -10,7 +10,7 @@ class User(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
 ) {
-    @OneToOne(mappedBy = "user", cascade = [(CascadeType.ALL)])
+    @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL])
     var profile: Profile? = null
         set(value) {
             field = value
@@ -19,7 +19,10 @@ class User(
             }
         }
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(
+        mappedBy = "user",
+        cascade = [CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH]
+    )
     var posts: MutableList<Post> = mutableListOf()
 
     @ManyToMany

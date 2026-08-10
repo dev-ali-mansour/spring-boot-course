@@ -18,4 +18,12 @@ class SocialServiceImpl(
         }
         return userRepository.save(user)
     }
+
+    override fun deleteUser(id: Long): User {
+        val user = userRepository.findById(id)
+            .orElseThrow { RuntimeException("User not found") }
+
+        userRepository.delete(user)
+        return user
+    }
 }

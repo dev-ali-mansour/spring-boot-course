@@ -5,10 +5,7 @@ import com.social.media.service.SocialService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class SocialController(private val socialService: SocialService) {
@@ -20,4 +17,10 @@ class SocialController(private val socialService: SocialService) {
     @PostMapping("/social/users")
     fun saveUser(@Validated @RequestBody user: User): ResponseEntity<User> =
         ResponseEntity(socialService.saveUser(user), HttpStatus.OK)
+
+    @DeleteMapping("/social/users/{id}")
+    fun deleteUser(@PathVariable id: Long): ResponseEntity<String> {
+        socialService.deleteUser(id)
+        return ResponseEntity("Deleted successfully", HttpStatus.OK)
+    }
 }
