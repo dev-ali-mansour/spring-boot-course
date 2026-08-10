@@ -87,5 +87,8 @@ class DataInitializer(
         profileRepository.save(profile2)
         profileRepository.save(profile3)
 
+        // FETCH TYPES
+        println("FETCHING SOCIAL USER")
+        userRepository.findById(1L)
     }
 }

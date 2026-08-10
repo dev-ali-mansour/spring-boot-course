@@ -25,7 +25,7 @@ class User(
     )
     var posts: MutableList<Post> = mutableListOf()
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "user_group",
         joinColumns = [JoinColumn(name = "user_id")],
