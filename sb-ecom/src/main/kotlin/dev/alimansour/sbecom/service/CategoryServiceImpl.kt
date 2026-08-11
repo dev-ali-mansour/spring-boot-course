@@ -2,8 +2,8 @@ package dev.alimansour.sbecom.service
 
 import dev.alimansour.sbecom.exception.APIException
 import dev.alimansour.sbecom.exception.ResourceNotFoundException
-import dev.alimansour.sbecom.mapper.toEntity
 import dev.alimansour.sbecom.mapper.toDTO
+import dev.alimansour.sbecom.mapper.toEntity
 import dev.alimansour.sbecom.payload.CategoryDTO
 import dev.alimansour.sbecom.payload.CategoryResponse
 import dev.alimansour.sbecom.repository.CategoryRepository
@@ -44,7 +44,7 @@ class CategoryServiceImpl(private val categoryRepository: CategoryRepository) : 
 
     override fun createCategory(categoryDTO: CategoryDTO): CategoryDTO {
         categoryRepository.findByName(categoryDTO.name)?.let {
-            throw APIException(message = "Category with name '${categoryDTO.name}' already exists!!!")
+            throw APIException(message = "Category `${categoryDTO.name}` already exists!")
         }
         val category = categoryDTO.toEntity()
         val savedCategory = categoryRepository.save(category)

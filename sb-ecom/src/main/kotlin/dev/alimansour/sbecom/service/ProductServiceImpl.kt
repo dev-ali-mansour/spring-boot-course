@@ -1,5 +1,6 @@
 package dev.alimansour.sbecom.service
 
+import dev.alimansour.sbecom.exception.APIException
 import dev.alimansour.sbecom.exception.ResourceNotFoundException
 import dev.alimansour.sbecom.mapper.toDTO
 import dev.alimansour.sbecom.mapper.toEntity
@@ -26,7 +27,15 @@ class ProductServiceImpl(
         productDTO: ProductDTO
     ): ProductDTO {
         val category = categoryRepository.findById(categoryId)
-            .orElseThrow { ResourceNotFoundException(resourceName = "Category", field = "id", fieldId = categoryId) }
+            .orElseThrow {
+                ResourceNotFoundException(resourceName = "Category", field = "id", fieldId = categoryId)
+            }
+
+        category.products.forEach { product ->
+            if (product.name.equals(productDTO.name, ignoreCase = true)) {
+                throw APIException("Product `${productDTO.name}` already exists!")
+            }
+        }
 
         val product = productDTO.toEntity().apply {
             this.image = "default.png"
@@ -41,6 +50,11 @@ class ProductServiceImpl(
     override fun getAllProducts(): ProductResponse {
         val products = productRepository.findAll()
             .map { it.toDTO() }
+
+        if (products.isEmpty()) {
+            throw APIException("No product exists!")
+        }
+
         return ProductResponse(content = products)
     }
 
@@ -50,6 +64,11 @@ class ProductServiceImpl(
 
         val products = productRepository.findByCategoryOrderByPriceAsc(category)
             .map { it.toDTO() }
+
+        if (products.isEmpty()) {
+            throw APIException("No product exist!")
+        }
+
         return ProductResponse(content = products)
     }
 
