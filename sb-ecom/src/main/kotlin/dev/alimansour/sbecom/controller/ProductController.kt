@@ -1,9 +1,13 @@
 package dev.alimansour.sbecom.controller
 
+import dev.alimansour.sbecom.config.AppConstants
 import dev.alimansour.sbecom.exception.APIException
 import dev.alimansour.sbecom.payload.ProductDTO
 import dev.alimansour.sbecom.payload.ProductResponse
 import dev.alimansour.sbecom.service.ProductService
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
@@ -24,16 +28,39 @@ class ProductController(private val productService: ProductService) {
     }
 
     @GetMapping("/public/products")
-    fun getAllProducts(): ResponseEntity<ProductResponse> =
-        ResponseEntity(productService.getAllProducts(), HttpStatus.OK)
+    fun getAllProducts(
+        @PageableDefault(
+            page = AppConstants.PAGE_NUMBER,
+            size = AppConstants.PAGE_SIZE,
+            sort = [AppConstants.SORT_BY],
+            direction = Sort.Direction.ASC
+        ) pageable: Pageable,
+    ): ResponseEntity<ProductResponse> =
+        ResponseEntity(productService.getAllProducts(pageable), HttpStatus.OK)
 
     @GetMapping("/public/categories/{categoryId}/products")
-    fun getProductsByCategoryId(@PathVariable categoryId: Long): ResponseEntity<ProductResponse> =
-        ResponseEntity(productService.searchByCategory(categoryId), HttpStatus.OK)
+    fun getProductsByCategoryId(
+        @PathVariable categoryId: Long,
+        @PageableDefault(
+            page = AppConstants.PAGE_NUMBER,
+            size = AppConstants.PAGE_SIZE,
+            sort = [AppConstants.SORT_BY],
+            direction = Sort.Direction.ASC
+        ) pageable: Pageable,
+    ): ResponseEntity<ProductResponse> =
+        ResponseEntity(productService.searchByCategory(categoryId, pageable), HttpStatus.OK)
 
     @GetMapping("/public/products/keyword/{keyword}")
-    fun getProductsByKeyword(@PathVariable keyword: String): ResponseEntity<ProductResponse> =
-        ResponseEntity(productService.searchByKeyword(keyword), HttpStatus.OK)
+    fun getProductsByKeyword(
+        @PathVariable keyword: String,
+        @PageableDefault(
+            page = AppConstants.PAGE_NUMBER,
+            size = AppConstants.PAGE_SIZE,
+            sort = [AppConstants.SORT_BY],
+            direction = Sort.Direction.ASC
+        ) pageable: Pageable,
+    ): ResponseEntity<ProductResponse> =
+        ResponseEntity(productService.searchByKeyword(keyword, pageable), HttpStatus.OK)
 
     @PutMapping("/admin/products/{id}")
     fun updateProduct(

@@ -10,6 +10,7 @@ import dev.alimansour.sbecom.payload.ProductResponse
 import dev.alimansour.sbecom.repository.CategoryRepository
 import dev.alimansour.sbecom.repository.ProductRepository
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 
@@ -47,35 +48,61 @@ class ProductServiceImpl(
         return savedProduct.toDTO()
     }
 
-    override fun getAllProducts(): ProductResponse {
-        val products = productRepository.findAll()
-            .map { it.toDTO() }
+    override fun getAllProducts(pageable: Pageable): ProductResponse {
+        val page = productRepository.findAll(pageable)
+        val products = page.content.map { it.toDTO() }
 
         if (products.isEmpty()) {
             throw APIException("No product exists!")
         }
 
-        return ProductResponse(content = products)
+        return ProductResponse(
+            content = products,
+            pageNumber = page.number,
+            pageSize = page.size,
+            totalPages = page.totalPages,
+            totalElements = page.totalElements,
+            lastPage = page.isLast
+        )
     }
 
-    override fun searchByCategory(categoryId: Long): ProductResponse {
+    override fun searchByCategory(categoryId: Long, pageable: Pageable): ProductResponse {
         val category = categoryRepository.findById(categoryId)
             .orElseThrow { ResourceNotFoundException(resourceName = "Category", field = "id", fieldId = categoryId) }
 
-        val products = productRepository.findByCategoryOrderByPriceAsc(category)
-            .map { it.toDTO() }
+        val page = productRepository.findByCategory(category, pageable)
+        val products = page.content.map { it.toDTO() }
 
         if (products.isEmpty()) {
             throw APIException("No product exist!")
         }
 
-        return ProductResponse(content = products)
+        return ProductResponse(
+            content = products,
+            pageNumber = page.number,
+            pageSize = page.size,
+            totalPages = page.totalPages,
+            totalElements = page.totalElements,
+            lastPage = page.isLast
+        )
     }
 
-    override fun searchByKeyword(keyword: String): ProductResponse {
-        val products = productRepository.findByNameLikeIgnoreCase("%$keyword%")
-            .map { it.toDTO() }
-        return ProductResponse(content = products)
+    override fun searchByKeyword(keyword: String, pageable: Pageable): ProductResponse {
+        val page = productRepository.findByNameLikeIgnoreCase("%$keyword%", pageable)
+        val products = page.content.map { it.toDTO() }
+
+        if (products.isEmpty()) {
+            throw APIException("No product exist!")
+        }
+
+        return ProductResponse(
+            content = products,
+            pageNumber = page.number,
+            pageSize = page.size,
+            totalPages = page.totalPages,
+            totalElements = page.totalElements,
+            lastPage = page.isLast
+        )
     }
 
     override fun updateProduct(id: Long, productDTO: ProductDTO): ProductDTO {
@@ -86,6 +113,7 @@ class ProductServiceImpl(
         val product = productDTO.toEntity().apply {
             this.id = id
             this.image = existedProduct.image
+            this.category = existedProduct.category
             this.specialPrice = calculateSpecialPrice()
         }
 
@@ -118,4 +146,6 @@ class ProductServiceImpl(
 
     private fun Product.calculateSpecialPrice(): Double =
         price * (1 - discount * 0.01) //price - ((discount * 0.01) * price)
+
+
 }
