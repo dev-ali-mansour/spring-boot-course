@@ -34,4 +34,11 @@ class ProductServiceImpl(
         return ProductResponse(content = products)
     }
 
+    override fun searchByCategory(categoryId: Long): ProductResponse {
+        val category = categoryRepository.findById(categoryId)
+            .orElseThrow { ResourceNotFoundException(resourceName = "Category", field = "id", fieldId = categoryId) }
+
+        val products = productRepository.findByCategoryOrderByPriceAsc(category).map { it.toDTO() }
+        return ProductResponse(content = products)
+    }
 }

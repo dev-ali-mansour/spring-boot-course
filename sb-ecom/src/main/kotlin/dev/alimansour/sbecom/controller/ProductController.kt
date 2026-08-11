@@ -26,4 +26,7 @@ class ProductController(private val productService: ProductService) {
     fun getAllProducts(): ResponseEntity<ProductResponse> =
         ResponseEntity(productService.getAllProducts(), HttpStatus.OK)
 
+    @GetMapping("/public/categories/{categoryId}/products")
+    fun getProductsByCategoryId(@PathVariable categoryId: Long): ResponseEntity<ProductResponse> =
+        ResponseEntity(productService.searchByCategory(categoryId), HttpStatus.OK)
 }

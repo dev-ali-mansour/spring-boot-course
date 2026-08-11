@@ -7,4 +7,5 @@ import dev.alimansour.sbecom.payload.ProductResponse
 interface ProductService {
     fun addProduct(categoryId: Long, product: Product): ProductDTO
     fun getAllProducts(): ProductResponse
+    fun searchByCategory(categoryId: Long): ProductResponse
 }
