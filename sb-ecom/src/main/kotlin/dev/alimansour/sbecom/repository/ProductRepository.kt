@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface ProductRepository : JpaRepository<Product, Long> {
     fun findByCategoryOrderByPriceAsc(category: Category): MutableList<Product>
+    fun findByNameLikeIgnoreCase(name: String): MutableList<Product>
 }

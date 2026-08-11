@@ -29,4 +29,8 @@ class ProductController(private val productService: ProductService) {
     @GetMapping("/public/categories/{categoryId}/products")
     fun getProductsByCategoryId(@PathVariable categoryId: Long): ResponseEntity<ProductResponse> =
         ResponseEntity(productService.searchByCategory(categoryId), HttpStatus.OK)
+
+    @GetMapping("/public/products/keyword/{keyword}")
+    fun getProductsByKeyword(@PathVariable keyword: String): ResponseEntity<ProductResponse> =
+        ResponseEntity(productService.searchByKeyword(keyword), HttpStatus.OK)
 }

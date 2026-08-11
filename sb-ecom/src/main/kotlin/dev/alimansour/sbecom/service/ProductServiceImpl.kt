@@ -30,7 +30,8 @@ class ProductServiceImpl(
     }
 
     override fun getAllProducts(): ProductResponse {
-        val products = productRepository.findAll().map { it.toDTO() }
+        val products = productRepository.findAll()
+            .map { it.toDTO() }
         return ProductResponse(content = products)
     }
 
@@ -38,7 +39,14 @@ class ProductServiceImpl(
         val category = categoryRepository.findById(categoryId)
             .orElseThrow { ResourceNotFoundException(resourceName = "Category", field = "id", fieldId = categoryId) }
 
-        val products = productRepository.findByCategoryOrderByPriceAsc(category).map { it.toDTO() }
+        val products = productRepository.findByCategoryOrderByPriceAsc(category)
+            .map { it.toDTO() }
+        return ProductResponse(content = products)
+    }
+
+    override fun searchByKeyword(keyword: String): ProductResponse {
+        val products = productRepository.findByNameLikeIgnoreCase("%$keyword%")
+            .map { it.toDTO() }
         return ProductResponse(content = products)
     }
 }
