@@ -1,0 +1,393 @@
+-- Categories
+INSERT INTO categories (id, name) VALUES (1, 'Mens T-Shirts');
+INSERT INTO categories (id, name) VALUES (2, 'Smartphones');
+INSERT INTO categories (id, name) VALUES (3, 'Apparel');
+INSERT INTO categories (id, name) VALUES (4, 'Home Appliances');
+INSERT INTO categories (id, name) VALUES (5, 'Toys');
+INSERT INTO categories (id, name) VALUES (6, 'Furniture');
+INSERT INTO categories (id, name) VALUES (7, 'Books');
+INSERT INTO categories (id, name) VALUES (8, 'Sports Equipment');
+INSERT INTO categories (id, name) VALUES (9, 'Beauty Products');
+INSERT INTO categories (id, name) VALUES (10, 'Automotive');
+INSERT INTO categories (id, name) VALUES (11, 'Outdoor Gear');
+INSERT INTO categories (id, name) VALUES (12, 'Electronics');
+INSERT INTO categories (id, name) VALUES (13, 'Kitchen Appliances');
+INSERT INTO categories (id, name) VALUES (14, 'Baby Products');
+INSERT INTO categories (id, name) VALUES (15, 'Health & Fitness');
+INSERT INTO categories (id, name) VALUES (16, 'Garden & Outdoor');
+INSERT INTO categories (id, name) VALUES (17, 'Pet Supplies');
+INSERT INTO categories (id, name) VALUES (18, 'Office Supplies');
+INSERT INTO categories (id, name) VALUES (19, 'Jewelry & Watches');
+INSERT INTO categories (id, name) VALUES (20, 'Travel & Luggage');
+INSERT INTO categories (id, name) VALUES (21, 'Musical Instruments');
+INSERT INTO categories (id, name) VALUES (22, 'Crafts & Hobbies');
+INSERT INTO categories (id, name) VALUES (23, 'Collectibles & Memorabilia');
+INSERT INTO categories (id, name) VALUES (24, 'Art & Decor');
+INSERT INTO categories (id, name) VALUES (25, 'Food & Beverages');
+INSERT INTO categories (id, name) VALUES (26, 'Stationery & Gift Wrapping');
+INSERT INTO categories (id, name) VALUES (27, 'Electrical & Lighting');
+INSERT INTO categories (id, name) VALUES (28, 'DIY & Tools');
+INSERT INTO categories (id, name) VALUES (29, 'Party Supplies');
+INSERT INTO categories (id, name) VALUES (30, 'Educational Toys');
+
+-- Products (10 per category)
+
+-- Category 1: Mens T-Shirts
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Classic Cotton Crewneck', 'Premium 100% combed cotton crewneck t-shirt.', 'default.png', 50, 25.0, 10.0, 22.5, 1);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Slim Fit V-Neck Tee', 'Modern slim fit v-neck cotton t-shirt.', 'default.png', 40, 28.0, 15.0, 23.8, 1);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Graphic Vintage T-Shirt', 'Retro graphic printed soft cotton t-shirt.', 'default.png', 65, 30.0, 20.0, 24.0, 1);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Heavyweight Pocket Tee', 'Durable heavyweight cotton t-shirt with chest pocket.', 'default.png', 30, 32.0, 5.0, 30.4, 1);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Performance Athletic Shirt', 'Moisture-wicking breathable polyester athletic t-shirt.', 'default.png', 80, 35.0, 25.0, 26.25, 1);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Organic Cotton Plain Tee', 'Eco-friendly 100% organic cotton basic t-shirt.', 'default.png', 45, 27.0, 0.0, 27.0, 1);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Henley Long Sleeve Shirt', 'Soft ribbed cotton henley shirt with button placket.', 'default.png', 35, 40.0, 10.0, 36.0, 1);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Striped Casual T-Shirt', 'Classic horizontal striped casual cotton tee.', 'default.png', 55, 29.0, 10.0, 26.1, 1);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Oversized Drop Shoulder Tee', 'Streetwear style oversized relaxed fit t-shirt.', 'default.png', 60, 34.0, 15.0, 28.9, 1);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Tri-Blend Soft Heather Tee', 'Ultra-soft tri-blend fabric heather grey t-shirt.', 'default.png', 70, 26.0, 5.0, 24.7, 1);
+
+-- Category 2: Smartphones
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Galaxy Ultra X5', '6.7 inch AMOLED display smartphone with 108MP camera.', 'default.png', 25, 999.0, 10.0, 899.1, 2);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('iPhone Pro MAX 15', 'Titanium design smartphone with A17 Pro chip.', 'default.png', 15, 1199.0, 5.0, 1139.05, 2);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Pixel AI Phone 8 Pro', 'Pure Android smartphone powered by Tensor G3 chip.', 'default.png', 30, 899.0, 12.0, 791.12, 2);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('OnePlus Speed Turbo 12', 'Flagship performance with 120W ultra-fast charging.', 'default.png', 20, 749.0, 15.0, 636.65, 2);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Xperia Cinema 1 V', '4K OLED display 21:9 ratio professional photography phone.', 'default.png', 10, 1299.0, 8.0, 1195.08, 2);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Xiaomi Ultra Zoom 13', 'Leica quad camera system flagship smartphone.', 'default.png', 18, 950.0, 10.0, 855.0, 2);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Motorola Edge+ 5G', 'Endless edge display with Snapdragon 8 Gen 2 processor.', 'default.png', 22, 699.0, 20.0, 559.2, 2);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Nothing Phone (2)', 'Unique transparent Glyph interface LED back smartphone.', 'default.png', 28, 599.0, 10.0, 539.1, 2);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('ASUS ROG Gaming Phone 7', 'Ultimate mobile gaming smartphone with AirTrigger controls.', 'default.png', 12, 1099.0, 5.0, 1044.05, 2);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Realme GT Neo 5', 'Budget flagship with 240W fast charging and RGB light.', 'default.png', 35, 499.0, 15.0, 424.15, 2);
+
+-- Category 3: Apparel
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Classic Denim Jacket', 'Timeless blue denim trucker jacket with button closure.', 'default.png', 40, 75.0, 10.0, 67.5, 3);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Fleece Pullover Hoodie', 'Cozy heavyweight fleece hoodie with kangaroo pocket.', 'default.png', 60, 55.0, 15.0, 46.75, 3);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Chino Pants Slim Fit', 'Versatile stretch cotton chino pants for casual wear.', 'default.png', 50, 48.0, 5.0, 45.6, 3);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Waterproof Windbreaker', 'Lightweight packable rain jacket windbreaker.', 'default.png', 35, 65.0, 20.0, 52.0, 3);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Wool Blend Trench Coat', 'Elegant double-breasted wool blend winter trench coat.', 'default.png', 15, 180.0, 25.0, 135.0, 3);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Casual Button-Down Shirt', '100% Oxford cotton long sleeve casual button-down.', 'default.png', 45, 42.0, 10.0, 37.8, 3);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Athletic Jogger Pants', 'Comfortable fleece joggers with drawstring waistband.', 'default.png', 70, 38.0, 12.0, 33.44, 3);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Puffer Winter Vest', 'Sleeveless insulated down-alternative puffer vest.', 'default.png', 30, 60.0, 15.0, 51.0, 3);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Knit Crewneck Sweater', 'Warm merino wool blend knit casual sweater.', 'default.png', 25, 70.0, 10.0, 63.0, 3);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Cargo Shorts Relaxed Fit', 'Durable multi-pocket cotton casual cargo shorts.', 'default.png', 55, 35.0, 5.0, 33.25, 3);
+
+-- Category 4: Home Appliances
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('HEPA Air Purifier', '3-stage filtration quiet HEPA air purifier for large rooms.', 'default.png', 25, 149.0, 10.0, 134.1, 4);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Robot Vacuum Cleaner', 'Smart Lidar navigation robot vacuum cleaner with mop.', 'default.png', 20, 299.0, 20.0, 239.2, 4);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Cordless Stick Vacuum', 'Lightweight powerful suction cordless stick vacuum cleaner.', 'default.png', 30, 199.0, 15.0, 169.15, 4);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Ultrasonic Humidifier', 'Cool mist quiet ultrasonic humidifier for bedroom.', 'default.png', 40, 49.0, 5.0, 46.55, 4);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Digital Dehumidifier 30 Pint', 'Energy Star rated portable dehumidifier with auto-shutoff.', 'default.png', 15, 189.0, 10.0, 170.1, 4);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Portable Tower Fan', 'Oscillating quiet cooling tower fan with remote control.', 'default.png', 50, 69.0, 12.0, 60.72, 4);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Space Heater Ceramic', 'Compact fast-heating ceramic space heater with thermostat.', 'default.png', 45, 39.0, 8.0, 35.88, 4);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Garment Steamer Handheld', 'Fast heat-up portable fabric clothes garment steamer.', 'default.png', 35, 34.0, 10.0, 30.6, 4);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Smart Wi-Fi Thermostat', 'Programmable energy saving smart thermostat with app control.', 'default.png', 28, 129.0, 15.0, 109.65, 4);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Iron Press Steam Station', 'Professional ceramic soleplate steam iron for clothes.', 'default.png', 22, 59.0, 5.0, 56.05, 4);
+
+-- Category 5: Toys
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('RC Stunt Car 4WD', '360 degree rotating high speed remote control stunt car.', 'default.png', 60, 39.0, 10.0, 35.1, 5);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Building Blocks Castle Set', '500 piece creative building blocks castle play set.', 'default.png', 45, 49.0, 15.0, 41.65, 5);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Plush Teddy Bear 24"', 'Ultra-soft jumbo stuffed teddy bear plush toy.', 'default.png', 70, 29.0, 5.0, 27.55, 5);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Wooden Train Track Set', 'Classic wooden railway train track set with 50 pieces.', 'default.png', 35, 45.0, 12.0, 39.6, 5);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Interactive Robot Dog', 'Voice control electronic smart interactive puppy toy.', 'default.png', 25, 59.0, 20.0, 47.2, 5);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Play Kitchen Playset', 'Wooden pretend play kitchen set with accessories.', 'default.png', 18, 99.0, 10.0, 89.1, 5);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Action Figure Hero Set', 'Pack of 5 poseable superhero action figures.', 'default.png', 50, 34.0, 8.0, 31.28, 5);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Magnetic Tiles 100 Pcs', '3D magnetic building blocks construction tiles set.', 'default.png', 40, 54.0, 15.0, 45.9, 5);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Dinosaur World Playset', '12 realistic dinosaur figures with play mat box.', 'default.png', 65, 27.0, 5.0, 25.65, 5);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Dollhouse Wooden 3-Story', 'Miniature wooden dollhouse with furniture included.', 'default.png', 15, 119.0, 10.0, 107.1, 5);
+
+-- Category 6: Furniture
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Ergonomic Mesh Office Chair', 'High back adjustable ergonomic lumbar support office chair.', 'default.png', 25, 189.0, 15.0, 160.65, 6);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Modern Velvet Sofa 3-Seater', 'Mid-century modern velvet upholstered sofa couch.', 'default.png', 8, 699.0, 10.0, 629.1, 6);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Industrial Coffee Table', 'Rustic wood and metal frame accent coffee table.', 'default.png', 20, 129.0, 12.0, 113.52, 6);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Standing Desk Electric', 'Height adjustable electric motorized standing computer desk.', 'default.png', 18, 299.0, 20.0, 239.2, 6);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('5-Tier Bookshelf Storage', 'Open ladder shelving unit bookshelf display bookcase.', 'default.png', 30, 99.0, 5.0, 94.05, 6);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Queen Size Bed Frame', 'Upholstered platform bed frame with button tufted headboard.', 'default.png', 12, 349.0, 15.0, 296.65, 6);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Dining Table Wood Set', '5-piece dining table with 4 padded chairs.', 'default.png', 10, 449.0, 10.0, 404.1, 6);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Recliner Armchair Leather', 'Overstuffed faux leather manual recliner armchair.', 'default.png', 15, 259.0, 18.0, 212.38, 6);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Nightstand Wooden 2-Drawer', 'Bedside end table with 2 drawers and storage shelf.', 'default.png', 40, 79.0, 8.0, 72.68, 6);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('TV Stand Console 65"', 'Modern entertainment center TV stand with cabinets.', 'default.png', 22, 179.0, 10.0, 161.1, 6);
+
+-- Category 7: Books
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Clean Code Handbook', 'A handbook of agile software craftsmanship principles.', 'default.png', 50, 44.0, 10.0, 39.6, 7);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('The Pragmatic Programmer', 'Your journey to mastery 20th anniversary edition book.', 'default.png', 45, 48.0, 12.0, 42.24, 7);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Design Patterns GOF', 'Elements of reusable object-oriented software design book.', 'default.png', 30, 52.0, 15.0, 44.2, 7);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Atomic Habits Novel', 'Tiny changes remarkable results self-improvement book.', 'default.png', 100, 27.0, 20.0, 21.6, 7);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('System Design Interview', 'An insider guide to system design interviews volume 1.', 'default.png', 60, 39.0, 5.0, 37.05, 7);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Spring Boot in Action', 'Comprehensive guide to building production Spring applications.', 'default.png', 40, 45.0, 10.0, 40.5, 7);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Kotlin Programming Book', 'Big Nerd Ranch guide to idiomatic Kotlin development.', 'default.png', 35, 38.0, 8.0, 34.96, 7);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Introduction to Algorithms', 'CLRS fourth edition comprehensive algorithms textbook.', 'default.png', 25, 95.0, 15.0, 80.75, 7);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('The Psychology of Money', 'Timeless lessons on wealth greed and happiness book.', 'default.png', 80, 22.0, 10.0, 19.8, 7);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Refactoring 2nd Edition', 'Improving the design of existing code by Martin Fowler.', 'default.png', 42, 50.0, 12.0, 44.0, 7);
+
+-- Category 8: Sports Equipment
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Basketball Official Size 7', 'Indoor outdoor composite leather grip basketball.', 'default.png', 40, 34.0, 10.0, 30.6, 8);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Soccer Ball FIFA Standard', 'Thermal bonded match soccer ball size 5.', 'default.png', 50, 29.0, 15.0, 24.65, 8);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Adjustable Dumbbells 50lbs', 'Pair of selecttech quick adjustment weight dumbbells.', 'default.png', 15, 299.0, 20.0, 239.2, 8);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Non-Slip Yoga Mat 6mm', 'Eco-friendly TPE extra thick non-slip fitness yoga mat.', 'default.png', 80, 24.0, 5.0, 22.8, 8);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Tennis Racket Graphite', 'Professional lightweight graphite tennis racket with cover.', 'default.png', 25, 89.0, 12.0, 78.32, 8);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Resistance Bands Set 5', 'Stackable workout exercise resistance loop bands set.', 'default.png', 90, 19.0, 10.0, 17.1, 8);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Foam Roller High Density', 'Deep tissue muscle massage high density foam roller.', 'default.png', 65, 21.0, 8.0, 19.32, 8);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Speed Jump Rope Cable', 'Adjustable speed jump rope with ball bearings handles.', 'default.png', 100, 14.0, 5.0, 13.3, 8);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Badminton Set 4 Rackets', 'Complete backyard badminton set with net shuttlecocks.', 'default.png', 30, 44.0, 15.0, 37.4, 8);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Pull Up Bar Doorway', 'Heavy duty multi-grip chin up pull up bar for doorway.', 'default.png', 35, 38.0, 10.0, 34.2, 8);
+
+-- Category 9: Beauty Products
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Hyaluronic Acid Serum', 'Hydrating face serum with pure hyaluronic acid and B5.', 'default.png', 75, 22.0, 10.0, 19.8, 9);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Vitamin C Brightening Face Wash', 'Gentle foaming cleanser enriched with vitamin C.', 'default.png', 60, 18.0, 15.0, 15.3, 9);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Retinol Night Moisturizer', 'Anti-aging firming night cream with retinol complex.', 'default.png', 40, 35.0, 20.0, 28.0, 9);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Sunscreen SPF 50 Broad Spectrum', 'Lightweight non-greasy facial sunscreen lotion.', 'default.png', 90, 19.0, 5.0, 18.05, 9);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Matte Lipstick Set 6 Colors', 'Long-lasting waterproof velvet matte liquid lipsticks.', 'default.png', 50, 26.0, 12.0, 22.88, 9);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Eyeshadow Palette 18 Shades', 'Highly pigmented nude and shimmer makeup eyeshadow palette.', 'default.png', 45, 29.0, 10.0, 26.1, 9);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Argan Hair Repair Mask', 'Deep conditioning argan oil hair repair mask treatment.', 'default.png', 55, 24.0, 8.0, 22.08, 9);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Makeup Brush Set 12 Pcs', 'Synthetic soft bristles makeup foundation powder brushes.', 'default.png', 65, 21.0, 15.0, 17.85, 9);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Micellar Cleansing Water', 'All-in-1 waterproof makeup remover micellar cleanser.', 'default.png', 80, 14.0, 5.0, 13.3, 9);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Exfoliating Body Scrub Shea', 'Organic shea butter moisturizing body sugar scrub.', 'default.png', 48, 17.0, 10.0, 15.3, 9);
+
+-- Category 10: Automotive
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Digital Tire Pressure Gauge', '150 PSI backlit digital tire pressure gauge tool.', 'default.png', 80, 15.0, 10.0, 13.5, 10);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Car Jump Starter 2000A', 'Portable battery car jump starter peak 12V pack.', 'default.png', 30, 89.0, 15.0, 75.65, 10);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('OBD2 Code Reader Scanner', 'Universal diagnostic car OBD2 engine error code scanner.', 'default.png', 45, 34.0, 20.0, 27.2, 10);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Dash Cam 4K Front Rear', 'Dual channel 4K dash camera with night vision Wi-Fi.', 'default.png', 25, 129.0, 12.0, 113.52, 10);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Car Phone Mount Dashboard', 'Universal hands-free magnetic dashboard car phone holder.', 'default.png', 100, 16.0, 5.0, 15.2, 10);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Microfiber Car Cleaning Cloths', 'Pack of 12 thick lint-free microfiber towels.', 'default.png', 90, 18.0, 10.0, 16.2, 10);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Car Vacuum Cleaner Portable', '12V high power handheld corded car vacuum cleaner.', 'default.png', 50, 29.0, 15.0, 24.65, 10);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('All Weather Car Floor Mats', 'Heavy duty rubber 4-piece all weather car floor mats.', 'default.png', 35, 44.0, 8.0, 40.48, 10);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Car Trunk Organizer Heavy Duty', 'Collapsible multi-compartment car storage organizer.', 'default.png', 40, 27.0, 10.0, 24.3, 10);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Leather Car Seat Cushion', 'Ergonomic breathable memory foam car seat cushion.', 'default.png', 60, 25.0, 5.0, 23.75, 10);
+
+-- Category 11: Outdoor Gear
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Camping Tent 4-Person', 'Waterproof windproof dome camping tent with rainfly.', 'default.png', 20, 119.0, 15.0, 101.15, 11);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Sleeping Bag 3-Season', 'Lightweight warm cold weather sleeping bag with compression sack.', 'default.png', 35, 45.0, 10.0, 40.5, 11);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Trekking Poles Aluminum', 'Pair of quick lock adjustable hiking trekking poles.', 'default.png', 50, 38.0, 12.0, 33.44, 11);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('LED Camping Lantern 1000LM', 'Rechargeable waterproof ultra-bright LED camping lantern.', 'default.png', 65, 24.0, 8.0, 22.08, 11);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Backpacking Stove Portable', 'Compact folding canister camp stove with piezo ignition.', 'default.png', 40, 21.0, 5.0, 19.95, 11);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Hydration Backpack 2L', 'Lightweight running hiking pack with 2L water bladder.', 'default.png', 45, 34.0, 15.0, 28.9, 11);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Camping Hammock Double', 'Portable nylon parachute double hammock with tree straps.', 'default.png', 55, 28.0, 10.0, 25.2, 11);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Water Filter Straw Personal', 'Emergency outdoor personal water purifier filter straw.', 'default.png', 80, 19.0, 20.0, 15.2, 11);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Outdoor Folding Chair', 'Heavy duty compact quad camping folding chair with cup holder.', 'default.png', 30, 39.0, 10.0, 35.1, 11);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Insulated Cooler Bag 30-Can', 'Soft sided leakproof insulated travel beach cooler bag.', 'default.png', 25, 49.0, 12.0, 43.12, 11);
+
+-- Category 12: Electronics
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Wireless ANC Headphones', 'Over-ear active noise cancelling bluetooth headphones.', 'default.png', 40, 149.0, 20.0, 119.2, 12);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Bluetooth Speaker Waterproof', 'Portable IPX7 waterproof wireless speaker with deep bass.', 'default.png', 60, 59.0, 15.0, 50.15, 12);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('4K Gaming Monitor 27"', '144Hz IPS 1ms HDR400 gaming computer monitor.', 'default.png', 15, 349.0, 10.0, 314.1, 12);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Mechanical Gaming Keyboard', 'RGB backlit hot-swappable mechanical wired keyboard.', 'default.png', 45, 79.0, 12.0, 69.52, 12);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Wireless Ergonomic Mouse', 'Multi-device bluetooth rechargeable wireless ergonomic mouse.', 'default.png', 70, 39.0, 10.0, 35.1, 12);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Smart Watch Fitness Tracker', 'Heart rate SpO2 sleep tracker IP68 smartwatch.', 'default.png', 50, 69.0, 25.0, 51.75, 12);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('External SSD 1TB Portable', 'USB 3.2 Gen 2 high speed portable external solid state drive.', 'default.png', 30, 99.0, 10.0, 89.1, 12);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('USB-C Multiport Hub 7-in-1', 'Adapter dongle with 4K HDMI 3 USB 3.0 SD card reader.', 'default.png', 85, 29.0, 5.0, 27.55, 12);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('HD Web Camera 1080P', 'Streaming webcam with privacy shutter and microphone.', 'default.png', 55, 44.0, 15.0, 37.4, 12);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Power Bank 20000mAh', 'Fast charging portable phone battery charger power bank.', 'default.png', 65, 35.0, 8.0, 32.2, 12);
+
+-- Category 13: Kitchen Appliances
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Digital Air Fryer 5.8 Quart', 'XL oil-less electric air fryer oven with 8 presets.', 'default.png', 30, 99.0, 15.0, 84.15, 13);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('High Speed Countertop Blender', '1200W professional smoothie countertop blender.', 'default.png', 25, 89.0, 10.0, 80.1, 13);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Espresso Coffee Machine 15 Bar', 'Semi-automatic espresso maker with milk frother steam wand.', 'default.png', 18, 169.0, 20.0, 135.2, 13);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Electric Pressure Cooker 6 Qt', '7-in-1 multi-functional programmable instant pressure cooker.', 'default.png', 22, 109.0, 12.0, 95.92, 13);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('2-Slice Stainless Steel Toaster', 'Extra wide slot 6 shade settings toaster.', 'default.png', 45, 34.0, 5.0, 32.3, 13);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Electric Gooseneck Kettle 1L', 'Variable temperature control stainless steel coffee kettle.', 'default.png', 35, 49.0, 10.0, 44.1, 13);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Food Processor 8 Cup', 'Compact vegetable chopper and food processor.', 'default.png', 28, 59.0, 15.0, 50.15, 13);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Slow Cooker 6 Quart', 'Oval manual stainless steel programmable slow cooker.', 'default.png', 40, 44.0, 8.0, 40.48, 13);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Nonstick Electric Griddle', 'Removable drip tray large family electric griddle.', 'default.png', 32, 39.0, 10.0, 35.1, 13);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Immersion Hand Blender 500W', '4-in-1 stick blender with whisk and chopper attachment.', 'default.png', 50, 32.0, 5.0, 30.4, 13);
+
+-- Category 14: Baby Products
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Video Baby Monitor 5"', 'Wireless video monitor with infrared night vision camera.', 'default.png', 25, 89.0, 10.0, 80.1, 14);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Ergonomic Baby Carrier', 'All-in-one 360 ergonomic baby backpack carrier.', 'default.png', 30, 79.0, 15.0, 67.15, 14);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Convertible Car Seat 3-in-1', 'Rear facing and forward facing convertible infant car seat.', 'default.png', 15, 199.0, 20.0, 159.2, 14);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Diaper Bag Backpack', 'Multi-function waterproof travel diaper bag with changing pad.', 'default.png', 50, 42.0, 12.0, 36.96, 14);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Electric Baby Bottle Warmer', 'Fast milk bottle warmer with timer and defrost mode.', 'default.png', 40, 35.0, 5.0, 33.25, 14);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Baby Sound Machine White Noise', 'Portable sleep sound machine with 10 soothing sounds.', 'default.png', 60, 24.0, 10.0, 21.6, 14);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Silicone Baby Bibs 3-Pack', 'Waterproof easy clean soft silicone feeding bibs.', 'default.png', 80, 15.0, 8.0, 13.8, 14);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Infant Swaddle Blankets 3-Pack', '100% organic cotton adjustable baby swaddle wraps.', 'default.png', 70, 26.0, 15.0, 22.1, 14);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Foldable Baby Playpen', 'Activity safety center playpen with breathable mesh.', 'default.png', 18, 119.0, 10.0, 107.1, 14);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Baby Teething Toys Set 4', 'BPA free food grade silicone natural teething keys.', 'default.png', 90, 12.0, 5.0, 11.4, 14);
+
+-- Category 15: Health & Fitness
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Smart Body Fat Scale', 'Bluetooth digital bathroom scale with BMI muscle mass analysis.', 'default.png', 45, 29.0, 10.0, 26.1, 15);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Deep Tissue Massage Gun', 'Handheld percussive muscle massage gun with 6 heads.', 'default.png', 30, 69.0, 20.0, 55.2, 15);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Upper Arm Blood Pressure Monitor', 'Automatic digital blood pressure monitor with cuff.', 'default.png', 40, 39.0, 15.0, 33.15, 15);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Fingertip Pulse Oximeter', 'Blood oxygen saturation level SpO2 monitor sensor.', 'default.png', 70, 19.0, 5.0, 18.05, 15);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Whey Protein Isolate 2lbs', 'Pure chocolate flavor high protein powder supplement.', 'default.png', 50, 44.0, 12.0, 38.72, 15);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Multivitamin Gummies 120ct', 'Daily essential vitamins and minerals dietary supplement.', 'default.png', 80, 18.0, 10.0, 16.2, 15);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Posture Corrector Adjustable', 'Upper back brace support posture corrector strap.', 'default.png', 65, 22.0, 8.0, 20.24, 15);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Infrared Thermometer Forehead', 'Non-contact digital forehead temperature thermometer.', 'default.png', 55, 25.0, 15.0, 21.25, 15);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Creatine Monohydrate 500g', 'Unflavored pure micronized creatine powder supplement.', 'default.png', 60, 28.0, 5.0, 26.6, 15);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Heating Pad for Back Pain', 'Electric fast heating pad with 6 heat settings.', 'default.png', 35, 32.0, 10.0, 28.8, 15);
+
+-- Category 16: Garden & Outdoor
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Expandable Garden Hose 50ft', 'Flexible lightweight kink-free water hose with nozzle.', 'default.png', 40, 34.0, 10.0, 30.6, 16);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Solar Outdoor Lights 8-Pack', 'Waterproof LED landscape pathway solar garden lights.', 'default.png', 60, 39.0, 15.0, 33.15, 16);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Bypass Pruning Shears', 'Professional titanium coated stainless steel hand pruners.', 'default.png', 50, 19.0, 5.0, 18.05, 16);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Electric String Trimmer 12"', 'Cordless weed wacker grass trimmer with battery.', 'default.png', 25, 79.0, 12.0, 69.52, 16);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Garden Tool Set 9 Pcs', 'Heavy duty cast aluminum gardening tools with tote bag.', 'default.png', 35, 42.0, 10.0, 37.8, 16);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Heavy Duty Bird Feeder', 'Squirrel proof hanging metal bird feeder for garden.', 'default.png', 45, 27.0, 8.0, 24.84, 16);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Patio Umbrella 9ft', 'Outdoor market table umbrella with push button tilt.', 'default.png', 20, 65.0, 15.0, 55.25, 16);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('High Pressure Hose Nozzle', 'Heavy duty zinc alloy 8 watering patterns spray nozzle.', 'default.png', 70, 16.0, 5.0, 15.2, 16);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Plant Watering Can 1 Gallon', 'Durable plastic indoor outdoor long spout watering pot.', 'default.png', 55, 18.0, 10.0, 16.2, 16);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Outdoor Fire Pit 32"', 'Wood burning steel square firepit with spark screen cover.', 'default.png', 15, 129.0, 20.0, 103.2, 16);
+
+-- Category 17: Pet Supplies
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Orthopedic Dog Bed Large', 'Memory foam waterproof washable pet bed mattress.', 'default.png', 25, 59.0, 10.0, 53.1, 17);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Cat Tree Condo Tower 54"', 'Multi-level cat activity scratcher post tower with hammock.', 'default.png', 18, 79.0, 15.0, 67.15, 17);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Automatic Pet Feeder 4L', 'Programmable timed dry food dispenser for cats dogs.', 'default.png', 30, 49.0, 12.0, 43.12, 17);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Pet Water Fountain 2.5L', 'Stainless steel quiet automatic cat water dispenser filter.', 'default.png', 40, 29.0, 5.0, 27.55, 17);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Heavy Duty Dog Leash 6ft', 'Reflective padded handle nylon rope pet leash.', 'default.png', 80, 14.0, 10.0, 12.6, 17);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Interactive Cat Laser Toy', 'Automatic rotating LED laser pointer toy for indoor cats.', 'default.png', 55, 22.0, 15.0, 18.7, 17);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Pet Grooming Brush Undercoat', 'Deshedding dematting tool rake comb for dogs cats.', 'default.png', 65, 17.0, 8.0, 15.64, 17);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Dog Harness No-Pull', 'Adjustable reflective breathable dog vest harness.', 'default.png', 50, 24.0, 10.0, 21.6, 17);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Poop Bags with Dispenser 360', 'Leakproof lavender scented dog waste poop bags.', 'default.png', 100, 16.0, 5.0, 15.2, 17);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Dog Chew Toys Pack 5', 'Durable natural rubber teething chew toys set.', 'default.png', 70, 19.0, 10.0, 17.1, 17);
+
+-- Category 18: Office Supplies
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Cross-Cut Paper Shredder 8-Sheet', 'Credit card and home office quiet paper shredder.', 'default.png', 25, 49.0, 10.0, 44.1, 18);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Thermal Label Printer 4x6', 'High speed USB shipping commercial label maker printer.', 'default.png', 20, 119.0, 15.0, 101.15, 18);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Desk Organizer Mesh', 'Multi-functional desktop file sorting tray organizer.', 'default.png', 60, 24.0, 5.0, 22.8, 18);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Dry Erase Board 36x24', 'Magnetic white board with marker tray aluminum frame.', 'default.png', 30, 39.0, 12.0, 34.32, 18);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Gel Ink Pens Black 0.5mm 12ct', 'Smooth writing fine point retractable gel pens.', 'default.png', 90, 12.0, 10.0, 10.8, 18);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Laminator Machine 9-Inch', 'Thermal laminator with 20 laminating pouches cutter.', 'default.png', 35, 29.0, 8.0, 26.68, 18);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Heavy Duty Stapler 100 Sheet', 'High capacity desktop metal office stapler.', 'default.png', 40, 22.0, 10.0, 19.8, 18);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Large Leather Desk Pad Mat', 'Waterproof PU leather mouse pad desk protector.', 'default.png', 75, 18.0, 15.0, 15.3, 18);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Highlighters Pastel 6-Pack', 'Chisel tip soft pastel aesthetic color highlighters.', 'default.png', 100, 9.0, 5.0, 8.55, 18);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Sticky Notes 3x3 12 Pads', 'Bright color self-adhesive memo pads 100 sheets per pad.', 'default.png', 85, 14.0, 10.0, 12.6, 18);
+
+-- Category 19: Jewelry & Watches
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Mens Stainless Steel Watch', 'Classic analog quartz movement waterproof wrist watch.', 'default.png', 30, 89.0, 15.0, 75.65, 19);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Womens Rose Gold Bangle', 'Crystal paved stylish rose gold plated cuff bracelet.', 'default.png', 40, 45.0, 10.0, 40.5, 19);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Sterling Silver Pendant Necklace', '925 sterling silver cubic zirconia solitaire necklace.', 'default.png', 50, 39.0, 20.0, 31.2, 19);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Stud Earrings Set 925 Silver', 'Round clear CZ stud earrings 6 pairs set.', 'default.png', 70, 24.0, 5.0, 22.8, 19);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Leather Watch Box Organizer', '12 slot display case watch storage box with lock.', 'default.png', 25, 34.0, 12.0, 29.92, 19);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Automatic Mechanical Chronograph', 'Self-winding skeleton dial leather strap luxury watch.', 'default.png', 12, 199.0, 25.0, 149.25, 19);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Pearl Drop Earrings 14K Gold', 'Freshwater cultured pearl dangle drop earrings.', 'default.png', 35, 59.0, 10.0, 53.1, 19);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Ultrasonic Jewelry Cleaner Machine', 'Portable 45kHz professional eyewear jewelry cleaner.', 'default.png', 45, 38.0, 15.0, 32.3, 19);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Adjustable Silver Ring Set', 'Minimalist stackable open ring band set 5 pcs.', 'default.png', 60, 22.0, 8.0, 20.24, 19);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Men Cuban Link Chain 20"', 'Heavy 10mm stainless steel silver cuban link necklace.', 'default.png', 38, 29.0, 10.0, 26.1, 19);
+
+-- Category 20: Travel & Luggage
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Carry-On Spinner Suitcase 20"', 'Hardside lightweight spinner wheel TSA lock luggage.', 'default.png', 25, 89.0, 15.0, 75.65, 20);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Travel Packing Cubes 6-Set', 'Compression luggage organizer bags set with laundry bag.', 'default.png', 65, 24.0, 10.0, 21.6, 20);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Memory Foam Travel Neck Pillow', 'Ergonomic 360 chin support airplane sleeping pillow.', 'default.png', 50, 22.0, 5.0, 20.9, 20);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Travel Duffel Bag Canvas', 'Large weekender overnight carry on bag with shoe compartment.', 'default.png', 35, 49.0, 12.0, 43.12, 20);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Passport Holder RFID Blocking', 'Family passport wallet document organizer travel case.', 'default.png', 80, 16.0, 10.0, 14.4, 20);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Universal Travel Adapter All-in-1', 'Worldwide international power plug adapter 4 USB ports.', 'default.png', 70, 21.0, 15.0, 17.85, 20);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Hanging Toiletry Bag Large', 'Waterproof cosmetics wash bag organizer with hook.', 'default.png', 45, 27.0, 8.0, 24.84, 20);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Digital Luggage Scale 110lb', 'Portable handheld electronic travel suitcase weight scale.', 'default.png', 90, 12.0, 10.0, 10.8, 20);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('TSA Approved Cable Locks 2-Pack', '3-digit combination security luggage padlock.', 'default.png', 100, 14.0, 5.0, 13.3, 20);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Foldable Backpack Travel 35L', 'Ultra lightweight packable outdoor daypack backpack.', 'default.png', 40, 29.0, 10.0, 26.1, 20);
+
+-- Category 21: Musical Instruments
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Acoustic Guitar 41" Full Size', 'Spruce top dreadnought acoustic guitar starter bundle.', 'default.png', 20, 149.0, 10.0, 134.1, 21);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Electric Keyboard 61-Key', 'Portable digital piano keyboard with stand bench headphones.', 'default.png', 15, 129.0, 15.0, 109.65, 21);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Soprano Ukulele 21" Mahogany', 'Traditional Hawaiian wood ukulele starter kit tuner strap.', 'default.png', 45, 39.0, 5.0, 37.05, 21);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Clip-On Digital Guitar Tuner', 'Universal chromatic tuner for guitar bass ukulele violin.', 'default.png', 90, 12.0, 10.0, 10.8, 21);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('USB Studio Condenser Microphone', 'Cardioid podcast recording microphone with boom arm filter.', 'default.png', 30, 59.0, 12.0, 51.92, 21);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Foldable Music Stand Metal', 'Height adjustable sheet music stand with carrying bag.', 'default.png', 50, 24.0, 8.0, 22.08, 21);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Harmonica key of C 10-Hole', 'Diatonic blues harmonica with hard case for beginners.', 'default.png', 75, 16.0, 15.0, 13.6, 21);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Drum Practice Pad 12"', 'Double sided quiet snare drum training pad with sticks.', 'default.png', 40, 28.0, 10.0, 25.2, 21);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Guitar Effects Pedal Overdrive', 'Classic analog tube overdrive effect pedal for electric guitar.', 'default.png', 25, 49.0, 20.0, 39.2, 21);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Guitar Wall Mount Hanger 2-Pack', 'Hardwood guitar keeper display wall hanger hook.', 'default.png', 60, 18.0, 5.0, 17.1, 21);
+
+-- Category 22: Crafts & Hobbies
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Acrylic Paint Set 24 Colors', 'Professional non-toxic canvas craft acrylic paints with brushes.', 'default.png', 50, 24.0, 10.0, 21.6, 22);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Hot Glue Gun 60W', 'Dual power mini hot melt glue gun with 30 sticks.', 'default.png', 60, 16.0, 5.0, 15.2, 22);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Embroidery Starter Kit', 'Full range Stamped cross stitch kit with hoop threads.', 'default.png', 40, 19.0, 12.0, 16.72, 22);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Crochet Hooks Set 14 Sizes', 'Ergonomic soft rubber handle knitting needles yarn set.', 'default.png', 55, 21.0, 15.0, 17.85, 22);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Polymer Clay 50 Colors', 'Oven bake modeling clay set with sculpting tools box.', 'default.png', 30, 29.0, 8.0, 26.68, 22);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Wood Carving Tools 12 Pcs', 'Carbon steel razor sharp wood carving chisel kit.', 'default.png', 35, 27.0, 10.0, 24.3, 22);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Self Healing Cutting Mat A3', 'Grid rotary cutting mat with hobby knife craft blades.', 'default.png', 45, 22.0, 10.0, 19.8, 22);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Calligraphy Pen Set 8 Pcs', 'Lettering calligraphy marker pens for illustration journaling.', 'default.png', 70, 15.0, 5.0, 14.25, 22);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Diamond Painting Kit 5D', 'Full drill crystal rhinestone wall art craft kit.', 'default.png', 65, 18.0, 15.0, 15.3, 22);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Tie Dye Kit 18 Colors', 'One-step vibrant fabric tie dye kit with rubber bands gloves.', 'default.png', 25, 32.0, 10.0, 28.8, 22);
+
+-- Category 23: Collectibles & Memorabilia
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Coin Storage Album 250 Pockets', 'Collectors coin collection holder album book.', 'default.png', 40, 18.0, 10.0, 16.2, 23);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Trading Card Binder 9-Pocket', '720 cards capacity side loading zipper album binder.', 'default.png', 50, 27.0, 12.0, 23.76, 23);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Acrylic Display Case Dustproof', 'Clear countertop protection display box for figures collectibles.', 'default.png', 30, 34.0, 15.0, 28.9, 23);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Vintage Replica Pocket Watch', 'Steampunk antique bronze mechanical pocket watch with chain.', 'default.png', 45, 22.0, 5.0, 20.9, 23);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Stamp Collecting Album Book', 'Stockbook for stamp collectors 10 pages 600 strips.', 'default.png', 25, 21.0, 10.0, 18.9, 23);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Toploader Card Sleeves 100 Pack', 'Hard plastic rigid protective sleeves for sport cards.', 'default.png', 80, 14.0, 8.0, 12.88, 23);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Diecast Vintage Car Model 1:24', 'Classic retro alloy Metal car vehicle model toy.', 'default.png', 35, 39.0, 10.0, 35.1, 23);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Framed Movie Poster Replica 24x36', 'Classic cinema canvas wall art print wooden frame.', 'default.png', 20, 45.0, 15.0, 38.25, 23);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Miniature Wooden Sailboat Model', 'Handcrafted nautical wooden ship sailboat decor.', 'default.png', 28, 29.0, 5.0, 27.55, 23);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Autograph Display Baseball Holder', 'UV protection clear acrylic baseball display cube case.', 'default.png', 60, 15.0, 10.0, 13.5, 23);
+
+-- Category 24: Art & Decor
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Canvas Wall Art Abstract 3-Piece', 'Modern framed geometric line canvas wall decor prints.', 'default.png', 20, 69.0, 15.0, 58.65, 24);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Ceramic Flower Vase Set 3', 'Minimalist white boho ceramic decorative vases.', 'default.png', 35, 38.0, 10.0, 34.2, 24);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Macrame Wall Hanging Tapestry', 'Handmade woven cotton bohemian tassel wall decor.', 'default.png', 40, 24.0, 5.0, 22.8, 24);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Flameless LED Candles 5-Pack', 'Real wax battery pillar candles with remote timer control.', 'default.png', 50, 29.0, 12.0, 25.52, 24);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Round Sunburst Wall Mirror 24"', 'Decorative gold metal accent sunburst hanging wall mirror.', 'default.png', 15, 59.0, 20.0, 47.2, 24);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Artificial Monstera Plant 4ft', 'Faux tropical palm potted plant for indoor decor.', 'default.png', 18, 79.0, 10.0, 71.1, 24);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Floating Wall Shelves Set 3', 'Rustic wood wall mounted display storage shelves.', 'default.png', 60, 27.0, 8.0, 24.84, 24);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Table Lamp Vintage Industrial', 'Edison bulb dimmable wooden base desk nightstand lamp.', 'default.png', 30, 34.0, 10.0, 30.6, 24);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Decorative Throw Pillow Covers 4ct', 'Soft velvet square cushion accent covers 18x18.', 'default.png', 70, 19.0, 15.0, 16.15, 24);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Metal Tree of Life Wall Sculptures', '3D round iron metal branch wall hanging art piece.', 'default.png', 25, 42.0, 5.0, 39.9, 24);
+
+-- Category 25: Food & Beverages
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Organic Whole Bean Coffee 2lbs', 'Medium dark roast 100% Arabica fair trade coffee beans.', 'default.png', 60, 24.0, 10.0, 21.6, 25);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Matcha Green Tea Powder 100g', 'Japanese culinary grade organic pure green tea powder.', 'default.png', 45, 19.0, 15.0, 16.15, 25);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Gourmet Dark Chocolate Box 24ct', 'Assorted Belgian luxury dark truffles gift box.', 'default.png', 30, 29.0, 5.0, 27.55, 25);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Extra Virgin Olive Oil 1L', 'First cold pressed organic Mediterranean olive oil.', 'default.png', 50, 22.0, 12.0, 19.36, 25);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Raw Unfiltered Honey 32oz', 'Pure natural Grade A wildflower raw honey jar.', 'default.png', 40, 18.0, 10.0, 16.2, 25);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Mixed Nuts Roast Salted 30oz', 'Almonds cashews pecans walnuts healthy snack bag.', 'default.png', 65, 26.0, 8.0, 23.92, 25);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Sparkling Water Variety 24-Can', 'Zero calorie natural fruit flavored sparkling water pack.', 'default.png', 80, 17.0, 5.0, 16.15, 25);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Organic Loose Leaf Herbal Tea 4oz', 'Relaxing chamomile lavender herbal wellness tea blend.', 'default.png', 55, 14.0, 10.0, 12.6, 25);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Himalayan Pink Sea Salt 5lbs', 'Fine grain pure natural gourmet food cooking salt.', 'default.png', 70, 15.0, 15.0, 12.75, 25);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Aged Balsamic Vinegar 500ml', 'Italian Modena authentic thick sweet glaze vinegar.', 'default.png', 35, 21.0, 10.0, 18.9, 25);
+
+-- Category 26: Stationery & Gift Wrapping
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Kraft Gift Wrapping Paper Roll', 'Heavyweight reversible birthday holidays wrapping paper.', 'default.png', 45, 16.0, 10.0, 14.4, 26);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Satin Ribbon Roll 1" 50 Yds', 'Double-faced luxury silk satin gift wrapping ribbon.', 'default.png', 60, 12.0, 5.0, 11.4, 26);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('All-Occasion Greeting Cards 40ct', 'Assorted birthday thank you sympathy blank cards set.', 'default.png', 50, 22.0, 15.0, 18.7, 26);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Washi Tape Set 20 Rolls', 'Decorative foil masking craft tape for bullet journal.', 'default.png', 80, 14.0, 12.0, 12.32, 26);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Wax Seal Stamp Kit', 'Retro brass seal stamp with sealing wax beads furnace.', 'default.png', 30, 24.0, 10.0, 21.6, 26);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Gift Bags Assorted Sizes 12 Pack', 'Heavy duty kraft paper gift bags with handles.', 'default.png', 65, 19.0, 8.0, 17.48, 26);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Colored Tissue Paper 100 Sheets', 'Rainbow craft gift packing wrapping tissue sheets.', 'default.png', 90, 11.0, 5.0, 10.45, 26);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Gold Gift Bows 50-Count', 'Self-adhesive metallic foil gift wrapping bows.', 'default.png', 75, 13.0, 10.0, 11.7, 26);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Leather Hardcover Journal Notebook', 'Thick lined paper executive A5 diary notebook.', 'default.png', 40, 21.0, 15.0, 17.85, 26);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('To/From Gift Tags 100 Pcs', 'Kraft paper string tags for presents labeling.', 'default.png', 100, 9.0, 5.0, 8.55, 26);
+
+-- Category 27: Electrical & Lighting
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Smart LED Light Bulbs E26 4ct', 'Color changing WiFi RGB A19 smart light bulbs Alexa.', 'default.png', 50, 34.0, 10.0, 30.6, 27);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Surge Protector Power Strip 12-Outlet', 'Heavy duty 6ft cord extension cord with 4 USB ports.', 'default.png', 40, 27.0, 15.0, 22.95, 27);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Outdoor LED String Lights 50ft', 'Waterproof shatterproof commercial Edison patio lights.', 'default.png', 30, 44.0, 12.0, 38.72, 27);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Under Cabinet Puck Lights 6-Pack', 'Wireless Dimmable puck lights with remote control battery.', 'default.png', 45, 29.0, 5.0, 27.55, 27);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('LED Desk Lamp Wireless Charger', 'Eye-caring dimmable study lamp with USB charging port.', 'default.png', 35, 38.0, 20.0, 30.4, 27);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Solar Motion Sensor Lights 4-Pack', 'Ultra bright 100 LED outdoor security wall lights.', 'default.png', 60, 32.0, 10.0, 28.8, 27);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Smart WiFi Light Switch', 'Neutral wire required 2.4G single pole touch switch.', 'default.png', 55, 19.0, 8.0, 17.48, 27);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Digital Multimeter Tester', 'Auto-ranging AC DC voltage current resistance continuity tester.', 'default.png', 40, 24.0, 10.0, 21.6, 27);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Flexible LED Light Strip 32.8ft', 'Music sync RGB light strip with 44-key remote controller.', 'default.png', 70, 22.0, 15.0, 18.7, 27);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Rechargeable Headlamp 2-Pack', 'Super bright 1000 lumen sensor headlamp flashlight.', 'default.png', 65, 25.0, 5.0, 23.75, 27);
+
+-- Category 28: DIY & Tools
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Cordless Drill Driver Kit 20V', 'Power drill with 2.0Ah battery charger 30pcs drill bits.', 'default.png', 25, 69.0, 10.0, 62.1, 28);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Home Tool Kit 128-Piece', 'General household hand tool set with plastic toolbox case.', 'default.png', 30, 49.0, 15.0, 41.65, 28);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Magnetic Screwdriver Set 44 Pcs', 'Precision driver bits set for electronics computer repair.', 'default.png', 50, 24.0, 5.0, 22.8, 28);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Laser Tape Measure 2-in-1', '131ft laser distance meter and 16ft digital tape measure.', 'default.png', 35, 38.0, 12.0, 33.44, 28);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Stud Finder Sensor Wall Scanner', '5-in-1 electronic stud sensor center finder beam scanner.', 'default.png', 40, 27.0, 10.0, 24.3, 28);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Hot Air Heat Gun 1800W', 'Dual temperature settings heat gun for craft shrink wrapping.', 'default.png', 28, 29.0, 8.0, 26.68, 28);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Rotary Tool Kit 160 Accessories', 'Multi-purpose variable speed mini rotary tool for sanding carving.', 'default.png', 22, 42.0, 15.0, 35.7, 28);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Heavy Duty Clamps Set 4-Pack', 'One-handed quick release ratcheting bar woodworking clamps.', 'default.png', 45, 32.0, 10.0, 28.8, 28);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Work Light LED Rechargeable', 'Portable 30W 1500LM magnetic flood light stand.', 'default.png', 38, 34.0, 5.0, 32.3, 28);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Utility Knife Heavy Duty 3-Pack', 'Retractable box cutter utility razor knifes with extra blades.', 'default.png', 75, 14.0, 10.0, 12.6, 28);
+
+-- Category 29: Party Supplies
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Balloon Garland Arch Kit 120 Pcs', 'Gold white nude party balloons arch kit for birthday wedding.', 'default.png', 50, 18.0, 10.0, 16.2, 29);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Foil Fringe Backdrop Curtains 4 Pack', 'Metallic tinsel photo booth stream backdrop for decorations.', 'default.png', 65, 14.0, 5.0, 13.3, 29);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Disposable Dinnerware Set 150 Pcs', 'White gold rim plastic plates cups napkins silverware set.', 'default.png', 30, 39.0, 15.0, 33.15, 29);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Happy Birthday Neon LED Sign', 'Warm white dimmable birthday party backdrop wall light.', 'default.png', 20, 49.0, 12.0, 43.12, 29);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Confetti Cannons Poppers 6-Pack', 'Biodegradable tissue paper party poppers handheld shooter.', 'default.png', 80, 22.0, 10.0, 19.8, 29);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Cupcake Stand 3-Tier Acrylic', 'Clear dessert tower display stand for wedding party.', 'default.png', 40, 25.0, 8.0, 23.0, 29);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Party Photo Booth Props 45 Pcs', 'Funny DIY mask glasses mustache photo booth props.', 'default.png', 90, 12.0, 10.0, 10.8, 29);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Sequin Table Runner 12x108"', 'Glitter sparkling gold sequin table cover runner.', 'default.png', 60, 15.0, 5.0, 14.25, 29);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('LED Party Lights Strobe Ball', 'Sound activated RGB disco light projector for room dance.', 'default.png', 45, 19.0, 15.0, 16.15, 29);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Paper Lanterns Decorative 12 Pack', 'Hanging round Chinese white paper lamps for celebrations.', 'default.png', 70, 17.0, 10.0, 15.3, 29);
+
+-- Category 30: Educational Toys
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Beginner Microscope Kit 100x-1200x', 'Science educational kids microscope with slides LED light.', 'default.png', 30, 39.0, 10.0, 35.1, 30);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('STEM Circuit Board Science Kit', 'Electronics exploration circuit builder maze learning toy.', 'default.png', 25, 45.0, 15.0, 38.25, 30);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Solar Robot Science Kit 12-in-1', 'Educational solar powered building robot toys for kids.', 'default.png', 40, 29.0, 5.0, 27.55, 30);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Volcano Eruption Science Lab', 'Build a volcano and make it erupt chemistry science kit.', 'default.png', 50, 19.0, 12.0, 16.72, 30);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Human Body Anatomy Model 3D', 'Removable organs skeletal assembly human torso puzzle model.', 'default.png', 35, 24.0, 10.0, 21.6, 30);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Interactive Globe 2-in-1 World & Constellation', 'Illuminated LED night view constellation world globe.', 'default.png', 20, 59.0, 20.0, 47.2, 30);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Magnetic Wooden Math Numbers Puzzle', 'Counting matching shape sorter educational math board.', 'default.png', 60, 18.0, 5.0, 17.1, 30);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Crystal Growing Science Experiment', 'Fast growing colorful crystal cluster lab kit.', 'default.png', 45, 22.0, 10.0, 19.8, 30);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Coding Robot Toy for Kids', 'Screen-free beginner coding logic puzzle trail robot.', 'default.png', 18, 69.0, 15.0, 58.65, 30);
+INSERT INTO product (name, description, image, quantity, price, discount, special_price, category_id) VALUES ('Dinosaur Fossil Dig Kit', 'Real paleontology dig out 12 dinosaur skeleton fossils.', 'default.png', 55, 27.0, 8.0, 24.84, 30);
