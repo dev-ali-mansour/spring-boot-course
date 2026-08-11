@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 
 @RestController
 @RequestMapping("/api")
@@ -48,4 +49,11 @@ class ProductController(private val productService: ProductService) {
     @DeleteMapping("/admin/products/{id}")
     fun deleteProduct(@PathVariable id: Long): ResponseEntity<ProductDTO> =
         ResponseEntity(productService.deleteProduct(id), HttpStatus.OK)
+
+    @PutMapping("/admin/products/{id}/image")
+    fun updateProductImage(
+        @PathVariable id: Long,
+        @RequestParam("image") image: MultipartFile,
+    ): ResponseEntity<ProductDTO> =
+        ResponseEntity(productService.updateProductImage(id, image), HttpStatus.OK)
 }
