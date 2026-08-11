@@ -6,6 +6,9 @@ import dev.alimansour.sbecom.payload.CategoryDTO
 import dev.alimansour.sbecom.payload.CategoryResponse
 import dev.alimansour.sbecom.service.CategoryService
 import jakarta.validation.Valid
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -16,11 +19,14 @@ class CategoryController(private val categoryService: CategoryService) {
 
     @GetMapping("/public/categories")
     fun getCategories(
-        @RequestParam(value = "page", defaultValue = AppConstants.PAGE_NUMBER, required = false) page: Int,
-        @RequestParam(value = "size", defaultValue = AppConstants.PAGE_SIZE, required = false) size: Int,
-        @RequestParam(value = "sort", defaultValue = AppConstants.SORT_CATEGORIES, required = false) sort: String,
+        @PageableDefault(
+            page = AppConstants.PAGE_NUMBER,
+            size = AppConstants.PAGE_SIZE,
+            sort = [AppConstants.SORT_BY],
+            direction = Sort.Direction.ASC
+        ) pageable: Pageable,
     ): ResponseEntity<CategoryResponse> {
-        val response = categoryService.getCategories(page, size, sort)
+        val response = categoryService.getCategories(pageable)
         return ResponseEntity(response, HttpStatus.OK)
     }
 

@@ -7,27 +7,14 @@ import dev.alimansour.sbecom.mapper.toEntity
 import dev.alimansour.sbecom.payload.CategoryDTO
 import dev.alimansour.sbecom.payload.CategoryResponse
 import dev.alimansour.sbecom.repository.CategoryRepository
-import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Sort
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 @Service
 class CategoryServiceImpl(private val categoryRepository: CategoryRepository) : CategoryService {
 
-    override fun getCategories(page: Int, size: Int, sort: String): CategoryResponse {
-        val parts = sort.split(",")
-        val sortField = parts[0]
-        val sortOrder = when {
-            parts.size > 1 && parts[1].equals("desc", ignoreCase = true) -> {
-                Sort.by(sortField).descending()
-            }
-
-            else -> {
-                Sort.by(sortField).ascending()
-            }
-        }
-        val pageDetails = PageRequest.of(page, size, sortOrder)
-        val page = categoryRepository.findAll(pageDetails)
+    override fun getCategories(pageable: Pageable): CategoryResponse {
+        val page = categoryRepository.findAll(pageable)
         val categories = page.content.map { it.toDTO() }
         if (categories.isEmpty()) {
             throw APIException("No category created till now.")
