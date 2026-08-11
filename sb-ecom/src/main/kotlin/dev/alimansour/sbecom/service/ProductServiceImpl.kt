@@ -68,6 +68,15 @@ class ProductServiceImpl(
         return savedProduct.toDTO()
     }
 
+    override fun deleteProduct(id: Long): ProductDTO {
+        val product = productRepository.findById(id).orElseThrow {
+            ResourceNotFoundException(resourceName = "Product", field = "id", fieldId = id)
+        }
+
+        productRepository.delete(product)
+        return product.toDTO()
+    }
+
     private fun Product.calculateSpecialPrice(): Double =
         price * (1 - discount * 0.01) //price - ((discount * 0.01) * price)
 }

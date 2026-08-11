@@ -9,4 +9,5 @@ interface ProductService {
     fun searchByCategory(categoryId: Long): ProductResponse
     fun searchByKeyword(keyword: String): ProductResponse
     fun updateProduct(id: Long, productDTO: ProductDTO): ProductDTO
+    fun deleteProduct(id: Long): ProductDTO
 }

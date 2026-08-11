@@ -44,4 +44,8 @@ class ProductController(private val productService: ProductService) {
         }
         return ResponseEntity(productService.updateProduct(id, productDTO), HttpStatus.OK)
     }
+
+    @DeleteMapping("/admin/products/{id}")
+    fun deleteProduct(@PathVariable id: Long): ResponseEntity<ProductDTO> =
+        ResponseEntity(productService.deleteProduct(id), HttpStatus.OK)
 }
