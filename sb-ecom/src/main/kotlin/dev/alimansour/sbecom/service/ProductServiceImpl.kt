@@ -2,6 +2,7 @@ package dev.alimansour.sbecom.service
 
 import dev.alimansour.sbecom.exception.ResourceNotFoundException
 import dev.alimansour.sbecom.mapper.toDTO
+import dev.alimansour.sbecom.mapper.toEntity
 import dev.alimansour.sbecom.model.Product
 import dev.alimansour.sbecom.payload.ProductDTO
 import dev.alimansour.sbecom.payload.ProductResponse
@@ -16,15 +17,17 @@ class ProductServiceImpl(
 ) : ProductService {
     override fun addProduct(
         categoryId: Long,
-        product: Product
+        productDTO: ProductDTO
     ): ProductDTO {
         val category = categoryRepository.findById(categoryId)
             .orElseThrow { ResourceNotFoundException(resourceName = "Category", field = "id", fieldId = categoryId) }
 
-        product.image = "default.png"
-        product.category = category
-        val specialPrice = product.price - ((product.discount * 0.01) * product.price)
-        product.specialPrice = specialPrice
+        val product = productDTO.toEntity().apply {
+            this.image = "default.png"
+            this.category = category
+            this.specialPrice = calculateSpecialPrice()
+        }
+
         val savedProduct = productRepository.save(product)
         return savedProduct.toDTO()
     }
@@ -49,4 +52,22 @@ class ProductServiceImpl(
             .map { it.toDTO() }
         return ProductResponse(content = products)
     }
+
+    override fun updateProduct(id: Long, productDTO: ProductDTO): ProductDTO {
+        val existedProduct = productRepository.findById(id).orElseThrow {
+            ResourceNotFoundException(resourceName = "Product", field = "id", fieldId = id)
+        }
+
+        val product = productDTO.toEntity().apply {
+            this.id = id
+            this.image = existedProduct.image
+            this.specialPrice = calculateSpecialPrice()
+        }
+
+        val savedProduct = productRepository.save(product)
+        return savedProduct.toDTO()
+    }
+
+    private fun Product.calculateSpecialPrice(): Double =
+        price * (1 - discount * 0.01) //price - ((discount * 0.01) * price)
 }

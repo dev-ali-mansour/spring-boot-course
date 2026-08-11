@@ -1,6 +1,6 @@
 package dev.alimansour.sbecom.controller
 
-import dev.alimansour.sbecom.model.Product
+import dev.alimansour.sbecom.exception.APIException
 import dev.alimansour.sbecom.payload.ProductDTO
 import dev.alimansour.sbecom.payload.ProductResponse
 import dev.alimansour.sbecom.service.ProductService
@@ -15,8 +15,8 @@ class ProductController(private val productService: ProductService) {
 
     @PostMapping("/admin/categories/{categoryId}/product")
     fun addProduct(
-        @Validated @RequestBody product: Product,
-        @PathVariable categoryId: Long
+        @PathVariable categoryId: Long,
+        @Validated @RequestBody product: ProductDTO,
     ): ResponseEntity<ProductDTO> {
         val productDTO = productService.addProduct(categoryId, product)
         return ResponseEntity(productDTO, HttpStatus.CREATED)
@@ -33,4 +33,15 @@ class ProductController(private val productService: ProductService) {
     @GetMapping("/public/products/keyword/{keyword}")
     fun getProductsByKeyword(@PathVariable keyword: String): ResponseEntity<ProductResponse> =
         ResponseEntity(productService.searchByKeyword(keyword), HttpStatus.OK)
+
+    @PutMapping("/admin/products/{id}")
+    fun updateProduct(
+        @PathVariable id: Long,
+        @Validated @RequestBody productDTO: ProductDTO
+    ): ResponseEntity<ProductDTO> {
+        if (productDTO.id != null && productDTO.id != id) {
+            throw APIException(message = "Resource ID mismatch: URL path specifies id $id, but the request body contains ${productDTO.id}")
+        }
+        return ResponseEntity(productService.updateProduct(id, productDTO), HttpStatus.OK)
+    }
 }
