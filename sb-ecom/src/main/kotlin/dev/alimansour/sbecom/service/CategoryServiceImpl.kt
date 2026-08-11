@@ -16,9 +16,7 @@ class CategoryServiceImpl(private val categoryRepository: CategoryRepository) : 
     override fun getCategories(pageable: Pageable): CategoryResponse {
         val page = categoryRepository.findAll(pageable)
         val categories = page.content.map { it.toDTO() }
-        if (categories.isEmpty()) {
-            throw APIException("No category created till now.")
-        }
+
         return CategoryResponse(
             content = categories,
             pageNumber = page.number,

@@ -44,7 +44,7 @@ class ProductController(private val productService: ProductService) {
         @PageableDefault(
             page = AppConstants.PAGE_NUMBER,
             size = AppConstants.PAGE_SIZE,
-            sort = [AppConstants.SORT_BY],
+            sort = ["price"],
             direction = Sort.Direction.ASC
         ) pageable: Pageable,
     ): ResponseEntity<ProductResponse> =

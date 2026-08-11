@@ -52,10 +52,6 @@ class ProductServiceImpl(
         val page = productRepository.findAll(pageable)
         val products = page.content.map { it.toDTO() }
 
-        if (products.isEmpty()) {
-            throw APIException("No product exists!")
-        }
-
         return ProductResponse(
             content = products,
             pageNumber = page.number,
@@ -73,10 +69,6 @@ class ProductServiceImpl(
         val page = productRepository.findByCategory(category, pageable)
         val products = page.content.map { it.toDTO() }
 
-        if (products.isEmpty()) {
-            throw APIException("No product exist!")
-        }
-
         return ProductResponse(
             content = products,
             pageNumber = page.number,
@@ -90,10 +82,6 @@ class ProductServiceImpl(
     override fun searchByKeyword(keyword: String, pageable: Pageable): ProductResponse {
         val page = productRepository.findByNameLikeIgnoreCase("%$keyword%", pageable)
         val products = page.content.map { it.toDTO() }
-
-        if (products.isEmpty()) {
-            throw APIException("No product exist!")
-        }
 
         return ProductResponse(
             content = products,
