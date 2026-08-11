@@ -7,13 +7,13 @@ class Product(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
-    var name: String = "",
-    var image: String = "",
-    var description: String = "",
-    var quantity: Int = 0,
-    var price: Double = 0.0,
-    var discount: Double = 0.0,
-    var specialPrice: Double = 0.0,
+    var name: String,
+    var image: String,
+    var description: String,
+    var quantity: Int,
+    var price: Double,
+    var discount: Double,
+    var specialPrice: Double,
 ) {
 
     @ManyToOne

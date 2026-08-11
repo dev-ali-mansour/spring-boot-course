@@ -15,5 +15,5 @@ class Category(
 
     @NotBlank(message = "Name cannot be blank")
     @Size(min = 5, message = "Category name must be at least 5 characters")
-    var name: String = "",
+    var name: String,
 )
