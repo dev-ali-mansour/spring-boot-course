@@ -18,12 +18,22 @@ import org.springframework.security.web.SecurityFilterChain
 class SecurityConfig {
     @Bean
     fun defaultSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
-        http.authorizeHttpRequests { requests -> requests.anyRequest().authenticated() }
+        http.authorizeHttpRequests { requests ->
+            requests
+                .requestMatchers("/h2-console/**").permitAll()
+                .anyRequest().authenticated()
+        }
         http.sessionManagement { session ->
             session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         }
 //        http.formLogin(withDefaults())
         http.httpBasic(withDefaults())
+        http.headers { headers ->
+            headers.frameOptions { frameOptions ->
+                frameOptions.sameOrigin()
+            }
+        }
+        http.csrf { csrf -> csrf.disable() }
         return http.build()
     }
 
