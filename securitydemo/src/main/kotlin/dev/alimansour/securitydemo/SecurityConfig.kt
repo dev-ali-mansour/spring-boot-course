@@ -10,12 +10,14 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.provisioning.InMemoryUserDetailsManager
+import org.springframework.security.provisioning.JdbcUserDetailsManager
 import org.springframework.security.web.SecurityFilterChain
+import javax.sql.DataSource
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-class SecurityConfig {
+class SecurityConfig(private val dataSource: DataSource) {
     @Bean
     fun defaultSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http.authorizeHttpRequests { requests ->
@@ -47,6 +49,10 @@ class SecurityConfig {
             .password("{noop}adminPass")
             .roles("ADMIN")
             .build()
-        return InMemoryUserDetailsManager(user1, admin)
+        val userDetailsManager = JdbcUserDetailsManager(dataSource)
+        userDetailsManager.createUser(user1)
+        userDetailsManager.createUser(admin)
+        return userDetailsManager
+//        return InMemoryUserDetailsManager(user1, admin)
     }
 }
