@@ -16,13 +16,12 @@ import org.springframework.web.multipart.MultipartFile
 
 @Service
 class ProductServiceImpl(
+    @Value("\${project.images.path}")
+    private val path: String,
     private val productRepository: ProductRepository,
     private val categoryRepository: CategoryRepository,
     private val fileService: FileService,
 ) : ProductService {
-    @Value("\${project.images.path}")
-    lateinit var path: String
-
     override fun addProduct(
         categoryId: Long,
         productDTO: ProductDTO
