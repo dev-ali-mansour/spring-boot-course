@@ -2,7 +2,6 @@ package dev.alimansour.securitydemo
 
 import dev.alimansour.securitydemo.jwt.AuthEntryPointJwt
 import dev.alimansour.securitydemo.jwt.AuthTokenFilter
-import dev.alimansour.securitydemo.jwt.JwtUtils
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -27,16 +26,14 @@ import javax.sql.DataSource
 @EnableMethodSecurity
 class SecurityConfig(
     private val dataSource: DataSource,
-    private val jwtUtils: JwtUtils,
     private val unauthorizedHandler: AuthEntryPointJwt,
 ) {
 
     @Bean
-    fun authenticationJwtTokenFilter(): AuthTokenFilter =
-        AuthTokenFilter(jwtUtils, userDetailsService())
-
-    @Bean
-    fun defaultSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
+    fun defaultSecurityFilterChain(
+        http: HttpSecurity,
+        authTokenFilter: AuthTokenFilter
+    ): SecurityFilterChain {
         http.authorizeHttpRequests { requests ->
             requests
                 .requestMatchers("/h2-console/**").permitAll()
@@ -59,7 +56,7 @@ class SecurityConfig(
         http.csrf { csrf -> csrf.disable() }
 
         http.addFilterBefore(
-            authenticationJwtTokenFilter(),
+            authTokenFilter,
             UsernamePasswordAuthenticationFilter::class.java
         )
         return http.build()
