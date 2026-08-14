@@ -1,5 +1,6 @@
 package dev.alimansour.sbecom.security.jwt
 
+import dev.alimansour.sbecom.security.service.UserDetailsImpl
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.MalformedJwtException
@@ -10,21 +11,26 @@ import jakarta.servlet.http.HttpServletRequest
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.http.ResponseCookie
 import org.springframework.stereotype.Component
+import org.springframework.web.util.WebUtils
 import java.security.Key
 import java.util.*
 import javax.crypto.SecretKey
 
 @Component
 class JwtUtils(
-    @Value($$"${spring.app.jwt.secret}")
+    @Value("\${spring.app.jwt.secret}")
     private val jwtSecret: String,
 
-    @Value($$"${spring.app.jwt.expirationMs}")
-    private val jwtExpirationMs: Long
+    @Value("\${spring.app.jwt.expirationMs}")
+    private val jwtExpirationMs: Long,
+
+    @Value("\${spring.app.jwt.cookieName}")
+    private val jwtCookie: String
 ) {
 
+    @Deprecated("Use getJwtFromCookies() instead")
     fun getJwtFromHeader(request: HttpServletRequest): String? {
         val bearerToken = request.getHeader("Authorization")
         logger.debug("Authorization Header: {}", bearerToken)
@@ -34,10 +40,29 @@ class JwtUtils(
         return null
     }
 
-    fun generateTokenFromUsername(userDetails: UserDetails): String {
-        val username = userDetails.username
-        return Jwts.builder().subject(username).issuedAt(Date())
-            .expiration(Date(System.currentTimeMillis() + jwtExpirationMs)).signWith(key()).compact()
+    fun getJwtFromCookies(request: HttpServletRequest): String? {
+        val cookie = WebUtils.getCookie(request, jwtCookie) ?: return null
+        println("COOKIE: ${cookie.value}")
+        return cookie.value
+    }
+
+    fun generateJwtCookie(userDetails: UserDetailsImpl): ResponseCookie {
+        val jwt = generateTokenFromUsername(userDetails.username)
+        return ResponseCookie.from(jwtCookie, jwt)
+            .path("/api")
+            .maxAge(24 * 60 * 60 * 1000)
+            .httpOnly(false)
+            .build()
+    }
+
+    fun generateTokenFromUsername(username: String): String {
+        return Jwts
+            .builder()
+            .subject(username)
+            .issuedAt(Date())
+            .expiration(Date(System.currentTimeMillis() + jwtExpirationMs))
+            .signWith(key())
+            .compact()
     }
 
     fun getUsernameFromJwtToken(token: String): String =
