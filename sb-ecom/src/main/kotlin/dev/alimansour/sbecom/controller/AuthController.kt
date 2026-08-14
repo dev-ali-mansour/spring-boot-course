@@ -130,4 +130,20 @@ class AuthController(
     @GetMapping("/username")
     fun currentUsername(authentication: Authentication?): String =
         authentication?.name.orEmpty()
+
+    @GetMapping("/user")
+    fun getUserDetails(authentication: Authentication?): ResponseEntity<UserInfoResponse> {
+        val userDetails: UserDetailsImpl = authentication?.principal as UserDetailsImpl
+        val roles: List<String> = userDetails.authorities.stream()
+            .map { item -> item.authority.orEmpty() }
+            .collect(Collectors.toList())
+
+        val response = UserInfoResponse(
+            id = userDetails.id,
+            username = userDetails.username,
+            roles = roles
+        )
+
+        return ResponseEntity.ok().body(response)
+    }
 }
