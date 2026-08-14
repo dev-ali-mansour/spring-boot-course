@@ -42,7 +42,6 @@ class JwtUtils(
 
     fun getJwtFromCookies(request: HttpServletRequest): String? {
         val cookie = WebUtils.getCookie(request, jwtCookie) ?: return null
-        println("COOKIE: ${cookie.value}")
         return cookie.value
     }
 
