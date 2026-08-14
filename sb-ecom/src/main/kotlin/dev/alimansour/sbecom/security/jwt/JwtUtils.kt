@@ -54,6 +54,13 @@ class JwtUtils(
             .build()
     }
 
+
+    fun getCleanJwtCookie(): ResponseCookie {
+        return ResponseCookie.from(jwtCookie, null)
+            .path("/api")
+            .build()
+    }
+
     fun generateTokenFromUsername(username: String): String {
         return Jwts
             .builder()
