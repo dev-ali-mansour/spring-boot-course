@@ -11,7 +11,9 @@ import dev.alimansour.sbecom.security.request.SignUpRequest
 import dev.alimansour.sbecom.security.response.MessageResponse
 import dev.alimansour.sbecom.security.response.UserInfoResponse
 import dev.alimansour.sbecom.security.service.UserDetailsImpl
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseCookie
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -55,14 +57,21 @@ class AuthController(
 
         SecurityContextHolder.getContext().authentication = authentication
         val userDetails: UserDetailsImpl = authentication.principal as UserDetailsImpl
-        val jwtToken = jwtUtils.generateTokenFromUsername(userDetails)
+        val jwtCookie: ResponseCookie = jwtUtils.generateJwtCookie(userDetails)
         val roles: List<String> = userDetails.authorities.stream()
             .map { item -> item.authority.orEmpty() }
             .collect(Collectors.toList())
 
-        val response = UserInfoResponse(id = userDetails.id, jwtToken, userDetails.username, roles)
+        val response = UserInfoResponse(
+            id = userDetails.id,
+            jwtToken = jwtCookie.value,
+            username = userDetails.username,
+            roles = roles
+        )
 
-        return ResponseEntity.ok(response)
+        return ResponseEntity.ok()
+            .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+            .body(response)
     }
 
     @PostMapping("/signup")
