@@ -48,7 +48,7 @@ class AuthTokenFilter(
     }
 
     private fun parseJwt(request: HttpServletRequest): String? {
-        val jwt = jwtUtils.getJwtFromHeader(request)
+        val jwt = jwtUtils.getJwtFromCookies(request)
         Companion.logger.debug("AuthTokenFilter.kt: {}", jwt)
         return jwt
     }
