@@ -31,7 +31,7 @@ INSERT INTO categories (name) VALUES ('Party Supplies');
 INSERT INTO categories (name) VALUES ('Educational Toys');
 
 -- Products (10 per category)
-/*
+
 -- Category 1: Mens T-Shirts
 INSERT INTO products (name, description, image, quantity, price, discount, special_price, category_id, seller_id) VALUES ('Classic Cotton Crewneck', 'Premium 100% combed cotton crewneck t-shirt.', 'default.png', 50, 25.0, 10.0, 22.5, 1, 2);
 INSERT INTO products (name, description, image, quantity, price, discount, special_price, category_id, seller_id) VALUES ('Slim Fit V-Neck Tee', 'Modern slim fit v-neck cotton t-shirt.', 'default.png', 40, 28.0, 15.0, 23.8, 1, 2);
@@ -391,4 +391,3 @@ INSERT INTO products (name, description, image, quantity, price, discount, speci
 INSERT INTO products (name, description, image, quantity, price, discount, special_price, category_id, seller_id) VALUES ('Crystal Growing Science Experiment', 'Fast growing colorful crystal cluster lab kit.', 'default.png', 45, 22.0, 10.0, 19.8, 30, 2);
 INSERT INTO products (name, description, image, quantity, price, discount, special_price, category_id, seller_id) VALUES ('Coding Robot Toy for Kids', 'Screen-free beginner coding logic puzzle trail robot.', 'default.png', 18, 69.0, 15.0, 58.65, 30, 2);
 INSERT INTO products (name, description, image, quantity, price, discount, special_price, category_id, seller_id) VALUES ('Dinosaur Fossil Dig Kit', 'Real paleontology dig out 12 dinosaur skeleton fossils.', 'default.png', 55, 27.0, 8.0, 24.84, 30, 2);
- */

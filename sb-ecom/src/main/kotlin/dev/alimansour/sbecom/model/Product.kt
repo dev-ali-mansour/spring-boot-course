@@ -23,6 +23,12 @@ class Product(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seller_id")
     var user: User? = null,
+
+    @OneToMany(
+        mappedBy = "product",
+        cascade = [CascadeType.PERSIST, CascadeType.MERGE]
+    )
+    var cartItems: MutableList<CartItem> = mutableListOf(),
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

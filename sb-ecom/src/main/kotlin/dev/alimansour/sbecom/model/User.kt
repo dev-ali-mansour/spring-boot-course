@@ -43,6 +43,13 @@ class User(
         orphanRemoval = true
     )
     var products: MutableSet<Product> = mutableSetOf(),
+
+    @OneToOne(
+        mappedBy = "user",
+        cascade = [CascadeType.PERSIST, CascadeType.MERGE],
+        orphanRemoval = true
+    )
+    val cart: Cart? = null,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
