@@ -5,6 +5,7 @@ import dev.alimansour.sbecom.exception.ResourceNotFoundException
 import dev.alimansour.sbecom.mapper.toDTO
 import dev.alimansour.sbecom.model.Cart
 import dev.alimansour.sbecom.model.CartItem
+import dev.alimansour.sbecom.model.Product
 import dev.alimansour.sbecom.payload.CartDTO
 import dev.alimansour.sbecom.repository.CartItemRepository
 import dev.alimansour.sbecom.repository.CartRepository
@@ -85,41 +86,65 @@ class CartServiceImpl(
         val product = productRepository.findById(productId)
             .orElseThrow { ResourceNotFoundException(resourceName = "Product", field = "id", fieldId = productId) }
 
-        cartItemRepository.findCartItemByProductIdAndCartId(userCart.id!!, productId)?.let { cartItem ->
-            val newQuantity = cartItem.quantity + quantity
+        val cartItem = cartItemRepository.findCartItemByProductIdAndCartId(userCart.id!!, productId)
+            ?: throw APIException("Product ${product.name} does not exist in the cart!")
 
-            if (quantity > 0) {
-                if (product.quantity == 0) {
-                    throw APIException("Product ${product.name} is not available!")
-                }
-                if (newQuantity > product.quantity) {
-                    throw APIException(
-                        "Please make an order of ${product.name} " +
-                                "less than or equal to the quantity ${product.quantity}!"
-                    )
-                }
+        val newQuantity = cartItem.quantity + quantity
+
+        if (quantity > 0) {
+            if (product.quantity == 0) {
+                throw APIException("Product ${product.name} is not available!")
             }
-
-            if (newQuantity < 0) {
-                throw APIException("Cannot reduce quantity below zero!")
+            if (newQuantity > product.quantity) {
+                throw APIException(
+                    "Please make an order of ${product.name} " +
+                            "less than or equal to the quantity ${product.quantity}!"
+                )
             }
-
-            if (newQuantity == 0) {
-                cartItemRepository.deleteById(cartItem.id!!)
-                userCart.cartItems.removeIf { it.id == cartItem.id }
-            } else {
-                cartItem.price = product.specialPrice
-                cartItem.quantity = newQuantity
-                cartItem.discount = product.discount
-                cartItemRepository.save(cartItem)
-            }
-
-            userCart.totalPrice = userCart.cartItems.sumOf { it.price * it.quantity }
-            val updatedCart = cartRepository.save(userCart)
-            return updatedCart.toDTO()
         }
 
-        throw APIException("Product ${product.name} does not exist in the cart!")
+        if (newQuantity < 0) {
+            throw APIException("Cannot reduce quantity below zero!")
+        }
+
+        val updatedCart = userCart.updateItemQuantity(
+            cartItem = cartItem,
+            product = product,
+            newQuantity = newQuantity
+        )
+        return updatedCart.toDTO()
+    }
+
+    @Transactional
+    override fun deleteProductFromCart(productId: Long): String {
+        val userId = authUtil.loggedInUserId()
+        val userCart = cartRepository.findCartByUserId(userId)
+            ?: throw ResourceNotFoundException(resourceName = "Cart", field = "userId", fieldId = userId)
+
+        val product = productRepository.findById(productId)
+            .orElseThrow { ResourceNotFoundException(resourceName = "Product", field = "id", fieldId = productId) }
+
+        val cartItem = cartItemRepository.findCartItemByProductIdAndCartId(userCart.id!!, productId)
+            ?: throw APIException("Product ${product.name} does not exist in the cart!")
+
+        userCart.updateItemQuantity(cartItem = cartItem, product = product, newQuantity = 0)
+
+        return "Product ${product.name} has been removed from the cart!"
+    }
+
+    private fun Cart.updateItemQuantity(cartItem: CartItem, product: Product, newQuantity: Int): Cart {
+        if (newQuantity == 0) {
+            cartItemRepository.deleteById(cartItem.id!!)
+            cartItems.removeIf { it.id == cartItem.id }
+        } else {
+            cartItem.price = product.specialPrice
+            cartItem.quantity = newQuantity
+            cartItem.discount = product.discount
+            cartItemRepository.save(cartItem)
+        }
+
+        totalPrice = cartItems.sumOf { it.price * it.quantity }
+        return cartRepository.save(this)
     }
 
     private fun createCart(): Cart {

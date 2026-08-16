@@ -7,4 +7,5 @@ interface CartService {
     fun getAllCarts(): List<CartDTO>
     fun getUserCart(): CartDTO
     fun updateProductQuantityInCart(productId: Long, quantity: Int): CartDTO
+    fun deleteProductFromCart(productId: Long): String
 }

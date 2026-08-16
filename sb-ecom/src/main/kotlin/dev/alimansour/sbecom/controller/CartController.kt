@@ -37,4 +37,10 @@ class CartController(private val cartService: CartService) {
         )
         return ResponseEntity(cartDTO, HttpStatus.OK)
     }
+
+    @DeleteMapping("/carts/products/{productId}")
+    fun deleteProductFromCart(@PathVariable productId: Long): ResponseEntity<String> {
+        val status = cartService.deleteProductFromCart(productId)
+        return ResponseEntity(status, HttpStatus.OK)
+    }
 }
