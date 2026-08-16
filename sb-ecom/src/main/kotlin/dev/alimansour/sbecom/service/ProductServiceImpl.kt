@@ -18,8 +18,7 @@ import org.springframework.web.multipart.MultipartFile
 
 @Service
 class ProductServiceImpl(
-    @Value("\${project.images.path}")
-    private val path: String,
+    @Value("\${project.images.path}") private val path: String,
     private val productRepository: ProductRepository,
     private val categoryRepository: CategoryRepository,
     private val cartRepository: CartRepository,
@@ -27,13 +26,11 @@ class ProductServiceImpl(
     private val fileService: FileService,
 ) : ProductService {
     override fun addProduct(
-        categoryId: Long,
-        productDTO: ProductDTO
+        categoryId: Long, productDTO: ProductDTO
     ): ProductDTO {
-        val category = categoryRepository.findById(categoryId)
-            .orElseThrow {
-                ResourceNotFoundException(resourceName = "Category", field = "id", fieldId = categoryId)
-            }
+        val category = categoryRepository.findById(categoryId).orElseThrow {
+            ResourceNotFoundException(resourceName = "Category", field = "id", fieldId = categoryId)
+        }
 
         category.products.forEach { product ->
             if (product.name.equals(productDTO.name, ignoreCase = true)) {
@@ -123,6 +120,8 @@ class ProductServiceImpl(
         val product = productRepository.findById(id).orElseThrow {
             ResourceNotFoundException(resourceName = "Product", field = "id", fieldId = id)
         }
+
+        cartService.deleteProductFromAllCarts(productId = id)
 
         productRepository.delete(product)
         return product.toDTO()

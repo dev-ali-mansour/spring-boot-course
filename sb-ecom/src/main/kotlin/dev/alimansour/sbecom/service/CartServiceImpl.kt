@@ -133,6 +133,22 @@ class CartServiceImpl(
     }
 
     @Transactional
+    override fun deleteProductFromAllCarts(productId: Long) {
+        val carts = cartRepository.findCartByProductId(productId)
+        if (carts.isEmpty()) return
+
+        val product = productRepository.findById(productId)
+            .orElseThrow { ResourceNotFoundException(resourceName = "Product", field = "id", fieldId = productId) }
+
+        carts.forEach { cart ->
+            val cartItem = cart.cartItems.find { it.product?.id == productId }
+            cartItem?.let { item ->
+                cart.updateItemQuantity(cartItem = item, product = product, newQuantity = 0)
+            }
+        }
+    }
+
+    @Transactional
     override fun updateProductInCarts(cartId: Long, productId: Long) {
         val cart = cartRepository.findById(cartId)
             .orElseThrow { ResourceNotFoundException(resourceName = "Cart", field = "id", fieldId = cartId) }
@@ -146,7 +162,7 @@ class CartServiceImpl(
         val oldItemPrice = cartItem.price * cartItem.quantity
         cartItem.price = product.specialPrice
         val newItemPrice = cartItem.price * cartItem.quantity
-        
+
         cart.totalPrice += (newItemPrice - oldItemPrice)
 
         cartItemRepository.save(cartItem)
