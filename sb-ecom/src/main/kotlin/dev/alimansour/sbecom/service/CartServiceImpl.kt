@@ -53,22 +53,12 @@ class CartServiceImpl(
         )
 
         cartItemRepository.save(newCartItem)
+        cart.cartItems.add(newCartItem)
 
-        // The product.specialPrice maps to the item's price
         cart.totalPrice += (product.specialPrice * quantity)
         val updatedCart = cartRepository.save(cart)
 
-        // Manual Mapping to CartDTO (since CartMapper is removed)
-        val productDTOs = updatedCart.cartItems.map { item ->
-            // Map the product to ProductDTO and override the quantity with the CartItem's quantity
-            item.product!!.toDTO().copy(quantity = item.quantity)
-        }
-
-        return CartDTO(
-            id = updatedCart.id,
-            totalPrice = updatedCart.totalPrice,
-            products = productDTOs
-        )
+        return updatedCart.toDTO()
     }
 
     private fun createCart(): Cart {
