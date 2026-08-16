@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api")
-class CartController (private val cartService: CartService){
+class CartController(private val cartService: CartService) {
     @PostMapping("/carts/products/{productId}/quantity/{quantity}")
     fun addProductToCart(
         @PathVariable productId: Long,
@@ -21,4 +21,8 @@ class CartController (private val cartService: CartService){
     @GetMapping("/carts")
     fun getCarts(): ResponseEntity<List<CartDTO>> =
         ResponseEntity(cartService.getAllCarts(), HttpStatus.OK)
+
+    @GetMapping("/carts/users/cart")
+    fun getUserCart(): ResponseEntity<CartDTO> =
+        ResponseEntity(cartService.getUserCart(), HttpStatus.OK)
 }

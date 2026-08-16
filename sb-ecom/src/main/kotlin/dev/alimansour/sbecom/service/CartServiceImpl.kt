@@ -64,6 +64,14 @@ class CartServiceImpl(
     override fun getAllCarts(): List<CartDTO> =
         cartRepository.findAll().map { it.toDTO() }
 
+    override fun getUserCart(): CartDTO {
+        val email = authUtil.loggedInEmail()
+        val userCart = cartRepository.findCartByEmail(email)
+            ?: throw ResourceNotFoundException("Cart", "email", email)
+
+        return userCart.toDTO()
+    }
+
     private fun createCart(): Cart {
         cartRepository.findCartByEmail(authUtil.loggedInEmail())?.let { userCart ->
             return userCart
