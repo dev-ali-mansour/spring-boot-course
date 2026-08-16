@@ -25,4 +25,16 @@ class CartController(private val cartService: CartService) {
     @GetMapping("/carts/users/cart")
     fun getUserCart(): ResponseEntity<CartDTO> =
         ResponseEntity(cartService.getUserCart(), HttpStatus.OK)
+
+    @PutMapping("/carts/products/{productId}/quantity/{operation}")
+    fun updateCartProduct(
+        @PathVariable productId: Long,
+        @PathVariable operation: String
+    ): ResponseEntity<CartDTO> {
+        val cartDTO: CartDTO = cartService.updateProductQuantityInCart(
+            productId = productId,
+            quantity = if (operation.equals("delete", ignoreCase = true)) -1 else 1
+        )
+        return ResponseEntity(cartDTO, HttpStatus.OK)
+    }
 }

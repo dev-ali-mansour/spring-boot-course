@@ -10,6 +10,7 @@ import dev.alimansour.sbecom.repository.CartItemRepository
 import dev.alimansour.sbecom.repository.CartRepository
 import dev.alimansour.sbecom.repository.ProductRepository
 import dev.alimansour.sbecom.util.AuthUtil
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
 @Service
@@ -67,9 +68,58 @@ class CartServiceImpl(
     override fun getUserCart(): CartDTO {
         val userId = authUtil.loggedInUserId()
         val userCart = cartRepository.findCartByUserId(userId)
-            ?: throw ResourceNotFoundException("Cart", "userId", userId)
+            ?: throw ResourceNotFoundException(resourceName = "Cart", field = "userId", fieldId = userId)
 
         return userCart.toDTO()
+    }
+
+    @Transactional
+    override fun updateProductQuantityInCart(
+        productId: Long,
+        quantity: Int
+    ): CartDTO {
+        val userId = authUtil.loggedInUserId()
+        val userCart = cartRepository.findCartByUserId(userId)
+            ?: throw ResourceNotFoundException(resourceName = "Cart", field = "userId", fieldId = userId)
+
+        val product = productRepository.findById(productId)
+            .orElseThrow { ResourceNotFoundException(resourceName = "Product", field = "id", fieldId = productId) }
+
+        cartItemRepository.findCartItemByProductIdAndCartId(userCart.id!!, productId)?.let { cartItem ->
+            val newQuantity = cartItem.quantity + quantity
+
+            if (quantity > 0) {
+                if (product.quantity == 0) {
+                    throw APIException("Product ${product.name} is not available!")
+                }
+                if (newQuantity > product.quantity) {
+                    throw APIException(
+                        "Please make an order of ${product.name} " +
+                                "less than or equal to the quantity ${product.quantity}!"
+                    )
+                }
+            }
+
+            if (newQuantity < 0) {
+                throw APIException("Cannot reduce quantity below zero!")
+            }
+
+            if (newQuantity == 0) {
+                cartItemRepository.deleteById(cartItem.id!!)
+                userCart.cartItems.removeIf { it.id == cartItem.id }
+            } else {
+                cartItem.price = product.specialPrice
+                cartItem.quantity = newQuantity
+                cartItem.discount = product.discount
+                cartItemRepository.save(cartItem)
+            }
+
+            userCart.totalPrice = userCart.cartItems.sumOf { it.price * it.quantity }
+            val updatedCart = cartRepository.save(userCart)
+            return updatedCart.toDTO()
+        }
+
+        throw APIException("Product ${product.name} does not exist in the cart!")
     }
 
     private fun createCart(): Cart {
