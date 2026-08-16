@@ -61,6 +61,9 @@ class CartServiceImpl(
         return updatedCart.toDTO()
     }
 
+    override fun getAllCarts(): List<CartDTO> =
+        cartRepository.findAll().map { it.toDTO() }
+
     private fun createCart(): Cart {
         cartRepository.findCartByEmail(authUtil.loggedInEmail())?.let { userCart ->
             return userCart

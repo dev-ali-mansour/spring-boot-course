@@ -4,10 +4,7 @@ import dev.alimansour.sbecom.payload.CartDTO
 import dev.alimansour.sbecom.service.CartService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api")
@@ -20,4 +17,8 @@ class CartController (private val cartService: CartService){
         val cartDTO = cartService.addProductToCart(productId, quantity)
         return ResponseEntity(cartDTO, HttpStatus.CREATED)
     }
+
+    @GetMapping("/carts")
+    fun getCarts(): ResponseEntity<List<CartDTO>> =
+        ResponseEntity(cartService.getAllCarts(), HttpStatus.OK)
 }
