@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface CartRepository : JpaRepository<Cart, Long> {
-    @Query("SELECT c FROM Cart c WHERE c.user.email= :email")
-    fun findCartByEmail(@Param("email") email: String): Cart?
+    @Query("SELECT c FROM Cart c WHERE c.user.id = :userId")
+    fun findCartByUserId(@Param("userId") userId: Long): Cart?
 }
