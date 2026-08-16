@@ -4,9 +4,11 @@ import dev.alimansour.sbecom.exception.APIException
 import dev.alimansour.sbecom.exception.ResourceNotFoundException
 import dev.alimansour.sbecom.mapper.toDTO
 import dev.alimansour.sbecom.mapper.toEntity
+import dev.alimansour.sbecom.model.Cart
 import dev.alimansour.sbecom.model.Product
 import dev.alimansour.sbecom.payload.ProductDTO
 import dev.alimansour.sbecom.payload.ProductResponse
+import dev.alimansour.sbecom.repository.CartRepository
 import dev.alimansour.sbecom.repository.CategoryRepository
 import dev.alimansour.sbecom.repository.ProductRepository
 import org.springframework.beans.factory.annotation.Value
@@ -20,6 +22,8 @@ class ProductServiceImpl(
     private val path: String,
     private val productRepository: ProductRepository,
     private val categoryRepository: CategoryRepository,
+    private val cartRepository: CartRepository,
+    private val cartService: CartService,
     private val fileService: FileService,
 ) : ProductService {
     override fun addProduct(
@@ -105,6 +109,13 @@ class ProductServiceImpl(
         }
 
         val updatedProduct = productRepository.save(product)
+        val carts: List<Cart> = cartRepository.findCartByProductId(product.id!!)
+        val cartDTOs = carts.map { it.toDTO() }
+
+        cartDTOs.forEach { cart ->
+            cartService.updateProductInCarts(cart.id!!, id)
+        }
+
         return updatedProduct.toDTO()
     }
 

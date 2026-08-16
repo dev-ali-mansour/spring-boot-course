@@ -10,4 +10,7 @@ import org.springframework.stereotype.Repository
 interface CartRepository : JpaRepository<Cart, Long> {
     @Query("SELECT c FROM Cart c WHERE c.user.id = :userId")
     fun findCartByUserId(@Param("userId") userId: Long): Cart?
+
+    @Query("SELECT c FROM Cart c JOIN FETCH c.cartItems ci JOIN FETCH ci.product p WHERE p.id = :id")
+    fun findCartByProductId(id: Long): List<Cart>
 }

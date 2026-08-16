@@ -132,6 +132,27 @@ class CartServiceImpl(
         return "Product ${product.name} has been removed from the cart!"
     }
 
+    @Transactional
+    override fun updateProductInCarts(cartId: Long, productId: Long) {
+        val cart = cartRepository.findById(cartId)
+            .orElseThrow { ResourceNotFoundException(resourceName = "Cart", field = "id", fieldId = cartId) }
+
+        val product = productRepository.findById(productId)
+            .orElseThrow { ResourceNotFoundException(resourceName = "Product", field = "id", fieldId = productId) }
+
+        val cartItem = cartItemRepository.findCartItemByProductIdAndCartId(cartId, productId)
+            ?: throw APIException("Product ${product.name} does not exist in the cart!")
+
+        val oldItemPrice = cartItem.price * cartItem.quantity
+        cartItem.price = product.specialPrice
+        val newItemPrice = cartItem.price * cartItem.quantity
+        
+        cart.totalPrice += (newItemPrice - oldItemPrice)
+
+        cartItemRepository.save(cartItem)
+        cartRepository.save(cart)
+    }
+
     private fun Cart.updateItemQuantity(cartItem: CartItem, product: Product, newQuantity: Int): Cart {
         if (newQuantity == 0) {
             cartItemRepository.deleteById(cartItem.id!!)
