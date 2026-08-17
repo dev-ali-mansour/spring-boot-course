@@ -8,4 +8,5 @@ interface AddressService {
     fun getAddressById(id: Long): AddressDTO
     fun getUserAddresses(): List<AddressDTO>
     fun updateAddress(id: Long, addressDTO: AddressDTO): AddressDTO
+    fun deleteAddress(id: Long): AddressDTO
 }

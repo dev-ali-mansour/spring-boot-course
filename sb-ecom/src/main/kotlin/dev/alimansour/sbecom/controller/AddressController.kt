@@ -48,4 +48,8 @@ class AddressController(private val addressService: AddressService) {
         val updatedAddress = addressService.updateAddress(id, addressDTO)
         return ResponseEntity(updatedAddress, HttpStatus.OK)
     }
+
+    @DeleteMapping("/addresses/{id}")
+    fun deleteAddress(@PathVariable id: Long): ResponseEntity<AddressDTO> =
+        ResponseEntity(addressService.deleteAddress(id), HttpStatus.OK)
 }

@@ -60,4 +60,12 @@ class AddressServiceImpl(
         }
         return updatedAddress.toDTO()
     }
+
+    override fun deleteAddress(id: Long): AddressDTO {
+        val address = addressRepository.findById(id)
+            .orElseThrow { ResourceNotFoundException(resourceName = "Address", field = "id", fieldId = id) }
+
+        addressRepository.delete(address)
+        return address.toDTO()
+    }
 }
