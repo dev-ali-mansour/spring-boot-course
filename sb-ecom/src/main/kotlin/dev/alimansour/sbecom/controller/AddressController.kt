@@ -28,4 +28,10 @@ class AddressController(private val addressService: AddressService) {
         val addressDTO = addressService.getAddressById(id)
         return ResponseEntity(addressDTO, HttpStatus.OK)
     }
+
+    @GetMapping("/users/addresses")
+    fun getUserAddresses(): ResponseEntity<List<AddressDTO>> {
+        val addressList: List<AddressDTO> = addressService.getUserAddresses()
+        return ResponseEntity(addressList, HttpStatus.OK)
+    }
 }

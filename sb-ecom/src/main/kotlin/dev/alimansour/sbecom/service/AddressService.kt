@@ -6,4 +6,5 @@ interface AddressService {
     fun createAddress(addressDTO: AddressDTO): AddressDTO
     fun getAddresses(): List<AddressDTO>
     fun getAddressById(id: Long): AddressDTO
+    fun getUserAddresses(): List<AddressDTO>
 }

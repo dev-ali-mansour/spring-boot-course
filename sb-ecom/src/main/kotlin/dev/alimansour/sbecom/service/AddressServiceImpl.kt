@@ -34,4 +34,8 @@ class AddressServiceImpl(
         return addressDTO.toDTO()
     }
 
+    override fun getUserAddresses(): List<AddressDTO> {
+        val user = authUtil.loggedInUser()
+        return user.addresses.map { it.toDTO() }
+    }
 }
