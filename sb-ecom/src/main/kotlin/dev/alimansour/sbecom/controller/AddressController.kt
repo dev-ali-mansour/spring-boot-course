@@ -1,5 +1,6 @@
 package dev.alimansour.sbecom.controller
 
+import dev.alimansour.sbecom.exception.APIException
 import dev.alimansour.sbecom.payload.AddressDTO
 import dev.alimansour.sbecom.service.AddressService
 import org.springframework.http.HttpStatus
@@ -33,5 +34,18 @@ class AddressController(private val addressService: AddressService) {
     fun getUserAddresses(): ResponseEntity<List<AddressDTO>> {
         val addressList: List<AddressDTO> = addressService.getUserAddresses()
         return ResponseEntity(addressList, HttpStatus.OK)
+    }
+
+    @PutMapping("/addresses/{id}")
+    fun updateAddress(
+        @PathVariable id: Long,
+        @Validated @RequestBody addressDTO: AddressDTO
+    ): ResponseEntity<AddressDTO> {
+        if (addressDTO.id != null && addressDTO.id != id) {
+            throw APIException(message = "Resource ID mismatch: URL path specifies id $id, but the request body contains ${addressDTO.id}")
+        }
+
+        val updatedAddress = addressService.updateAddress(id, addressDTO)
+        return ResponseEntity(updatedAddress, HttpStatus.OK)
     }
 }
