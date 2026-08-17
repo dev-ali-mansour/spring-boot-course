@@ -29,11 +29,10 @@ class User(
     )
     var roles: MutableSet<Role> = mutableSetOf(),
 
-    @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE])
-    @JoinTable(
-        name = "user_address",
-        joinColumns = [JoinColumn(name = "user_id")],
-        inverseJoinColumns = [JoinColumn(name = "address_id")]
+    @OneToMany(
+        mappedBy = "user",
+        cascade = [CascadeType.PERSIST, CascadeType.MERGE],
+        orphanRemoval = true
     )
     var addresses: MutableList<Address> = mutableListOf(),
 
@@ -49,7 +48,7 @@ class User(
         cascade = [CascadeType.PERSIST, CascadeType.MERGE],
         orphanRemoval = true
     )
-    val cart: Cart? = null,
+    var cart: Cart? = null,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

@@ -16,8 +16,9 @@ class Address(
     var country: String = "",
     var pinCode: String = "",
 
-    @ManyToMany(mappedBy = "addresses")
-    var users: MutableList<User> = mutableListOf(),
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    var user: User? = null,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -27,9 +28,9 @@ class Address(
             id == address.id
         } else {
             street == address.street &&
-                buildingName == address.buildingName &&
-                city == address.city &&
-                pinCode == address.pinCode
+                    buildingName == address.buildingName &&
+                    city == address.city &&
+                    pinCode == address.pinCode
         }
     }
 
