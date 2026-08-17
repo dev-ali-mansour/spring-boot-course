@@ -148,7 +148,7 @@ class AuthController(
     }
 
     @PostMapping("/signout")
-    fun signOutUser(): ResponseEntity<Any> {
+    fun signOutUser(): ResponseEntity<MessageResponse> {
         val cookie = jwtUtils.getCleanJwtCookie()
 
         return ResponseEntity.ok()
