@@ -5,10 +5,7 @@ import dev.alimansour.sbecom.service.AddressService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api")
@@ -19,4 +16,11 @@ class AddressController(private val addressService: AddressService) {
         val savedAddress: AddressDTO = addressService.createAddress(addressDTO)
         return ResponseEntity(savedAddress, HttpStatus.CREATED)
     }
+
+    @GetMapping("/addresses")
+    fun getAddresses(): ResponseEntity<List<AddressDTO>> {
+        val addressList: List<AddressDTO> = addressService.getAddresses()
+        return ResponseEntity(addressList, HttpStatus.OK)
+    }
+
 }

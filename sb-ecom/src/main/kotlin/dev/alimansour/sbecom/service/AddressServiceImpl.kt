@@ -24,4 +24,7 @@ class AddressServiceImpl(
         return savedAddress.toDTO()
     }
 
+    override fun getAddresses(): List<AddressDTO> =
+        addressRepository.findAll().map { it.toDTO() }
+
 }
