@@ -1,5 +1,6 @@
 package dev.alimansour.sbecom.service
 
+import dev.alimansour.sbecom.exception.ResourceNotFoundException
 import dev.alimansour.sbecom.mapper.toDTO
 import dev.alimansour.sbecom.mapper.toEntity
 import dev.alimansour.sbecom.payload.AddressDTO
@@ -24,7 +25,13 @@ class AddressServiceImpl(
         return savedAddress.toDTO()
     }
 
-    override fun getAddresses(): List<AddressDTO> =
-        addressRepository.findAll().map { it.toDTO() }
+    override fun getAddresses(): List<AddressDTO> = addressRepository.findAll().map { it.toDTO() }
+
+    override fun getAddressById(id: Long): AddressDTO {
+        val addressDTO = addressRepository.findById(id)
+            .orElseThrow { ResourceNotFoundException(resourceName = "Address", field = "id", fieldId = id) }
+
+        return addressDTO.toDTO()
+    }
 
 }

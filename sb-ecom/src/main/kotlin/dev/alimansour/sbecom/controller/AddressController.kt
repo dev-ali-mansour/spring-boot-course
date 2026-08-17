@@ -23,4 +23,9 @@ class AddressController(private val addressService: AddressService) {
         return ResponseEntity(addressList, HttpStatus.OK)
     }
 
+    @GetMapping("/addresses/{id}")
+    fun getAddressesById(@PathVariable id: Long): ResponseEntity<AddressDTO> {
+        val addressDTO = addressService.getAddressById(id)
+        return ResponseEntity(addressDTO, HttpStatus.OK)
+    }
 }
