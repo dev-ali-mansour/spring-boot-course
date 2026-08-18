@@ -106,11 +106,15 @@ class ProductServiceImpl(
         }
 
         val updatedProduct = productRepository.save(product)
-        val carts: List<Cart> = cartRepository.findCartByProductId(product.id!!)
+        val carts: List<Cart> = cartRepository.findCartByProductId(
+            requireNotNull(product.id) { "Product ID must not be null" })
         val cartDTOs = carts.map { it.toDTO() }
 
         cartDTOs.forEach { cart ->
-            cartService.updateProductInCarts(cart.id!!, id)
+            cartService.updateProductInCarts(
+                cartId = requireNotNull(cart.id) { "Cart ID must not be null" },
+                productId = id
+            )
         }
 
         return updatedProduct.toDTO()
@@ -125,7 +129,6 @@ class ProductServiceImpl(
 
         productRepository.delete(product)
         return product.toDTO()
-
     }
 
     override fun updateProductImage(id: Long, image: MultipartFile): ProductDTO {

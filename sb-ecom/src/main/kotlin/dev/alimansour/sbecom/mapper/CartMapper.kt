@@ -7,6 +7,7 @@ fun Cart.toDTO(): CartDTO = CartDTO(
     id = this.id,
     totalPrice = this.totalPrice,
     products = this.cartItems.map { item ->
-        item.product!!.toDTO().copy(quantity = item.quantity)
+        requireNotNull(item.product) { "Cart item must not be null!" }
+            .toDTO().copy(quantity = item.quantity)
     }
 )

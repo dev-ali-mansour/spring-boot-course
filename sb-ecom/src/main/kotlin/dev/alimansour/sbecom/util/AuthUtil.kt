@@ -14,16 +14,16 @@ class AuthUtil(private val userRepository: UserRepository) {
     }
 
     fun loggedInUserId(): Long {
-        return getUserDetailsImpl()?.id ?: loggedInUser().id!!
+        return getUserDetailsImpl()?.id ?: requireNotNull(loggedInUser().id) { "User ID must not be null!" }
     }
 
     fun loggedInUser(): User {
         val authentication = SecurityContextHolder.getContext().authentication
-            ?: throw UsernameNotFoundException("No authentication context found")
+            ?: throw UsernameNotFoundException("No authentication context found!")
 
         return userRepository.findByUsername(authentication.name)
             .orElseThrow {
-                UsernameNotFoundException("User Not Found with username: ${authentication.name}")
+                UsernameNotFoundException("User Not Found with username: ${authentication.name}!")
             }
     }
 
