@@ -41,7 +41,7 @@ class CategoryServiceImpl(private val categoryRepository: CategoryRepository) : 
             ResourceNotFoundException("Category", "id", categoryId)
         }
 
-        categoryRepository.deleteById(categoryId)
+        categoryRepository.delete(category)
         return category.toDTO()
     }
 

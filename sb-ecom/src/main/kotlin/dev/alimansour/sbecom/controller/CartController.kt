@@ -40,7 +40,7 @@ class CartController(private val cartService: CartService) {
 
     @DeleteMapping("/carts/products/{productId}")
     fun deleteProductFromCart(@PathVariable productId: Long): ResponseEntity<String> {
-        val status = cartService.deleteProductFromCart(productId)
+        val status = cartService.deleteProductFromCurrentUserCart(productId)
         return ResponseEntity(status, HttpStatus.OK)
     }
 }
