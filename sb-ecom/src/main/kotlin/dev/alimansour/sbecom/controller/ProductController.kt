@@ -5,6 +5,7 @@ import dev.alimansour.sbecom.exception.APIException
 import dev.alimansour.sbecom.payload.ProductDTO
 import dev.alimansour.sbecom.payload.ProductResponse
 import dev.alimansour.sbecom.service.ProductService
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile
 @RequestMapping("/api")
 class ProductController(private val productService: ProductService) {
 
+    @Tag(name = "Product APIs", description = "APIs for managing products")
     @PostMapping("/admin/categories/{categoryId}/product")
     fun addProduct(
         @PathVariable categoryId: Long,
@@ -27,6 +29,7 @@ class ProductController(private val productService: ProductService) {
         return ResponseEntity(productDTO, HttpStatus.CREATED)
     }
 
+    @Tag(name = "Product APIs", description = "APIs for managing products")
     @GetMapping("/public/products")
     fun getAllProducts(
         @PageableDefault(
@@ -38,6 +41,7 @@ class ProductController(private val productService: ProductService) {
     ): ResponseEntity<ProductResponse> =
         ResponseEntity(productService.getAllProducts(pageable), HttpStatus.OK)
 
+    @Tag(name = "Product APIs", description = "APIs for managing products")
     @GetMapping("/public/categories/{categoryId}/products")
     fun getProductsByCategoryId(
         @PathVariable categoryId: Long,
@@ -50,6 +54,7 @@ class ProductController(private val productService: ProductService) {
     ): ResponseEntity<ProductResponse> =
         ResponseEntity(productService.searchByCategory(categoryId, pageable), HttpStatus.OK)
 
+    @Tag(name = "Product APIs", description = "APIs for managing products")
     @GetMapping("/public/products/keyword/{keyword}")
     fun getProductsByKeyword(
         @PathVariable keyword: String,
@@ -62,6 +67,7 @@ class ProductController(private val productService: ProductService) {
     ): ResponseEntity<ProductResponse> =
         ResponseEntity(productService.searchByKeyword(keyword, pageable), HttpStatus.OK)
 
+    @Tag(name = "Product APIs", description = "APIs for managing products")
     @PutMapping("/admin/products/{id}")
     fun updateProduct(
         @PathVariable id: Long,
@@ -73,10 +79,12 @@ class ProductController(private val productService: ProductService) {
         return ResponseEntity(productService.updateProduct(id, productDTO), HttpStatus.OK)
     }
 
+    @Tag(name = "Product APIs", description = "APIs for managing products")
     @DeleteMapping("/admin/products/{id}")
     fun deleteProduct(@PathVariable id: Long): ResponseEntity<ProductDTO> =
         ResponseEntity(productService.deleteProduct(id), HttpStatus.OK)
 
+    @Tag(name = "Product APIs", description = "APIs for managing products")
     @PutMapping("/admin/products/{id}/image")
     fun updateProductImage(
         @PathVariable id: Long,

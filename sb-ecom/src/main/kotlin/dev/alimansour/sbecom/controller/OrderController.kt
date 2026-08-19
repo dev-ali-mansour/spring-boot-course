@@ -3,6 +3,7 @@ package dev.alimansour.sbecom.controller
 import dev.alimansour.sbecom.payload.OrderDTO
 import dev.alimansour.sbecom.payload.OrderRequestDTO
 import dev.alimansour.sbecom.service.OrderService
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api")
 class OrderController(private val orderService: OrderService) {
+
+    @Tag(name = "Order APIs", description = "APIs for managing orders")
     @PostMapping("/orders/users/payments/{paymentMethod}")
     fun orderProducts(
         @PathVariable paymentMethod: String,

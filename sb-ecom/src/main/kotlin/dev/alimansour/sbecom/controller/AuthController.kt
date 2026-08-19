@@ -11,6 +11,7 @@ import dev.alimansour.sbecom.security.request.SignUpRequest
 import dev.alimansour.sbecom.security.response.MessageResponse
 import dev.alimansour.sbecom.security.response.UserInfoResponse
 import dev.alimansour.sbecom.security.service.UserDetailsImpl
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseCookie
@@ -35,6 +36,7 @@ class AuthController(
     private val encoder: PasswordEncoder,
 ) {
 
+    @Tag(name = "Authentication APIs", description = "APIs for user authentication")
     @PostMapping("/signin")
     fun authenticateUser(@Validated @RequestBody signInRequest: SignInRequest): ResponseEntity<Any> {
         val authentication: Authentication
@@ -71,6 +73,7 @@ class AuthController(
             .body(response)
     }
 
+    @Tag(name = "Authentication APIs", description = "APIs for user authentication")
     @PostMapping("/signup")
     fun registerUser(@Validated @RequestBody signUpRequest: SignUpRequest): ResponseEntity<Any> {
         if (userRepository.existsByUsername(signUpRequest.username)) {
@@ -127,10 +130,12 @@ class AuthController(
         return ResponseEntity.ok(MessageResponse("User registered successfully"))
     }
 
+    @Tag(name = "Authentication APIs", description = "APIs for user authentication")
     @GetMapping("/username")
     fun currentUsername(authentication: Authentication?): String =
         authentication?.name.orEmpty()
 
+    @Tag(name = "Authentication APIs", description = "APIs for user authentication")
     @GetMapping("/user")
     fun getUserDetails(authentication: Authentication?): ResponseEntity<UserInfoResponse> {
         val userDetails: UserDetailsImpl = authentication?.principal as UserDetailsImpl
@@ -147,6 +152,7 @@ class AuthController(
         return ResponseEntity.ok().body(response)
     }
 
+    @Tag(name = "Authentication APIs", description = "APIs for user authentication")
     @PostMapping("/signout")
     fun signOutUser(): ResponseEntity<MessageResponse> {
         val cookie = jwtUtils.getCleanJwtCookie()
