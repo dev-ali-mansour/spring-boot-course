@@ -1,0 +1,58 @@
+Employee Directory API — curl Requests
+=======================================
+
+EXPERIENCE THE PROBLEM
+-----------------------
+Get all employees (no pagination):
+curl -s http://localhost:8080/api/employees | cat
+
+
+PAGINATION
+----------
+Page 0, 5 per page:
+curl -s "http://localhost:8080/api/employees?page=0&size=5" | cat
+
+Page 1, 5 per page:
+curl -s "http://localhost:8080/api/employees?page=1&size=5" | cat
+
+Page 4, 5 per page:
+curl -s "http://localhost:8080/api/employees?page=4&size=5" | cat
+
+
+SORTING
+-------
+Sort by last name ascending:
+curl -s "http://localhost:8080/api/employees?sort=lastName,asc" | cat
+
+Sort by last name descending:
+curl -s "http://localhost:8080/api/employees?sort=lastName,desc" | cat
+
+Sort by salary descending:
+curl -s "http://localhost:8080/api/employees?sort=salary,desc" | cat
+
+Sort by department ascending:
+curl -s "http://localhost:8080/api/employees?sort=department,asc" | cat
+
+
+PAGINATION + SORTING COMBINED
+------------------------------
+Page 0, size 5, sorted by last name:
+curl -s "http://localhost:8080/api/employees?page=0&size=5&sort=lastName,asc" | cat
+
+
+FILTER BY DEPARTMENT
+--------------------
+All Engineering employees:
+curl -s "http://localhost:8080/api/employees?department=Engineering" | cat
+
+Legal employees sorted by salary descending:
+curl -s "http://localhost:8080/api/employees?department=Legal&sort=salary,desc" | cat
+
+HR employees, page 0, size 3:
+curl -s "http://localhost:8080/api/employees?department=HR&page=0&size=3" | cat
+
+
+MULTI-FIELD SORTING
+-------------------
+Sort by department then last name:
+curl -s "http://localhost:8080/api/employees?sort=department,asc&sort=lastName,asc" | cat
