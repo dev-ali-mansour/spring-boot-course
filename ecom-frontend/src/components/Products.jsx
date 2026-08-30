@@ -10,8 +10,8 @@ const Products = () => {
       name: "Iphone XS Max",
       image: "https://placehold.co/600x400",
       description:
-        "Experience the latest in mobile technology with the iPhone XS Max. Featuring a stunning 6.5-inch Super Retina display, advanced Face ID, and a powerful A12 Bionic chip, this smartphone delivers exceptional performance and an immersive user experience. Capture breathtaking photos with the dual-camera system and enjoy all-day battery life. Elevate your mobile experience with the iPhone XS Max.",
-      quantity: 0,
+        "Experience the latest in mobile technology with advanced cameras, powerful processing, and all-day battery.",
+      quantity: 10,
       price: 1450.0,
       discount: 10.0,
       specialPrice: 1305.0,
@@ -19,9 +19,9 @@ const Products = () => {
     {
       id: 654,
       name: "MacBook Air M2s",
-      image: "https://placehold.co/200x200",
+      image: "https://placehold.co/600x400",
       description:
-        "Ultra-thin laptop with Apple's M2 chip, providing exceptional performance and efficiency for all your computing needs.",
+        "Ultra-thin laptop with Apple's M2 chip, providing fast performance in a lightweight, portable design.",
       quantity: 0,
       price: 2250.0,
       discount: 20.0,
