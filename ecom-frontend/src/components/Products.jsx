@@ -7,7 +7,7 @@ const Products = () => {
   const products = [
     {
       id: 652,
-      name: "Iphone XS Max",
+      name: "IPhone XS Max",
       image: "https://placehold.co/600x400",
       description:
         "Experience the latest in mobile technology with advanced cameras, powerful processing, and all-day battery.",
