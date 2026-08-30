@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {FaShoppingCart} from "react-icons/fa";
+import ProductViewModal from "./ProductViewModal.jsx";
 
 export default function ProductCard({
                                         id,
@@ -26,7 +27,7 @@ export default function ProductCard({
             <div
                 onClick={() => {
                     handleProductView({
-                        id: id,
+                        id,
                         name,
                         image,
                         description,
@@ -87,6 +88,12 @@ export default function ProductCard({
                     </button>
                 </div>
             </div>
+            <ProductViewModal
+                isOpen={openProductViewModal}
+                setIsOpen={setOpenProductViewModal}
+                product={selectedViewProduct}
+                isAvailable={isAvailable}
+            />
         </div>
     );
 }
