@@ -22,6 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.web.cors.CorsConfigurationSource
 
 
 @Configuration
@@ -47,8 +48,13 @@ class WebSecurityConfig(
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
     @Bean
-    fun filterChain(http: HttpSecurity, authJwtTokenFilter: AuthTokenFilter): SecurityFilterChain =
-        http.csrf { csrf -> csrf.disable() }
+    fun filterChain(
+        http: HttpSecurity,
+        authJwtTokenFilter: AuthTokenFilter,
+        corsConfigurationSource: CorsConfigurationSource
+    ): SecurityFilterChain =
+        http.cors { cors -> cors.configurationSource(corsConfigurationSource) }
+            .csrf { csrf -> csrf.disable() }
             .exceptionHandling { exception -> exception.authenticationEntryPoint(unauthorizedHandler) }
             .sessionManagement { session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -99,19 +105,19 @@ class WebSecurityConfig(
             // Retrieve or create roles
             val userRole: Role = roleRepository.findByName(AppRole.ROLE_USER)
                 .orElseGet({
-                    val newUserRole: Role = Role(name = AppRole.ROLE_USER)
+                    val newUserRole = Role(name = AppRole.ROLE_USER)
                     roleRepository.save(newUserRole)
                 })
 
             val sellerRole: Role = roleRepository.findByName(AppRole.ROLE_SELLER)
                 .orElseGet({
-                    val newSellerRole: Role = Role(name = AppRole.ROLE_SELLER)
+                    val newSellerRole = Role(name = AppRole.ROLE_SELLER)
                     roleRepository.save(newSellerRole)
                 })
 
             val adminRole: Role = roleRepository.findByName(AppRole.ROLE_ADMIN)
                 .orElseGet({
-                    val newAdminRole: Role = Role(name = AppRole.ROLE_ADMIN)
+                    val newAdminRole = Role(name = AppRole.ROLE_ADMIN)
                     roleRepository.save(newAdminRole)
                 })
 
