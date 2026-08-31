@@ -18,7 +18,8 @@ import org.springframework.web.multipart.MultipartFile
 
 @Service
 class ProductServiceImpl(
-    @Value("\${project.images.path}") private val path: String,
+    @Value($$"${project.images.path}") private val path: String,
+    @Value($$"${image.base.url}") private val imageBaseUrl: String,
     private val productRepository: ProductRepository,
     private val categoryRepository: CategoryRepository,
     private val cartRepository: CartRepository,
@@ -50,7 +51,7 @@ class ProductServiceImpl(
 
     override fun getAllProducts(pageable: Pageable): ProductResponse {
         val page = productRepository.findAll(pageable)
-        val products = page.content.map { it.toDTO() }
+        val products = page.content.map { it.toDTO().copy(image = constructImageUrl(it.image)) }
 
         return ProductResponse(
             content = products,
@@ -67,7 +68,7 @@ class ProductServiceImpl(
             .orElseThrow { ResourceNotFoundException(resourceName = "Category", field = "id", fieldId = categoryId) }
 
         val page = productRepository.findByCategory(category, pageable)
-        val products = page.content.map { it.toDTO() }
+        val products = page.content.map { it.toDTO().copy(image = constructImageUrl(it.image)) }
 
         return ProductResponse(
             content = products,
@@ -81,7 +82,7 @@ class ProductServiceImpl(
 
     override fun searchByKeyword(keyword: String, pageable: Pageable): ProductResponse {
         val page = productRepository.findByNameLikeIgnoreCase("%$keyword%", pageable)
-        val products = page.content.map { it.toDTO() }
+        val products = page.content.map { it.toDTO().copy(image = constructImageUrl(it.image)) }
 
         return ProductResponse(
             content = products,
@@ -112,8 +113,7 @@ class ProductServiceImpl(
 
         cartDTOs.forEach { cart ->
             cartService.updateProductInCarts(
-                cartId = requireNotNull(cart.id) { "Cart ID must not be null" },
-                productId = id
+                cartId = requireNotNull(cart.id) { "Cart ID must not be null" }, productId = id
             )
         }
 
@@ -147,5 +147,7 @@ class ProductServiceImpl(
     private fun Product.calculateSpecialPrice(): Double =
         price * (1 - discount * 0.01) //price - ((discount * 0.01) * price)
 
-
+    private fun constructImageUrl(imageName: String): String =
+        if (imageBaseUrl.endsWith("/")) "$imageBaseUrl$imageName"
+        else "$imageBaseUrl/$imageName"
 }
