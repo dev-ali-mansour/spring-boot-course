@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
-import { FaExclamationTriangle } from "react-icons/fa";
+import {useEffect, useState} from "react";
+import {FaExclamationTriangle} from "react-icons/fa";
 import ProductCard from "./ProductCard";
 import ProductViewModal from "./ProductViewModal";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../store/actions";
-import { RootState, AppDispatch } from "../store/reducers/store";
-import { Product } from "../types";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchProducts} from "../store/actions";
+import {AppDispatch, RootState} from "../store/reducers/store";
+import {Product} from "../types";
+import Filter from "./Filter.tsx";
 
 export default function Products() {
-    const { isLoading, errorMessage } = useSelector((state: RootState) => state.errors);
-    const { products } = useSelector((state: RootState) => state.products);
+    const {isLoading, errorMessage} = useSelector((state: RootState) => state.errors);
+    const {products} = useSelector((state: RootState) => state.products);
     const dispatch = useDispatch<AppDispatch>();
 
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -26,6 +27,7 @@ export default function Products() {
 
     return (
         <div className="lg:px-14 sm:px-8 px-4 py-14 2xl:w-[90%] 2xl:mx-auto">
+            <Filter/>
             {isLoading ? (
                 <p>Loading...</p>
             ) : errorMessage ? (
@@ -37,19 +39,20 @@ export default function Products() {
                 </div>
             ) : (
                 <div className="min-h-175">
-                    <div className="pb-6 pt-14 grid 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-y-6 gap-x-6">
+                    <div
+                        className="pb-6 pt-14 grid 2xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-y-6 gap-x-6">
                         {products &&
                             products.map((product: Product) => (
-                                <ProductCard 
-                                    key={product.id} 
-                                    product={product} 
-                                    onView={() => handleViewProduct(product)} 
+                                <ProductCard
+                                    key={product.id}
+                                    product={product}
+                                    onView={() => handleViewProduct(product)}
                                 />
                             ))}
                     </div>
                 </div>
             )}
-            
+
             <ProductViewModal
                 isOpen={isModalOpen}
                 setIsOpen={setIsModalOpen}
