@@ -1,43 +1,20 @@
-import { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
-import ProductViewModal from "./ProductViewModal";
 import { Product } from "../types";
 
-export default function ProductCard({
-                                        id,
-                                        name,
-                                        image,
-                                        description,
-                                        quantity,
-                                        price,
-                                        discount,
-                                        specialPrice,
-                                    }: Product) {
-    const [openProductViewModal, setOpenProductViewModal] = useState(false);
-    const btnLoader = false;
-    const [selectedViewProduct, setSelectedViewProduct] = useState<Product | string>("");
-    const isAvailable = quantity && Number(quantity) > 0;
+interface ProductCardProps {
+    product: Product;
+    onView: () => void;
+}
 
-    const handleProductView = (product: Product) => {
-        setSelectedViewProduct(product);
-        setOpenProductViewModal(true);
-    };
+export default function ProductCard({ product, onView }: ProductCardProps) {
+    const { name, image, description, quantity, price, specialPrice } = product;
+    const btnLoader = false;
+    const isAvailable = quantity && Number(quantity) > 0;
 
     return (
         <div className="border rounded-lg shadow-xl overflow-hidden transition-shadow duration-300">
             <div
-                onClick={() => {
-                    handleProductView({
-                        id,
-                        name,
-                        image,
-                        description,
-                        quantity,
-                        price,
-                        discount,
-                        specialPrice,
-                    });
-                }}
+                onClick={onView}
                 className="w-full overflow-hidden aspect-3/2"
             >
                 <img
@@ -49,8 +26,7 @@ export default function ProductCard({
 
             <div className="p-4">
                 <h2
-                    onClick={() => {
-                    }}
+                    onClick={onView}
                     className="text-lg font-semibold mb-2 cursor-pointer"
                 >
                     {name}
@@ -89,12 +65,6 @@ export default function ProductCard({
                     </button>
                 </div>
             </div>
-            <ProductViewModal
-                isOpen={openProductViewModal}
-                setIsOpen={setOpenProductViewModal}
-                product={selectedViewProduct}
-                isAvailable={!!isAvailable}
-            />
         </div>
     );
 }
