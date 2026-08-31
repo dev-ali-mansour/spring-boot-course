@@ -1,9 +1,10 @@
-import {api} from "../../api/api.js";
+import { Dispatch } from "redux";
+import { api } from "../../api/api";
 
-export const fetchProducts = () => async (dispatch) => {
+export const fetchProducts = () => async (dispatch: Dispatch) => {
     try {
-        dispatch({type: "IS_FETCHING"});
-        const {data} = await api.get(`/public/products`);
+        dispatch({ type: "IS_FETCHING" });
+        const { data } = await api.get(`/public/products`);
         dispatch({
             type: "FETCH_PRODUCTS",
             payload: data.content,
@@ -13,8 +14,8 @@ export const fetchProducts = () => async (dispatch) => {
             totalPages: data.totalPages,
             lastPage: data.lastPage,
         });
-        dispatch({type: "IS_SUCCESS"});
-    } catch (error) {
+        dispatch({ type: "IS_SUCCESS" });
+    } catch (error: any) {
         console.log(error);
         const backendMessage =
             error?.response?.data?.message ||

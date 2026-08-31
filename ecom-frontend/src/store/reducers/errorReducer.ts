@@ -1,9 +1,14 @@
-const initialState = {
+export interface ErrorState {
+    isLoading: boolean;
+    errorMessage: string | null;
+}
+
+const initialState: ErrorState = {
     isLoading: false,
     errorMessage: null
 };
 
-export const errorReducer = (state = initialState, action) => {
+export const errorReducer = (state = initialState, action: any): ErrorState => {
     switch (action.type) {
         case "IS_FETCHING":
             return {

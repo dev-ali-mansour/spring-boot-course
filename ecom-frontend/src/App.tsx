@@ -1,12 +1,12 @@
-import "./App.css";
+
 import Products from "./components/Products";
 
-function App() {
+const App: React.FC = () => {
   return (
     <>
       <Products />
     </>
   );
-}
+};
 
 export default App;

@@ -1,6 +1,7 @@
-import {useState} from "react";
-import {FaShoppingCart} from "react-icons/fa";
-import ProductViewModal from "./ProductViewModal.jsx";
+import { useState } from "react";
+import { FaShoppingCart } from "react-icons/fa";
+import ProductViewModal from "./ProductViewModal";
+import { Product } from "../types";
 
 export default function ProductCard({
                                         id,
@@ -11,13 +12,13 @@ export default function ProductCard({
                                         price,
                                         discount,
                                         specialPrice,
-                                    }) {
+                                    }: Product) {
     const [openProductViewModal, setOpenProductViewModal] = useState(false);
     const btnLoader = false;
-    const [selectedViewProduct, setSelectedViewProduct] = useState("");
+    const [selectedViewProduct, setSelectedViewProduct] = useState<Product | string>("");
     const isAvailable = quantity && Number(quantity) > 0;
 
-    const handleProductView = (product) => {
+    const handleProductView = (product: Product) => {
         setSelectedViewProduct(product);
         setOpenProductViewModal(true);
     };
@@ -92,7 +93,7 @@ export default function ProductCard({
                 isOpen={openProductViewModal}
                 setIsOpen={setOpenProductViewModal}
                 product={selectedViewProduct}
-                isAvailable={isAvailable}
+                isAvailable={!!isAvailable}
             />
         </div>
     );

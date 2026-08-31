@@ -1,16 +1,26 @@
-import {Dialog, DialogBackdrop, DialogPanel, DialogTitle} from '@headlessui/react'
-import {Divider} from "@mui/material";
-import Status from "./Status.jsx";
-import {MdClose, MdDone} from "react-icons/md";
 
-export default function ProductViewModal({isOpen, setIsOpen, product, isAvailable}) {
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
+import { Divider } from "@mui/material";
+import Status from "./Status";
+import { MdClose, MdDone } from "react-icons/md";
+import { Product } from "../types";
 
+interface ProductViewModalProps {
+    isOpen: boolean;
+    setIsOpen: (isOpen: boolean) => void;
+    product: Product | string | any; // To cover selectedViewProduct initialization as ""
+    isAvailable: boolean;
+}
+
+export default function ProductViewModal({ isOpen, setIsOpen, product, isAvailable }: ProductViewModalProps) {
     function close() {
-        setIsOpen(false)
+        setIsOpen(false);
     }
 
-    return (<>
-        <Dialog open={isOpen} as="div" className="relative z-10" onClose={close} __demoMode>
+    if (!product || typeof product === 'string') return null;
+
+    return (
+        <Dialog open={isOpen} as="div" className="relative z-10" onClose={close}>
             <DialogBackdrop className="fixed inset-0 bg-gray-500 opacity-75 transition-opacity duration-300"/>
             <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                 <div className="flex min-h-full items-center justify-center p-4">
@@ -37,18 +47,17 @@ export default function ProductViewModal({isOpen, setIsOpen, product, isAvailabl
                                 <div className="flex items-center justify-between gap-2">
                                     {product.specialPrice ? (
                                         <div className="flex items-center gap-2">
-                      <span className="text-gray-400 line-through">
-                        ${Number(product.price).toFixed(2)}
-                      </span>
-                                            <span className="sm:text-xl font-semibold text-slate-700">
-                        ${Number(product.specialPrice).toFixed(2)}
-                      </span>
+                                          <span className="text-gray-400 line-through">
+                                            ${Number(product.price).toFixed(2)}
+                                          </span>
+                                          <span className="sm:text-xl font-semibold text-slate-700">
+                                            ${Number(product.specialPrice).toFixed(2)}
+                                          </span>
                                         </div>
                                     ) : (
                                         <span className="text-xl font-bold">
-                      {" "}
-                                            ${Number(product.price).toFixed(2)}
-                    </span>
+                                          ${Number(product.price).toFixed(2)}
+                                        </span>
                                     )}
 
                                     {isAvailable ? (
@@ -86,5 +95,5 @@ export default function ProductViewModal({isOpen, setIsOpen, product, isAvailabl
                 </div>
             </div>
         </Dialog>
-    </>)
+    );
 }

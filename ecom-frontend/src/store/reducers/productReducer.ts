@@ -1,10 +1,18 @@
-const initialState = {
+import { Product, Pagination } from "../../types";
+
+export interface ProductState {
+    products: Product[] | null;
+    categories: any[] | null; // Placeholder for categories type if needed
+    pagination: Partial<Pagination>;
+}
+
+const initialState: ProductState = {
     products: null,
     categories: null,
     pagination: {},
 };
 
-export const productReducer = (state = initialState, action) => {
+export const productReducer = (state = initialState, action: any): ProductState => {
     switch (action.type) {
         case "FETCH_PRODUCTS":
             return {
