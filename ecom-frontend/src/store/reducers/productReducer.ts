@@ -1,4 +1,6 @@
-import {Category, Pagination, Product} from "../../types/Product.ts";
+import { Product} from "../../types/Product.ts";
+import {Category} from "../../types/Category.ts";
+import {Pagination} from "../../types/Pagination.ts";
 
 export interface ProductState {
     products: Product[] | null;
