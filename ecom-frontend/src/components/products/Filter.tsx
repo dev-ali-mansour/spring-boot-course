@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {FiArrowDown, FiArrowUp, FiRefreshCw, FiSearch} from "react-icons/fi";
 import {Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Tooltip} from "@mui/material";
 import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
-import {Category} from "../types/Category.ts";
+import {Category} from "../../types/Category.ts";
 
 export default function Filter({categories}: { categories: Category[] }) {
     const [searchParams] = useSearchParams();

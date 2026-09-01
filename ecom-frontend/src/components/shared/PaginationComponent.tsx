@@ -1,7 +1,7 @@
 import {Pagination as MuiPagination} from "@mui/material";
 import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import * as React from "react";
-import {Pagination} from "../types/Pagination.ts";
+import {Pagination} from "../../types/Pagination.ts";
 
 export default function PaginationComponent({pagination}: { pagination: Partial<Pagination> }) {
     const [searchParams] = useSearchParams();

@@ -1,5 +1,5 @@
 
-import Products from "./components/Products";
+import Products from "./components/products/Products.tsx";
 
 const App: React.FC = () => {
   return (

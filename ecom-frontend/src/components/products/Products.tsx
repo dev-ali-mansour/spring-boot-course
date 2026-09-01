@@ -1,15 +1,15 @@
 import {useEffect, useState} from "react";
 import {FaExclamationTriangle} from "react-icons/fa";
-import ProductCard from "./ProductCard";
-import ProductViewModal from "./ProductViewModal";
+import ProductCard from "../shared/ProductCard.tsx";
+import ProductViewModal from "../shared/ProductViewModal.tsx";
 import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../store/reducers/store";
-import {Product} from "../types/Product.ts";
+import {AppDispatch, RootState} from "../../store/reducers/store.ts";
+import {Product} from "../../types/Product.ts";
 import Filter from "./Filter.tsx";
-import useProductFilter from "../hooks/useProductFilter.tsx";
-import {fetchCategories} from "../store/actions";
-import Loader from "./Loader.tsx";
-import PaginationComponent from "./PaginationComponent.tsx";
+import useProductFilter from "../../hooks/useProductFilter.ts";
+import {fetchCategories} from "../../store/actions";
+import Loader from "../shared/Loader.tsx";
+import PaginationComponent from "../shared/PaginationComponent.tsx";
 
 export default function Products() {
     const {isProductsLoading, productsErrorMessage} = useSelector((state: RootState) => state.errors);

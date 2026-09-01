@@ -1,6 +1,6 @@
 import {FaShoppingCart} from "react-icons/fa";
-import {Product} from "../types/Product.ts";
-import truncateText from "../utils/truncateText.tsx";
+import {Product} from "../../types/Product.ts";
+import truncateText from "../../utils/truncateText.tsx";
 
 interface ProductCardProps {
     product: Product;
