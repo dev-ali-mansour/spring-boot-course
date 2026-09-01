@@ -5,6 +5,7 @@ import dev.alimansour.sbecom.exception.ResourceNotFoundException
 import dev.alimansour.sbecom.mapper.toDTO
 import dev.alimansour.sbecom.mapper.toEntity
 import dev.alimansour.sbecom.model.Cart
+import dev.alimansour.sbecom.model.Category
 import dev.alimansour.sbecom.model.Product
 import dev.alimansour.sbecom.payload.ProductDTO
 import dev.alimansour.sbecom.payload.ProductResponse
@@ -13,6 +14,7 @@ import dev.alimansour.sbecom.repository.CategoryRepository
 import dev.alimansour.sbecom.repository.ProductRepository
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.domain.Specification
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 
@@ -49,8 +51,24 @@ class ProductServiceImpl(
         return savedProduct.toDTO()
     }
 
-    override fun getAllProducts(pageable: Pageable): ProductResponse {
-        val page = productRepository.findAll(pageable)
+    override fun getAllProducts(keyword: String, category: String, pageable: Pageable): ProductResponse {
+        var spec: Specification<Product> = Specification.unrestricted()
+        if (keyword.isNotEmpty()) {
+            spec = spec.and { root, _, criteriaBuilder ->
+                criteriaBuilder.like(
+                    criteriaBuilder.lower(root.get("name")),
+                    "%${keyword.lowercase()}%"
+                )
+            }
+        }
+
+        if (category.isNotEmpty()) {
+            spec = spec.and { root, _, criteriaBuilder ->
+                criteriaBuilder.like(root.get<Category>("category").get("name"), category)
+            }
+        }
+
+        val page = productRepository.findAll(spec, pageable)
         val products = page.content.map { it.toDTO().copy(image = constructImageUrl(it.image)) }
 
         return ProductResponse(

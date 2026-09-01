@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile
 
 interface ProductService {
     fun addProduct(categoryId: Long, productDTO: ProductDTO): ProductDTO
-    fun getAllProducts(pageable: Pageable): ProductResponse
+    fun getAllProducts(keyword: String, category: String, pageable: Pageable): ProductResponse
     fun searchByCategory(categoryId: Long, pageable: Pageable): ProductResponse
     fun searchByKeyword(keyword: String, pageable: Pageable): ProductResponse
     fun updateProduct(id: Long, productDTO: ProductDTO): ProductDTO
