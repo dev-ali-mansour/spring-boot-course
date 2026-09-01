@@ -32,14 +32,16 @@ class ProductController(private val productService: ProductService) {
     @Tag(name = "Product APIs", description = "APIs for managing products")
     @GetMapping("/public/products")
     fun getAllProducts(
+        @RequestParam(value = "keyword", required = false) keyword: String = "",
+        @RequestParam(value = "category", required = false) category: String = "",
         @PageableDefault(
             page = AppConstants.PAGE_NUMBER,
             size = AppConstants.PAGE_SIZE,
-            sort = [AppConstants.SORT_BY],
+            sort = [AppConstants.SORT_PRODUCTS_BY],
             direction = Sort.Direction.ASC
         ) pageable: Pageable,
     ): ResponseEntity<ProductResponse> =
-        ResponseEntity(productService.getAllProducts(pageable), HttpStatus.OK)
+        ResponseEntity(productService.getAllProducts(keyword, category, pageable), HttpStatus.OK)
 
     @Tag(name = "Product APIs", description = "APIs for managing products")
     @GetMapping("/public/categories/{categoryId}/products")
@@ -61,7 +63,7 @@ class ProductController(private val productService: ProductService) {
         @PageableDefault(
             page = AppConstants.PAGE_NUMBER,
             size = AppConstants.PAGE_SIZE,
-            sort = [AppConstants.SORT_BY],
+            sort = [AppConstants.SORT_PRODUCTS_BY],
             direction = Sort.Direction.ASC
         ) pageable: Pageable,
     ): ResponseEntity<ProductResponse> =

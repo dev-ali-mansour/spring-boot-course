@@ -29,7 +29,7 @@ class CategoryController(private val categoryService: CategoryService) {
         @PageableDefault(
             page = AppConstants.PAGE_NUMBER,
             size = AppConstants.PAGE_SIZE,
-            sort = [AppConstants.SORT_BY],
+            sort = [AppConstants.SORT_CATEGORIES_BY],
             direction = Sort.Direction.ASC
         ) pageable: Pageable,
     ): ResponseEntity<CategoryResponse> {
@@ -59,7 +59,8 @@ class CategoryController(private val categoryService: CategoryService) {
     @DeleteMapping("/admin/categories/{categoryId}")
     fun deleteCategory(
         @Parameter(description = "ID of the category that you wish to delete")
-        @PathVariable categoryId: Long): ResponseEntity<CategoryDTO> {
+        @PathVariable categoryId: Long
+    ): ResponseEntity<CategoryDTO> {
         val deletedCategory = categoryService.deleteCategory(categoryId)
         return ResponseEntity(deletedCategory, HttpStatus.OK)
     }
