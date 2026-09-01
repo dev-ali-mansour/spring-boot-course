@@ -1,5 +1,5 @@
 import { FaShoppingCart } from "react-icons/fa";
-import { Product } from "../types";
+import { Product } from "../types/Product.ts";
 
 interface ProductCardProps {
     product: Product;

@@ -4,7 +4,7 @@ import ProductCard from "./ProductCard";
 import ProductViewModal from "./ProductViewModal";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../store/reducers/store";
-import {Product} from "../types";
+import {Product} from "../types/Product.ts";
 import Filter from "./Filter.tsx";
 import useProductFilter from "./useProductFilter.tsx";
 import {fetchCategories} from "../store/actions";
