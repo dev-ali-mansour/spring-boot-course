@@ -1,5 +1,6 @@
 import {FaShoppingCart} from "react-icons/fa";
 import {Product} from "../types/Product.ts";
+import truncateText from "../utils/truncateText.tsx";
 
 interface ProductCardProps {
     product: Product;
@@ -28,11 +29,11 @@ export default function ProductCard({product, onView}: ProductCardProps) {
                     onClick={onView}
                     className="text-lg font-semibold mb-2 cursor-pointer"
                 >
-                    {product.name}
+                    {truncateText(product.name, 50)}
                 </h2>
 
                 <div className="min-h-20 max-h-20">
-                    <p className="text-gray-600 text-sm">{product.description}</p>
+                    <p className="text-gray-600 text-sm">{truncateText(product.description, 80)}</p>
                 </div>
 
                 <div className="flex items-center justify-between">
