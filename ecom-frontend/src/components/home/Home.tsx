@@ -1,7 +1,9 @@
+import HeroBanner from "./HeroBanner.tsx";
+
 export default function Home() {
     return (
         <div>
-            <h1>Welcome to the Home Page</h1>
+            <HeroBanner/>
         </div>
     );
 }
