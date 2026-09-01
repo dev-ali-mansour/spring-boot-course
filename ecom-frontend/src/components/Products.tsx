@@ -3,21 +3,24 @@ import {FaExclamationTriangle} from "react-icons/fa";
 import ProductCard from "./ProductCard";
 import ProductViewModal from "./ProductViewModal";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchProducts} from "../store/actions";
-import {AppDispatch, RootState} from "../store/reducers/store";
+import {RootState} from "../store/reducers/store";
 import {Product} from "../types";
 import Filter from "./Filter.tsx";
+import useProductFilter from "./useProductFilter.tsx";
+import {fetchCategories} from "../store/actions";
 
 export default function Products() {
-    const {isLoading, errorMessage} = useSelector((state: RootState) => state.errors);
-    const {products} = useSelector((state: RootState) => state.products);
-    const dispatch = useDispatch<AppDispatch>();
+    const {isProductsLoading, productsErrorMessage} = useSelector((state: RootState) => state.errors);
+    const {products, categories} = useSelector((state: RootState) => state.products);
+    const dispatch = useDispatch();
 
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    useProductFilter();
+
     useEffect(() => {
-        dispatch(fetchProducts() as any);
+        dispatch(fetchCategories() as any);
     }, [dispatch]);
 
     const handleViewProduct = (product: Product) => {
@@ -27,14 +30,14 @@ export default function Products() {
 
     return (
         <div className="lg:px-14 sm:px-8 px-4 py-14 2xl:w-[90%] 2xl:mx-auto">
-            <Filter/>
-            {isLoading ? (
+            <Filter categories={categories}/>
+            {isProductsLoading ? (
                 <p>Loading...</p>
-            ) : errorMessage ? (
+            ) : productsErrorMessage ? (
                 <div className="flex justify-center items-center h-50">
                     <FaExclamationTriangle className="text-slate-800 text-3xl mr-2"/>
                     <span className="text-slate-800 text-lg font-medium">
-                        {errorMessage}
+                        {productsErrorMessage}
                     </span>
                 </div>
             ) : (
