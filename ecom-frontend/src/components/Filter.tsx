@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { FiArrowDown, FiArrowUp, FiRefreshCw, FiSearch } from "react-icons/fi";
-import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Tooltip } from "@mui/material";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { Category } from "../types/Category.ts";
+import {useEffect, useState} from "react";
+import {FiArrowDown, FiArrowUp, FiRefreshCw, FiSearch} from "react-icons/fi";
+import {Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Tooltip} from "@mui/material";
+import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
+import {Category} from "../types/Category.ts";
 
-export default function Filter({ categories }: { categories: Category[] }) {
+export default function Filter({categories}: { categories: Category[] }) {
     const [searchParams] = useSearchParams();
     const pathName = useLocation().pathname;
     const navigate = useNavigate();
@@ -45,6 +45,7 @@ export default function Filter({ categories }: { categories: Category[] }) {
         if (selectedCategory === "all") {
             params.delete("category");
         } else {
+            params.delete("page");
             params.set("category", selectedCategory);
         }
         navigate(`${pathName}?${decodeURIComponent(params.toString())}`);
@@ -59,7 +60,7 @@ export default function Filter({ categories }: { categories: Category[] }) {
 
     const handleClearFilters = () => {
         setSearchTerm("");
-        navigate({ pathname: pathName });
+        navigate({pathname: pathName});
     };
 
     return (
@@ -73,7 +74,7 @@ export default function Filter({ categories }: { categories: Category[] }) {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="border border-gray-400 text-slate-800 rounded-md py-2 pl-10 pr-4 w-full focus:outline-none focus:ring-2 focus:ring-[#1976d2]"
                 />
-                <FiSearch className="absolute left-3 text-slate-800" size={20} />
+                <FiSearch className="absolute left-3 text-slate-800" size={20}/>
             </div>
 
             {/* CATEGORY SELECTION & ACTIONS */}
@@ -110,7 +111,7 @@ export default function Filter({ categories }: { categories: Category[] }) {
                         onClick={toggleSortOrder}
                     >
                         Sort By
-                        {sort.endsWith("asc") ? <FiArrowUp size={20} /> : <FiArrowDown size={20} />}
+                        {sort.endsWith("asc") ? <FiArrowUp size={20}/> : <FiArrowDown size={20}/>}
                     </Button>
                 </Tooltip>
 
@@ -118,7 +119,7 @@ export default function Filter({ categories }: { categories: Category[] }) {
                     className="flex items-center gap-2 bg-rose-900 text-white px-3 py-2 rounded-md transition duration-300 ease-in shadow-md focus:outline-none cursor-pointer"
                     onClick={handleClearFilters}
                 >
-                    <FiRefreshCw className="font-semibold" size={16} />
+                    <FiRefreshCw className="font-semibold" size={16}/>
                     <span className="font-semibold">Clear Filter</span>
                 </button>
             </div>
