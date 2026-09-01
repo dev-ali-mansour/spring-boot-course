@@ -3,17 +3,18 @@ import {FaExclamationTriangle} from "react-icons/fa";
 import ProductCard from "./ProductCard";
 import ProductViewModal from "./ProductViewModal";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../store/reducers/store";
+import {AppDispatch, RootState} from "../store/reducers/store";
 import {Product} from "../types/Product.ts";
 import Filter from "./Filter.tsx";
 import useProductFilter from "./useProductFilter.tsx";
 import {fetchCategories} from "../store/actions";
 import Loader from "./Loader.tsx";
+import PaginationComponent from "./PaginationComponent.tsx";
 
 export default function Products() {
     const {isProductsLoading, productsErrorMessage} = useSelector((state: RootState) => state.errors);
-    const {products, categories} = useSelector((state: RootState) => state.products);
-    const dispatch = useDispatch();
+    const {products, categories, pagination} = useSelector((state: RootState) => state.products);
+    const dispatch = useDispatch<AppDispatch>();
 
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -53,6 +54,11 @@ export default function Products() {
                                     onView={() => handleViewProduct(product)}
                                 />
                             ))}
+                    </div>
+                    <div className={"flex justify-center pt-10"}>
+                        <PaginationComponent
+                            pagination={pagination}
+                        />
                     </div>
                 </div>
             )}
