@@ -8,6 +8,7 @@ import {Product} from "../types/Product.ts";
 import Filter from "./Filter.tsx";
 import useProductFilter from "./useProductFilter.tsx";
 import {fetchCategories} from "../store/actions";
+import Loader from "./Loader.tsx";
 
 export default function Products() {
     const {isProductsLoading, productsErrorMessage} = useSelector((state: RootState) => state.errors);
@@ -32,7 +33,7 @@ export default function Products() {
         <div className="lg:px-14 sm:px-8 px-4 py-14 2xl:w-[90%] 2xl:mx-auto">
             <Filter categories={categories}/>
             {isProductsLoading ? (
-                <p>Loading...</p>
+                <Loader text={"Loading products..."}/>
             ) : productsErrorMessage ? (
                 <div className="flex justify-center items-center h-50">
                     <FaExclamationTriangle className="text-slate-800 text-3xl mr-2"/>
