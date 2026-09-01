@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../store/reducers/store";
 import {Product} from "../types/Product.ts";
 import Filter from "./Filter.tsx";
-import useProductFilter from "./useProductFilter.tsx";
+import useProductFilter from "../hooks/useProductFilter.tsx";
 import {fetchCategories} from "../store/actions";
 import Loader from "./Loader.tsx";
 import PaginationComponent from "./PaginationComponent.tsx";
