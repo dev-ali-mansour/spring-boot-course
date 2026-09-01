@@ -16,3 +16,8 @@ export interface Pagination {
     totalPages: number;
     lastPage: boolean;
 }
+
+export interface Category {
+    id: number | string;
+    name: string;
+}

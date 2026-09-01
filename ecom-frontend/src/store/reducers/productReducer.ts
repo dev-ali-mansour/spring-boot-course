@@ -1,14 +1,14 @@
-import { Product, Pagination } from "../../types";
+import {Category, Pagination, Product} from "../../types";
 
 export interface ProductState {
     products: Product[] | null;
-    categories: any[] | null; // Placeholder for categories type if needed
+    categories: Category[];
     pagination: Partial<Pagination>;
 }
 
 const initialState: ProductState = {
     products: null,
-    categories: null,
+    categories: [],
     pagination: {},
 };
 
@@ -26,6 +26,11 @@ export const productReducer = (state = initialState, action: any): ProductState 
                     totalPages: action.totalPages,
                     lastPage: action.lastPage,
                 },
+            };
+        case "FETCH_CATEGORIES":
+            return {
+                ...state,
+                categories: action.payload,
             };
         default:
             return state;

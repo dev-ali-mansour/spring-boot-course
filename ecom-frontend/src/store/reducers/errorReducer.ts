@@ -1,32 +1,54 @@
 export interface ErrorState {
-    isLoading: boolean;
-    errorMessage: string | null;
+    isProductsLoading: boolean;
+    isCategoriesLoading: boolean;
+    productsErrorMessage: string | null;
+    categoriesErrorMessage: string | null;
 }
 
 const initialState: ErrorState = {
-    isLoading: false,
-    errorMessage: null
+    isProductsLoading: false,
+    isCategoriesLoading: false,
+    productsErrorMessage: null,
+    categoriesErrorMessage: null
 };
 
 export const errorReducer = (state = initialState, action: any): ErrorState => {
     switch (action.type) {
-        case "IS_FETCHING":
+        case "PRODUCTS_FETCHING":
             return {
                 ...state,
-                isLoading: true,
-                errorMessage: null
+                isProductsLoading: true,
+                productsErrorMessage: null
             };
-        case "IS_SUCCESS":
+        case "PRODUCTS_SUCCESS":
             return {
                 ...state,
-                isLoading: false,
-                errorMessage: null
+                isProductsLoading: false,
+                productsErrorMessage: null
             };
-        case "IS_ERROR":
+        case "PRODUCTS_ERROR":
             return {
                 ...state,
-                isLoading: false,
-                errorMessage: action.payload
+                isProductsLoading: false,
+                productsErrorMessage: action.payload
+            };
+        case "CATEGORIES_FETCHING":
+            return {
+                ...state,
+                isCategoriesLoading: true,
+                categoriesErrorMessage: null
+            };
+        case "CATEGORIES_SUCCESS":
+            return {
+                ...state,
+                isCategoriesLoading: false,
+                categoriesErrorMessage: null
+            };
+        case "CATEGORIES_ERROR":
+            return {
+                ...state,
+                isCategoriesLoading: false,
+                categoriesErrorMessage: action.payload
             };
         default:
             return state;
