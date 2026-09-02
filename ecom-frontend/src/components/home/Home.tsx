@@ -4,13 +4,13 @@ import ProductCard from "../shared/ProductCard.tsx";
 import ProductViewModal from "../shared/ProductViewModal.tsx";
 import Loader from "../shared/Loader.tsx";
 import {FaExclamationTriangle} from "react-icons/fa";
-import {useProducts, getErrorMessage} from "../../hooks/useQueries.ts";
+import {getErrorMessage, useProducts} from "../../hooks/useQueries.ts";
 import {useProductModalStore} from "../../store/useProductModalStore.ts";
 
 export default function Home() {
-    const { data, isLoading: isProductsLoading, error } = useProducts("");
-    const { selectedProduct, isModalOpen, openModal, closeModal } = useProductModalStore();
-    
+    const {data, isLoading: isProductsLoading, error} = useProducts("");
+    const {selectedProduct, isModalOpen, openModal, closeModal} = useProductModalStore();
+
     const products = data?.content;
     const productsErrorMessage = error ? getErrorMessage(error) : null;
 
