@@ -1,11 +1,13 @@
-import placeholder from "../assets/placeholder.png"
 import bannerImageOne from "../assets/sliders/s_1.webp";
 import bannerImageTwo from "../assets/sliders/s_2.webp";
 import bannerImageThree from "../assets/sliders/s_3.webp";
+import placeholder from "../assets/images/placeholder.png"
+import contactUs from "../assets/images/contact-us.jpg"
 
 export {
-    placeholder,
     bannerImageOne,
     bannerImageTwo,
-    bannerImageThree
+    bannerImageThree,
+    placeholder,
+    contactUs
 }
