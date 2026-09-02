@@ -1,14 +1,10 @@
 import {useSearchParams} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {useEffect} from "react";
-import {fetchProducts} from "../store/actions";
-import {AppDispatch} from "../store/reducers/store.ts";
+import {useMemo} from "react";
 
 export default function useProductFilter() {
     const [searchParams] = useSearchParams();
-    const dispatch = useDispatch<AppDispatch>();
 
-    useEffect(() => {
+    return useMemo(() => {
         const params = new URLSearchParams();
         const page = searchParams.get("page")
             ? (Number(searchParams.get("page")) - 1).toString()
@@ -28,9 +24,6 @@ export default function useProductFilter() {
             params.set("keyword", keyword);
         }
 
-        const queryString = decodeURIComponent(params.toString());
-        console.log("Query String:", queryString);
-
-        dispatch(fetchProducts(queryString) as any);
-    }, [dispatch, searchParams]);
+        return decodeURIComponent(params.toString());
+    }, [searchParams]);
 }
