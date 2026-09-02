@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Home from "./components/home/Home.tsx";
 import Products from "./components/products/Products.tsx";
 import Navbar from "./components/shared/Navbar.tsx";
+import About from "./components/about/About.tsx";
 
 const App: React.FC = () => {
     return (
@@ -11,6 +12,7 @@ const App: React.FC = () => {
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/products" element={<Products/>}/>
+                <Route path="/about" element={<About/>}/>
             </Routes>
         </Router>
     );
