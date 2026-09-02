@@ -4,10 +4,11 @@ import truncateText from "../../utils/truncateText.tsx";
 
 interface ProductCardProps {
     product: Product;
-    onView: () => void;
+    isCompact?: boolean;
+    onView?: () => void;
 }
 
-export default function ProductCard({product, onView}: ProductCardProps) {
+export default function ProductCard({product, isCompact, onView}: ProductCardProps) {
     const btnLoader = false;
     const isAvailable = product.quantity && Number(product.quantity) > 0;
 
@@ -36,33 +37,35 @@ export default function ProductCard({product, onView}: ProductCardProps) {
                     <p className="text-gray-600 text-sm">{truncateText(product.description, 80)}</p>
                 </div>
 
-                <div className="flex items-center justify-between">
-                    {product.specialPrice ? (
-                        <div className="flex flex-col">
+                {!isCompact &&
+                    <div className="flex items-center justify-between">
+                        {product.specialPrice ? (
+                            <div className="flex flex-col">
                             <span className="text-gray-400 line-through">
                                 ${Number(product.price).toFixed(2)}
                             </span>
-                            <span className="text-xl font-bold text-slate-700">
+                                <span className="text-xl font-bold text-slate-700">
                                 ${Number(product.specialPrice).toFixed(2)}
                             </span>
-                        </div>
-                    ) : (
-                        <span className="text-xl font-bold text-slate-700">
+                            </div>
+                        ) : (
+                            <span className="text-xl font-bold text-slate-700">
                             ${Number(product.price).toFixed(2)}
                         </span>
-                    )}
+                        )}
 
-                    <button
-                        disabled={!isAvailable || btnLoader}
-                        className={`bg-blue-500 ${isAvailable ? "opacity-100 hover:bg-blue-600 cursor-pointer"
-                            : "opacity-70"} text-white py-2 px-3 rounded-lg items-center transition-colors duration-300 w-36 flex justify-center`}
-                        onClick={() => {
-                        }}
-                    >
-                        <FaShoppingCart className="mr-2"/>
-                        {isAvailable ? "Add to Cart" : "Stock Out"}
-                    </button>
-                </div>
+                        <button
+                            disabled={!isAvailable || btnLoader}
+                            className={`bg-blue-500 ${isAvailable ? "opacity-100 hover:bg-blue-600 cursor-pointer"
+                                : "opacity-70"} text-white py-2 px-3 rounded-lg items-center transition-colors duration-300 w-36 flex justify-center`}
+                            onClick={() => {
+                            }}
+                        >
+                            <FaShoppingCart className="mr-2"/>
+                            {isAvailable ? "Add to Cart" : "Stock Out"}
+                        </button>
+                    </div>
+                }
             </div>
         </div>
     );
