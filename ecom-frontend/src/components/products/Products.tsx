@@ -1,34 +1,25 @@
-import {useEffect, useState} from "react";
 import {FaExclamationTriangle} from "react-icons/fa";
 import ProductCard from "../shared/ProductCard.tsx";
 import ProductViewModal from "../shared/ProductViewModal.tsx";
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../store/reducers/store.ts";
 import {Product} from "../../types/Product.ts";
 import Filter from "./Filter.tsx";
 import useProductFilter from "../../hooks/useProductFilter.ts";
-import {fetchCategories} from "../../store/actions";
 import Loader from "../shared/Loader.tsx";
 import PaginationComponent from "../shared/PaginationComponent.tsx";
+import {useProducts, useCategories, getErrorMessage} from "../../hooks/useQueries.ts";
+import {useProductModalStore} from "../../store/useProductModalStore.ts";
 
 export default function Products() {
-    const {isProductsLoading, productsErrorMessage} = useSelector((state: RootState) => state.errors);
-    const {products, categories, pagination} = useSelector((state: RootState) => state.products);
-    const dispatch = useDispatch<AppDispatch>();
+    const queryString = useProductFilter();
+    const { data: productsData, isLoading: isProductsLoading, error: productsError } = useProducts(queryString);
+    const { data: categoriesData } = useCategories();
+    
+    const { selectedProduct, isModalOpen, openModal, closeModal } = useProductModalStore();
 
-    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    useProductFilter();
-
-    useEffect(() => {
-        dispatch(fetchCategories() as any);
-    }, [dispatch]);
-
-    const handleViewProduct = (product: Product) => {
-        setSelectedProduct(product);
-        setIsModalOpen(true);
-    };
+    const products = productsData?.content;
+    const pagination = productsData || {};
+    const categories = categoriesData?.content || [];
+    const productsErrorMessage = productsError ? getErrorMessage(productsError) : null;
 
     return (
         <div className="lg:px-14 sm:px-8 px-4 py-14 2xl:w-[90%] 2xl:mx-auto">
@@ -51,7 +42,7 @@ export default function Products() {
                                 <ProductCard
                                     key={product.id}
                                     product={product}
-                                    onView={() => handleViewProduct(product)}
+                                    onView={() => openModal(product)}
                                 />
                             ))}
                     </div>
@@ -65,7 +56,7 @@ export default function Products() {
 
             <ProductViewModal
                 isOpen={isModalOpen}
-                setIsOpen={setIsModalOpen}
+                setIsOpen={(open) => !open && closeModal()}
                 product={selectedProduct || ""}
                 isAvailable={!!(selectedProduct?.quantity && Number(selectedProduct.quantity) > 0)}
             />

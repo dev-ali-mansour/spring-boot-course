@@ -1,29 +1,18 @@
 import HeroBanner from "./HeroBanner.tsx";
 import {Product} from "../../types/Product.ts";
 import ProductCard from "../shared/ProductCard.tsx";
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../store/reducers/store.ts";
-import {useEffect, useState} from "react";
-import {fetchProducts} from "../../store/actions";
 import ProductViewModal from "../shared/ProductViewModal.tsx";
 import Loader from "../shared/Loader.tsx";
 import {FaExclamationTriangle} from "react-icons/fa";
+import {useProducts, getErrorMessage} from "../../hooks/useQueries.ts";
+import {useProductModalStore} from "../../store/useProductModalStore.ts";
 
 export default function Home() {
-    const dispatch = useDispatch<AppDispatch>();
-    const {isProductsLoading, productsErrorMessage} = useSelector((state: RootState) => state.errors);
-    const {products} = useSelector((state: any) => state.products);
-    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    useEffect(() => {
-        dispatch(fetchProducts() as any);
-    }, [dispatch])
-
-    const handleViewProduct = (product: Product) => {
-        setSelectedProduct(product);
-        setIsModalOpen(true);
-    };
+    const { data, isLoading: isProductsLoading, error } = useProducts("");
+    const { selectedProduct, isModalOpen, openModal, closeModal } = useProductModalStore();
+    
+    const products = data?.content;
+    const productsErrorMessage = error ? getErrorMessage(error) : null;
 
     return (
         <div className={"lg:px-14 sm:px-8 px-4"}>
@@ -57,7 +46,7 @@ export default function Home() {
                             <ProductCard
                                 key={product.id}
                                 product={product}
-                                onView={() => handleViewProduct(product)}
+                                onView={() => openModal(product)}
                             />
                         ))}
                 </div>
@@ -65,7 +54,7 @@ export default function Home() {
 
             <ProductViewModal
                 isOpen={isModalOpen}
-                setIsOpen={setIsModalOpen}
+                setIsOpen={(open) => !open && closeModal()}
                 product={selectedProduct || ""}
                 isAvailable={!!(selectedProduct?.quantity && Number(selectedProduct.quantity) > 0)}
             />
