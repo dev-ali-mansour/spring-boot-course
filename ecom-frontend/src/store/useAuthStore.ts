@@ -1,5 +1,5 @@
-import {User} from "../types/User.ts";
-import {Address} from "../types/Address.ts";
+import {User} from "../types";
+import {Address} from "../types";
 import {create} from "zustand";
 
 const CART_STORAGE_KEY: string = "cartItems";

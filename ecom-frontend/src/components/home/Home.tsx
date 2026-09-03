@@ -1,5 +1,5 @@
 import HeroBanner from "./HeroBanner.tsx";
-import {Product} from "../../types/Product.ts";
+import {Product} from "../../types";
 import ProductCard from "../shared/ProductCard.tsx";
 import ProductViewModal from "../shared/ProductViewModal.tsx";
 import Loader from "../shared/Loader.tsx";

@@ -1,5 +1,5 @@
 import {FaShoppingCart} from "react-icons/fa";
-import {Product} from "../../types/Product.ts";
+import {Product} from "../../types";
 import truncateText from "../../utils/truncateText.tsx";
 import {useCartStore} from "../../store";
 import React from "react";

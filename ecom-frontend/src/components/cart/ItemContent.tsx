@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {CartItem} from "../../types/CartItem.ts";
+import {CartItem} from "../../types";
 import truncateText from "../../utils/truncateText.tsx";
 import {HiOutlineTrash} from "react-icons/hi";
 import SetQuantity from "./SetQuantity.tsx";

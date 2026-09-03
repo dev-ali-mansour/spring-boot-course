@@ -2,7 +2,7 @@ import {Dialog, DialogBackdrop, DialogPanel, DialogTitle} from '@headlessui/reac
 import {Divider} from "@mui/material";
 import Status from "./Status.tsx";
 import {MdClose, MdDone} from "react-icons/md";
-import {Product} from "../../types/Product.ts";
+import {Product} from "../../types";
 import React from "react";
 
 interface ProductViewModalProps {

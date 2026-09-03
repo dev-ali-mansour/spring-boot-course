@@ -1,6 +1,6 @@
 import {placeholder} from "../../utils/constant.ts";
 import ProductCard from "../shared/ProductCard.tsx";
-import {Product} from "../../types/Product.ts";
+import {Product} from "../../types";
 import React from "react";
 
 const products: Product[] = [
