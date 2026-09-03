@@ -1,7 +1,14 @@
 import {MdArrowBack, MdShoppingCart} from "react-icons/md";
 import {Link} from "react-router-dom";
+import React from "react";
+import {useCartStore} from "../../store";
+import ItemContent from "./ItemContent.tsx";
 
-export default function Cart() {
+const Cart: React.FC = () => {
+    const {cart, totalPrice} = useCartStore();
+
+    if (!cart || cart.length === 0) return <h1>Cart is Empty</h1>
+
     return (
         <div className={"lg:px-14 sm:px-8 px-4 py-10"}>
             <div className={"flex flex-col items-center mb-12"}>
@@ -27,6 +34,11 @@ export default function Cart() {
                 </div>
             </div>
 
+            <div>
+                {cart && cart.length > 0 &&
+                    cart.map((item, index) => <ItemContent key={index} {...item}/>)}
+            </div>
+
             <div
                 className={`border-t-[1.5px] border-slate-200 py-4 flex sm:flex-row sm:px-0 px-2 
                 flex-col sm:justify-between gap-4`}>
@@ -34,7 +46,7 @@ export default function Cart() {
                 <div className={"flex text-sm gap-1 flex-col"}>
                     <div className={"flex justify-between w-full md:text-lg text-sm font-semibold"}>
                         <span>Subtotal</span>
-                        <span>$400</span>
+                        <span>${totalPrice.toFixed(2)}</span>
                     </div>
 
                     <p className={"accent-slate-500"}>
@@ -64,4 +76,6 @@ export default function Cart() {
             </div>
         </div>
     );
-}
+};
+
+export default Cart;
