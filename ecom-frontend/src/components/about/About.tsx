@@ -1,6 +1,7 @@
 import {placeholder} from "../../utils/constant.ts";
 import ProductCard from "../shared/ProductCard.tsx";
 import {Product} from "../../types/Product.ts";
+import React from "react";
 
 const products: Product[] = [
     {
@@ -35,7 +36,7 @@ const products: Product[] = [
     }
 ];
 
-export default function About() {
+const About: React.FC = () => {
 
     return (
         <div className={"max-w-7xl mx-auto px-4 py-8"}>
@@ -77,4 +78,6 @@ export default function About() {
             </div>
         </div>
     );
-}
+};
+
+export default About;

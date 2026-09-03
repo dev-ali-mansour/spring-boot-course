@@ -1,10 +1,11 @@
 import {RotatingLines} from "react-loader-spinner";
+import React from "react";
 
 interface LoaderProps {
     text?: string;
 }
 
-export default function Loader({text = "Please wait..."}: LoaderProps) {
+const Loader: React.FC<LoaderProps> = ({text = "Please wait..."}: LoaderProps) => {
     return (
         <div className={"flex justify-center items-center w-full h-112.5"}>
             <div className={"flex flex-col items-center gap-1"}>
@@ -23,4 +24,6 @@ export default function Loader({text = "Please wait..."}: LoaderProps) {
             </div>
         </div>
     );
-}
+};
+
+export default Loader;

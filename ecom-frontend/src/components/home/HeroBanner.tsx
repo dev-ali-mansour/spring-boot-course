@@ -9,11 +9,11 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/effect-fade';
 import 'swiper/css/autoplay';
-
+import React from "react";
 
 const colors = ["bg-banner-color1", "bg-banner-color2", "bg-banner-color3"];
 
-export default function HeroBanner() {
+const HeroBanner: React.FC = () => {
     return (
         <div className={"py-2 rounded-md"}>
             <Swiper
@@ -60,4 +60,6 @@ export default function HeroBanner() {
             </Swiper>
         </div>
     );
-}
+};
+
+export default HeroBanner;

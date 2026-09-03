@@ -1,9 +1,9 @@
-
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
-import { Divider } from "@mui/material";
+import {Dialog, DialogBackdrop, DialogPanel, DialogTitle} from '@headlessui/react';
+import {Divider} from "@mui/material";
 import Status from "./Status.tsx";
-import { MdClose, MdDone } from "react-icons/md";
-import { Product } from "../../types/Product.ts";
+import {MdClose, MdDone} from "react-icons/md";
+import {Product} from "../../types/Product.ts";
+import React from "react";
 
 interface ProductViewModalProps {
     isOpen: boolean;
@@ -12,7 +12,12 @@ interface ProductViewModalProps {
     isAvailable: boolean;
 }
 
-export default function ProductViewModal({ isOpen, setIsOpen, product, isAvailable }: ProductViewModalProps) {
+const ProductViewModal: React.FC<ProductViewModalProps> = ({
+                                                               isOpen,
+                                                               setIsOpen,
+                                                               product,
+                                                               isAvailable
+                                                           }: ProductViewModalProps) => {
     function close() {
         setIsOpen(false);
     }
@@ -50,7 +55,7 @@ export default function ProductViewModal({ isOpen, setIsOpen, product, isAvailab
                                           <span className="text-gray-400 line-through">
                                             ${Number(product.price).toFixed(2)}
                                           </span>
-                                          <span className="sm:text-xl font-semibold text-slate-700">
+                                            <span className="sm:text-xl font-semibold text-slate-700">
                                             ${Number(product.specialPrice).toFixed(2)}
                                           </span>
                                         </div>
@@ -96,4 +101,6 @@ export default function ProductViewModal({ isOpen, setIsOpen, product, isAvailab
             </div>
         </Dialog>
     );
-}
+};
+
+export default ProductViewModal;

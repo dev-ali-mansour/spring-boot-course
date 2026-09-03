@@ -1,11 +1,11 @@
 import {Link, useLocation} from "react-router-dom";
 import {FaShoppingCart, FaSignInAlt, FaStore} from "react-icons/fa";
 import {Badge} from "@mui/material";
-import {useState} from "react";
+import React, {useState} from "react";
 import {RxCross2} from "react-icons/rx";
 import {IoIosMenu} from "react-icons/io";
 
-export default function Navbar() {
+const Navbar: React.FC = () => {
     const path = useLocation().pathname;
     const [navbarOpen, setNavbarOpen] = useState(false);
 
@@ -89,4 +89,6 @@ export default function Navbar() {
             </div>
         </div>
     )
-}
+};
+
+export default Navbar;

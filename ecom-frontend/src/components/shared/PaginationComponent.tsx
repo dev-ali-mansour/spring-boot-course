@@ -3,7 +3,7 @@ import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import * as React from "react";
 import {Pagination} from "../../types/Pagination.ts";
 
-export default function PaginationComponent({pagination}: { pagination: Partial<Pagination> }) {
+const PaginationComponent: React.FC<{ pagination: Partial<Pagination> }> = ({pagination}) => {
     const [searchParams] = useSearchParams();
     const params = new URLSearchParams(searchParams);
     const pathName = useLocation().pathname;
@@ -30,4 +30,7 @@ export default function PaginationComponent({pagination}: { pagination: Partial<
             />
         </div>
     );
-}
+};
+
+export default PaginationComponent;
+

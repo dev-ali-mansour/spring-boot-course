@@ -5,13 +5,14 @@ import ProductViewModal from "../shared/ProductViewModal.tsx";
 import Loader from "../shared/Loader.tsx";
 import {FaExclamationTriangle} from "react-icons/fa";
 import {getErrorMessage, useProducts} from "../../hooks/useQueries.ts";
-import {useProductModalStore} from "../../store/useProductModalStore.ts";
+import {useProductModalStore} from "../../store";
+import React from "react";
 
-export default function Home() {
+const Home: React.FC = () => {
     const {data, isLoading: isProductsLoading, error} = useProducts("");
     const {selectedProduct, isModalOpen, openModal, closeModal} = useProductModalStore();
 
-    const products:Product[] | undefined = data?.content;
+    const products: Product[] | undefined = data?.content;
     const productsErrorMessage = error ? getErrorMessage(error) : null;
 
     return (
@@ -60,4 +61,6 @@ export default function Home() {
             />
         </div>
     );
-}
+};
+
+export default Home;

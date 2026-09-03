@@ -7,7 +7,7 @@ import useProductFilter from "../../hooks/useProductFilter.ts";
 import Loader from "../shared/Loader.tsx";
 import PaginationComponent from "../shared/PaginationComponent.tsx";
 import {useProducts, useCategories, getErrorMessage} from "../../hooks/useQueries.ts";
-import {useProductModalStore} from "../../store/useProductModalStore.ts";
+import {useProductModalStore} from "../../store";
 
 export default function Products() {
     const queryString = useProductFilter();

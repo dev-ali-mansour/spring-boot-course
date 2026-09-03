@@ -1,7 +1,8 @@
 import {FaShoppingCart} from "react-icons/fa";
 import {Product} from "../../types/Product.ts";
 import truncateText from "../../utils/truncateText.tsx";
-import {useCartStore} from "../../store/useCartStore.ts";
+import {useCartStore} from "../../store";
+import React from "react";
 
 interface ProductCardProps {
     product: Product;
@@ -9,7 +10,7 @@ interface ProductCardProps {
     onView?: () => void;
 }
 
-export default function ProductCard({product, isCompact, onView}: ProductCardProps) {
+const ProductCard: React.FC<ProductCardProps> = ({product, isCompact, onView}: ProductCardProps) => {
     const btnLoader = false;
     const isAvailable = product.quantity && Number(product.quantity) > 0;
     const addToCart = useCartStore((state) => state.addToCart);
@@ -73,4 +74,7 @@ export default function ProductCard({product, isCompact, onView}: ProductCardPro
             </div>
         </div>
     );
-}
+};
+
+export default ProductCard;
+

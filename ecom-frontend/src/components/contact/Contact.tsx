@@ -1,8 +1,9 @@
 import {FaEnvelope, FaPhone} from "react-icons/fa6";
 import {FaMapMarkedAlt} from "react-icons/fa";
 import {contactUs} from "../../utils/constant.ts";
+import React from "react";
 
-export default function Contact() {
+const Contact: React.FC = () => {
     return (
         <div className={"flex flex-col items-center justify-center min-h-screen py-12 bg-cover bg-center"}
              style={{backgroundImage: `url(${contactUs})`}}>
@@ -74,4 +75,6 @@ export default function Contact() {
             </div>
         </div>
     );
-}
+};
+
+export default Contact;

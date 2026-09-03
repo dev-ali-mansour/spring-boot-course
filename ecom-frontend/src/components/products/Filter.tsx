@@ -1,10 +1,10 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {FiArrowDown, FiArrowUp, FiRefreshCw, FiSearch} from "react-icons/fi";
 import {Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Tooltip} from "@mui/material";
 import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import {Category} from "../../types/Category.ts";
 
-export default function Filter({categories}: { categories: Category[] }) {
+const Filter: React.FC<{ categories: Category[] }> = ({categories}) => {
     const [searchParams] = useSearchParams();
     const pathName = useLocation().pathname;
     const navigate = useNavigate();
@@ -125,5 +125,6 @@ export default function Filter({categories}: { categories: Category[] }) {
             </div>
         </div>
     );
-}
+};
 
+export default Filter;
