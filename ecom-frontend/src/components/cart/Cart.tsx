@@ -3,11 +3,12 @@ import {Link} from "react-router-dom";
 import React from "react";
 import {useCartStore} from "../../store";
 import ItemContent from "./ItemContent.tsx";
+import EmptyCart from "./EmptyCart.tsx";
 
 const Cart: React.FC = () => {
     const {cart, totalPrice} = useCartStore();
 
-    if (!cart || cart.length === 0) return <h1>Cart is Empty</h1>
+    if (!cart || cart.length === 0) return <EmptyCart/>;
 
     return (
         <div className={"lg:px-14 sm:px-8 px-4 py-10"}>
