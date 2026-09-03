@@ -7,6 +7,7 @@ import About from "./components/about/About.tsx";
 import Contact from "./components/contact/Contact.tsx";
 import {Toaster} from "react-hot-toast";
 import Cart from "./components/cart/Cart.tsx";
+import SignIn from "./components/auth/SignIn.tsx";
 
 const App: React.FC = () => {
     return (
@@ -19,6 +20,7 @@ const App: React.FC = () => {
                     <Route path="/about" element={<About/>}/>
                     <Route path="/contact" element={<Contact/>}/>
                     <Route path="/cart" element={<Cart/>}/>
+                    <Route path="/signin" element={<SignIn/>}/>
                 </Routes>
             </Router>
             <Toaster position={"bottom-center"}/>
