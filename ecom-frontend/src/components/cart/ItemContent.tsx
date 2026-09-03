@@ -5,12 +5,15 @@ import {HiOutlineTrash} from "react-icons/hi";
 import SetQuantity from "./SetQuantity.tsx";
 import {useCartStore} from "../../store";
 import toast from "react-hot-toast";
+import {formatPrice} from "../../utils/formatPrice.ts";
 
 const ItemContent: React.FC<CartItem> = (item) => {
     const [currentQuantity, setCurrentQuantity] = useState<number>(item.quantity);
     const increaseCartQuantity = useCartStore((state) => state.increaseCartQuantity);
     const decreaseCartQuantity = useCartStore((state) => state.decreaseCartQuantity);
     const removeFromCart = useCartStore((state) => state.removeFromCart);
+
+    const activePrice = item.specialPrice ? Number(item.specialPrice) : Number(item.price);
 
     const handleQuantityIncrease = () => {
         increaseCartQuantity(item, toast, currentQuantity, setCurrentQuantity);
@@ -58,7 +61,7 @@ const ItemContent: React.FC<CartItem> = (item) => {
             </div>
 
             <div className="justify-self-center lg:text-[17px] text-sm text-slate-600 font-semibold">
-                {Number(item.specialPrice)}
+                {formatPrice(activePrice)}
             </div>
 
             <div className="justify-self-center">
@@ -70,7 +73,7 @@ const ItemContent: React.FC<CartItem> = (item) => {
             </div>
 
             <div className="justify-self-center lg:text-[17px] text-sm text-slate-600 font-semibold">
-                {Number(item.price) * currentQuantity}
+                {formatPrice(activePrice * currentQuantity)}
             </div>
 
         </div>
