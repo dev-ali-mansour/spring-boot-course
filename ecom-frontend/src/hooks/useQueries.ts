@@ -38,7 +38,8 @@ export const useCategories = () => {
 export const useSignIn = () => {
     return useMutation({
         mutationFn: async (credentials: SignInCredentials) => {
-            return await api.post("/auth/signin", credentials);
+            const {data} = await api.post("/auth/signin", credentials);
+            return data;
         }
     })
 };
