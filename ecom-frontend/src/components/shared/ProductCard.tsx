@@ -1,6 +1,7 @@
 import {FaShoppingCart} from "react-icons/fa";
 import {Product} from "../../types/Product.ts";
 import truncateText from "../../utils/truncateText.tsx";
+import {useCartStore} from "../../store/useCartStore.ts";
 
 interface ProductCardProps {
     product: Product;
@@ -11,7 +12,11 @@ interface ProductCardProps {
 export default function ProductCard({product, isCompact, onView}: ProductCardProps) {
     const btnLoader = false;
     const isAvailable = product.quantity && Number(product.quantity) > 0;
+    const addToCart = useCartStore((state) => state.addToCart);
 
+    const addToCartHandler = () => {
+        addToCart(product);
+    };
     return (
         <div className="border rounded-lg shadow-xl overflow-hidden transition-shadow duration-300">
             <div
@@ -56,11 +61,10 @@ export default function ProductCard({product, isCompact, onView}: ProductCardPro
 
                         <button
                             disabled={!isAvailable || btnLoader}
+                            onClick={addToCartHandler}
                             className={`bg-blue-500 ${isAvailable ? "opacity-100 hover:bg-blue-600 cursor-pointer"
-                                : "opacity-70"} text-white py-2 px-3 rounded-lg items-center transition-colors duration-300 w-36 flex justify-center`}
-                            onClick={() => {
-                            }}
-                        >
+                                : "opacity-70"} text-white py-2 px-3 rounded-lg items-center transition-colors 
+                                duration-300 w-36 flex justify-center`}>
                             <FaShoppingCart className="mr-2"/>
                             {isAvailable ? "Add to Cart" : "Stock Out"}
                         </button>
