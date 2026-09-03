@@ -11,7 +11,7 @@ export default function Home() {
     const {data, isLoading: isProductsLoading, error} = useProducts("");
     const {selectedProduct, isModalOpen, openModal, closeModal} = useProductModalStore();
 
-    const products = data?.content;
+    const products:Product[] | undefined = data?.content;
     const productsErrorMessage = error ? getErrorMessage(error) : null;
 
     return (
