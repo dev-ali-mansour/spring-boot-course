@@ -5,11 +5,13 @@ import React, {useState} from "react";
 import {RxCross2} from "react-icons/rx";
 import {IoIosMenu} from "react-icons/io";
 import {useCartStore} from "../../store";
+import {useAuthStore} from "../../store/useAuthStore.ts";
 
 const Navbar: React.FC = () => {
     const path = useLocation().pathname;
     const [navbarOpen, setNavbarOpen] = useState(false);
     const cart = useCartStore(state => state.cart);
+    const user = useAuthStore(state => state.user);
 
     return (
         <div className={"h-17.5 bg-custom-gradient text-white z-50 flex items-center sticky top-0"}>
@@ -24,6 +26,7 @@ const Navbar: React.FC = () => {
                         ${navbarOpen ? "h-fit sm:pb-0 pb-5" : "h-0 overflow-hidden"} 
                         transition-all duration-100 sm:h-fit sm:bg-none bg-custom-gradient 
                         text-white sm:w-fit w-full sm:flex-row flex-col px-4 sm:px-0`}>
+
                     <li className={"font-medium transition-all duration-150"}>
                         <Link className=
                                   {`${path === "/" ? "text-white font-semibold" : "text-gray-200"}`}
@@ -31,6 +34,7 @@ const Navbar: React.FC = () => {
                             Home
                         </Link>
                     </li>
+
                     <li className={"font-medium transition-all duration-150"}>
                         <Link className=
                                   {`${path === "/products" ? "text-white font-semibold" : "text-gray-200"}`}
@@ -38,6 +42,7 @@ const Navbar: React.FC = () => {
                             Products
                         </Link>
                     </li>
+
                     <li className={"font-medium transition-all duration-150"}>
                         <Link className=
                                   {`${path === "/about" ? "text-white font-semibold" : "text-gray-200"}`}
@@ -45,6 +50,7 @@ const Navbar: React.FC = () => {
                             About
                         </Link>
                     </li>
+
                     <li className={"font-medium transition-all duration-150"}>
                         <Link className=
                                   {`${path === "/contact" ? "text-white font-semibold" : "text-gray-200"}`}
@@ -52,6 +58,7 @@ const Navbar: React.FC = () => {
                             Contact
                         </Link>
                     </li>
+
                     <li className={"font-medium transition-all duration-150"}>
                         <Link className=
                                   {`${path === "/cart" ? "text-white font-semibold" : "text-gray-200"}`}
@@ -66,17 +73,26 @@ const Navbar: React.FC = () => {
                             </Badge>
                         </Link>
                     </li>
-                    <li className={"font-medium transition-all duration-150"}>
-                        <Link className={`flex items-center space-x-2 px-4 py-1.5 
+                    {(user && user.id) ? (
+                        <li className={"font-medium transition-all duration-150"}>
+                            <p className={`flex items-center space-x-2 px-4 py-1.5  
+                                    text-white font-semibold rounded-md shadow-lg`}>
+                                {`Welcome, ${user.username}!`}
+                            </p>
+                        </li>
+                    ) : (
+                        <li className={"font-medium transition-all duration-150"}>
+                            <Link className={`flex items-center space-x-2 px-4 py-1.5 
                                     bg-linear-to-r from-purple-600 to-red-500 
                                     text-white font-semibold rounded-md shadow-lg 
                                     hover:from-purple-500 hover:to-red-400 transition 
                                     duration-300 ease-in-out transform`}
-                              to={"/signin"}>
-                            <FaSignInAlt/>
-                            <span>Sign In</span>
-                        </Link>
-                    </li>
+                                  to={"/signin"}>
+                                <FaSignInAlt/>
+                                <span>Sign In</span>
+                            </Link>
+                        </li>
+                    )}
                 </ul>
 
                 <button
