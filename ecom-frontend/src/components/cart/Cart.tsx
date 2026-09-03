@@ -4,6 +4,7 @@ import React from "react";
 import {useCartStore} from "../../store";
 import ItemContent from "./ItemContent.tsx";
 import EmptyCart from "./EmptyCart.tsx";
+import {formatPrice} from "../../utils/formatPrice.ts";
 
 const Cart: React.FC = () => {
     const {cart, totalPrice} = useCartStore();
@@ -47,7 +48,7 @@ const Cart: React.FC = () => {
                 <div className={"flex text-sm gap-1 flex-col"}>
                     <div className={"flex justify-between w-full md:text-lg text-sm font-semibold"}>
                         <span>Subtotal</span>
-                        <span>${totalPrice.toFixed(2)}</span>
+                        <span>{formatPrice(Number(totalPrice))}</span>
                     </div>
 
                     <p className={"accent-slate-500"}>
