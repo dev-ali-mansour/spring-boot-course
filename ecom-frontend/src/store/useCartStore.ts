@@ -1,0 +1,133 @@
+import {CartItem} from "../types/CartItem.ts";
+import toast from "react-hot-toast";
+import {create} from "zustand";
+
+const CART_STORAGE_KEY: string = "cartItems";
+
+export interface CartState {
+    cart: CartItem[],
+    totalPrice: number,
+    cartId: number | string | null,
+    addToCart: (product: CartItem, quantity?: number, customToast?: typeof toast) => void,
+    increaseCartQuantity: (product: CartItem, customToast?: typeof toast, currentQuantity?: number, setCurrentQuantity?: (q: number) => void) => void,
+    decreaseCartQuantity: (product: CartItem, newQuantity: number) => void,
+    removeFromCart: (product: CartItem, customToast?: typeof toast) => void,
+    setCart: (cart: CartItem[], totalPrice: number, cartId: number | string | null) => void,
+    clearCart: () => void
+}
+
+const getInitialCart = (): CartItem[] => {
+    try {
+        const item = localStorage.getItem(CART_STORAGE_KEY);
+        return item ? JSON.parse(item) : [];
+    } catch {
+        return [];
+    }
+};
+
+const calculateTotalPrice = (items: CartItem[]): number => {
+    return items.reduce((acc, item) => {
+        const price = item.specialPrice ? Number(item.specialPrice) : Number(item.price);
+        return acc + price * Number(item.quantity);
+    }, 0);
+};
+
+export const useCartStore = create<CartState>((set, get) => ({
+    cart: getInitialCart(),
+    totalPrice: calculateTotalPrice(getInitialCart()),
+    cartId: null,
+    addToCart: (product, quantity = 1, customToast) => {
+        const activeToast = customToast || toast;
+        const currentCart = get().cart;
+        const existingItem = currentCart.find((item) => (item.id) === product.id);
+        const existingQuantity = existingItem ? existingItem.quantity : 0;
+        const totalRequestedQuantity = existingQuantity + quantity;
+        const availableQuantity = product.quantity ? Number(product.quantity) : 0;
+
+        if (availableQuantity < totalRequestedQuantity) {
+            activeToast.error("Out of stock");
+            return;
+        }
+
+        let updatedCart: CartItem[];
+        if (existingItem) {
+            updatedCart = currentCart.map((item) => {
+                if (item.id === product.id) {
+                    return {...item, quantity: totalRequestedQuantity}
+                }
+                return item;
+            })
+        } else {
+            const newItem: CartItem = {
+                ...product,
+                quantity: quantity
+            };
+            updatedCart = [...currentCart, newItem];
+        }
+
+        const newTotalPrice = calculateTotalPrice(updatedCart);
+        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCart));
+        set({cart: updatedCart, totalPrice: newTotalPrice});
+        activeToast.success("Added to the cart");
+    },
+    increaseCartQuantity: (product, customToast, currentQuantity, setCurrentQuantity) => {
+        const activeToast = customToast || toast;
+        const currentCart = get().cart;
+        const existingItem = currentCart.find((item) => item.id == product.id);
+        const currentQty = currentQuantity !== undefined
+            ? currentQuantity : existingItem ? Number(existingItem.quantity) : 1;
+        const availableQuantity = product.quantity ? Number(product.quantity) : 0;
+
+        if (availableQuantity < currentQty + 1) {
+            activeToast.error("Quantity reached to limit");
+            return;
+        }
+        const newQuantity = currentQty + 1;
+        if (setCurrentQuantity) {
+            setCurrentQuantity(newQuantity);
+        }
+
+        const updatedCart = currentCart.map((item) => {
+            if (item.id == product.id) {
+                return {...item, quantity: newQuantity};
+            }
+            return item;
+        });
+        const newTotalPrice = calculateTotalPrice(updatedCart);
+        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCart));
+        set({cart: updatedCart, totalPrice: newTotalPrice});
+    },
+    decreaseCartQuantity: (product, newQuantity) => {
+        const currentCart = get().cart;
+
+        const updatedCart = currentCart.map((item) => {
+            if (item.id === product.id) {
+                return {...item, quantity: newQuantity};
+            }
+            return item;
+        });
+
+        const newTotalPrice = calculateTotalPrice(updatedCart);
+        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCart));
+        set({cart: updatedCart, totalPrice: newTotalPrice});
+    },
+    removeFromCart: (product, customToast) => {
+        const activeToast = customToast || toast;
+        const currentCart = get().cart;
+
+        const updatedCart = currentCart.filter((item) => item.id !== product.id);
+
+        const newTotalPrice = calculateTotalPrice(updatedCart);
+        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCart));
+        set({cart: updatedCart, totalPrice: newTotalPrice});
+        activeToast.success(`${product.name} Removed from the cart`);
+    },
+    setCart: (cart, totalPrice, cartId) => {
+        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+        set({cart: cart, totalPrice: totalPrice, cartId: cartId});
+    },
+    clearCart: () => {
+        localStorage.removeItem(CART_STORAGE_KEY);
+        set({cart: [], totalPrice: 0, cartId: null});
+    }
+}));
