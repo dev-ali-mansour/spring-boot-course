@@ -7,6 +7,15 @@ export interface LoginCredentials {
     password?: string;
 }
 
+export interface RegistrationData {
+    firstName: string;
+    lastName: string;
+    username: string;
+    email: string;
+    password: string;
+    role?: string[];
+}
+
 export const getErrorMessage = (error: any) => {
     return error?.response?.data?.message ||
         error?.response?.data?.error ||
@@ -39,6 +48,15 @@ export const useLogin = () => {
     return useMutation({
         mutationFn: async (credentials: LoginCredentials) => {
             const {data} = await api.post("/auth/signin", credentials);
+            return data;
+        }
+    })
+};
+
+export const useRegister = () => {
+    return useMutation({
+        mutationFn: async (registrationData: RegistrationData) => {
+            const {data} = await api.post("/auth/signup", registrationData);
             return data;
         }
     })
