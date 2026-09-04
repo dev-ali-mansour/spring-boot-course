@@ -1,12 +1,12 @@
-import { bannerImageOne, bannerImageThree, bannerImageTwo } from "./constant";
+import {bannerImageOne, bannerImageThree, bannerImageTwo} from "./constant";
 
 export const bannerLists = [
     {
         id: 1,
         image: bannerImageOne,
-        title: "Home Comfort",
-        subtitle: "Living Room",
-        description: "Upgrade your space with cozy and stylish sofas",
+        title: "Playful Picks",
+        subtitle: "Kids' Clothing",
+        description: "Bright and fun styles for kids, up to 20% off",
     },
     {
         id: 2,
@@ -18,8 +18,8 @@ export const bannerLists = [
     {
         id: 3,
         image: bannerImageThree,
-        title: "Playful Picks",
-        subtitle: "Kids' Clothing",
-        description: "Bright and fun styles for kids, up to 20% off",
+        title: "Home Comfort",
+        subtitle: "Living Room",
+        description: "Upgrade your space with cozy and stylish sofas",
     }
 ];
