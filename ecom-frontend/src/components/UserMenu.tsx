@@ -4,7 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {BiUser} from "react-icons/bi";
 import {useAuthStore} from "../store";
 import {FaShoppingCart} from "react-icons/fa";
-import {useSignOut} from "../hooks/useQueries.ts";
+import {useLogout} from "../hooks/useQueries.ts";
 import {IoExitOutline} from "react-icons/io5";
 import truncateText from "../utils/truncateText.tsx";
 import BackDrop from "./shared/BackDrop.tsx";
@@ -16,7 +16,7 @@ const UserMenu: React.FC = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const {user, clearUser} = useAuthStore();
-    const signOutMutation = useSignOut();
+    const logoutMutation = useLogout();
     const navigate = useNavigate();
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -26,11 +26,11 @@ const UserMenu: React.FC = () => {
         setAnchorEl(null);
     };
 
-    const signOutHandler = async () => {
+    const logoutHandler = async () => {
         try {
-            await signOutMutation.mutateAsync();
+            await logoutMutation.mutateAsync();
         } catch (error) {
-            console.log("Failed to sign out on the server", error);
+            console.log("Failed to logout on the server", error);
         }
         clearUser();
         navigate("/login");
@@ -81,7 +81,7 @@ const UserMenu: React.FC = () => {
                 </Link>
                 <MenuItem
                     className={"flex gap-2"}
-                    onClick={signOutHandler}>
+                    onClick={logoutHandler}>
                     <div
                         className={`font-semibold w-full flex gap-2 items-center bg-button-gradient px-4 py-1 
                                     text-white rounded-xs`}>

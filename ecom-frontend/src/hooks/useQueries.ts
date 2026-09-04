@@ -44,7 +44,7 @@ export const useLogin = () => {
     })
 };
 
-export const useSignOut = () => {
+export const useLogout = () => {
     return useMutation({
         mutationFn: async () => {
             const {data} = await api.post("/auth/signout");
