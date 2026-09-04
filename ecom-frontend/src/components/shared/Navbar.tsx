@@ -5,7 +5,7 @@ import React, {useState} from "react";
 import {RxCross2} from "react-icons/rx";
 import {IoIosMenu} from "react-icons/io";
 import {useAuthStore, useCartStore} from "../../store";
-import UserMenu from "./UserMenu.tsx";
+import UserMenu from "../UserMenu.tsx";
 
 const Navbar: React.FC = () => {
     const path = useLocation().pathname;

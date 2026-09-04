@@ -2,12 +2,12 @@ import React from "react";
 import {Avatar, IconButton, Menu, MenuItem} from "@mui/material";
 import {Link, useNavigate} from "react-router-dom";
 import {BiUser} from "react-icons/bi";
-import {useAuthStore} from "../../store";
+import {useAuthStore} from "../store";
 import {FaShoppingCart} from "react-icons/fa";
-import {useSignOut} from "../../hooks/useQueries.ts";
+import {useSignOut} from "../hooks/useQueries.ts";
 import {IoExitOutline} from "react-icons/io5";
-import truncateText from "../../utils/truncateText.tsx";
-import BackDrop from "./BackDrop.tsx";
+import truncateText from "../utils/truncateText.tsx";
+import BackDrop from "./shared/BackDrop.tsx";
 
 const UserMenu: React.FC = () => {
     const id = React.useId();

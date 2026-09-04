@@ -1,6 +1,6 @@
 import {FaEnvelope, FaPhone} from "react-icons/fa6";
 import {FaMapMarkedAlt} from "react-icons/fa";
-import {contactUs} from "../../utils/constant.ts";
+import {contactUs} from "../utils/constant.ts";
 import React from "react";
 
 const Contact: React.FC = () => {
