@@ -14,8 +14,15 @@ class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
+    @Column(nullable = false)
+    var firstName: String = "",
+    @Column(nullable = false)
+    var lastName: String = "",
+    @Column(nullable = false)
     var username: String = "",
+    @Column(nullable = false)
     var email: String = "",
+    @Column(nullable = false)
     var password: String = "",
 
     @ManyToMany(
