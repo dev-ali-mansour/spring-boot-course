@@ -7,7 +7,7 @@ import About from "./components/About.tsx";
 import Contact from "./components/Contact.tsx";
 import {Toaster} from "react-hot-toast";
 import Cart from "./components/cart/Cart.tsx";
-import SignIn from "./components/auth/SignIn.tsx";
+import Login from "./components/auth/Login.tsx";
 import PrivateRouter from "./components/PrivateRouter.tsx";
 
 const App: React.FC = () => {
@@ -22,7 +22,7 @@ const App: React.FC = () => {
                     <Route path={"/contact"} element={<Contact/>}/>
                     <Route path={"/cart"} element={<Cart/>}/>
                     <Route path={"/"} element={<PrivateRouter isPublicPage={true}/>}>
-                        <Route path="/signin" element={<SignIn/>}/>
+                        <Route path="/login" element={<Login/>}/>
                     </Route>
                 </Routes>
             </Router>

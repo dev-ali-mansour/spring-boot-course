@@ -33,7 +33,7 @@ const UserMenu: React.FC = () => {
             console.log("Failed to sign out on the server", error);
         }
         clearUser();
-        navigate("/signin");
+        navigate("/login");
     }
 
     return (
@@ -87,7 +87,7 @@ const UserMenu: React.FC = () => {
                                     text-white rounded-xs`}>
                         <IoExitOutline className={"text-xl"}/>
                         <span className={"font-semibold"}>
-                            Sign Out
+                            Logout
                         </span>
                     </div>
                 </MenuItem>

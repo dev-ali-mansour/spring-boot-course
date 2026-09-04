@@ -84,9 +84,9 @@ const Navbar: React.FC = () => {
                                     text-white font-semibold rounded-md shadow-lg 
                                     hover:from-purple-500 hover:to-red-400 transition 
                                     duration-300 ease-in-out transform`}
-                                  to={"/signin"}>
+                                  to={"/login"}>
                                 <FaSignInAlt/>
-                                <span>Sign In</span>
+                                <span>Login</span>
                             </Link>
                         </li>
                     )}

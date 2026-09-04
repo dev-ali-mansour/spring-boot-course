@@ -2,7 +2,7 @@ import {useMutation, useQuery} from "@tanstack/react-query";
 import {api} from "../api/api";
 
 
-export interface SignInCredentials {
+export interface LoginCredentials {
     username?: string;
     password?: string;
 }
@@ -35,9 +35,9 @@ export const useCategories = () => {
     });
 };
 
-export const useSignIn = () => {
+export const useLogin = () => {
     return useMutation({
-        mutationFn: async (credentials: SignInCredentials) => {
+        mutationFn: async (credentials: LoginCredentials) => {
             const {data} = await api.post("/auth/signin", credentials);
             return data;
         }

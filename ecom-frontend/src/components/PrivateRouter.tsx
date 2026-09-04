@@ -13,7 +13,7 @@ const PrivateRouter: React.FC<PrivateRouterProps> = ({isPublicPage = false}: Pri
         return user ? <Navigate to={"/"}/> : <Outlet/>;
     }
 
-    return user ? <Outlet/> : <Navigate to={"/signin"}/>;
+    return user ? <Outlet/> : <Navigate to={"/login"}/>;
 };
 
 export default PrivateRouter;
