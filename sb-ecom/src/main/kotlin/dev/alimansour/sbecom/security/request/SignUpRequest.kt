@@ -4,6 +4,12 @@ import jakarta.validation.constraints.*
 
 data class SignUpRequest(
     @NotBlank
+    @Size(min = 2, max = 30, message = "Username must be between 2 and 30 characters!")
+    val firstName: String,
+    @NotBlank
+    @Size(min = 2, max = 30, message = "Username must be between 2 and 30 characters!")
+    val lastName: String,
+    @NotBlank
     @Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters!")
     val username: String,
 
