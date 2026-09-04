@@ -6,6 +6,7 @@ import {RxCross2} from "react-icons/rx";
 import {IoIosMenu} from "react-icons/io";
 import {useCartStore} from "../../store";
 import {useAuthStore} from "../../store/useAuthStore.ts";
+import UserMenu from "./UserMenu.tsx";
 
 const Navbar: React.FC = () => {
     const path = useLocation().pathname;
@@ -75,10 +76,7 @@ const Navbar: React.FC = () => {
                     </li>
                     {(user && user.id) ? (
                         <li className={"font-medium transition-all duration-150"}>
-                            <p className={`flex items-center space-x-2 px-4 py-1.5  
-                                    text-white font-semibold rounded-md shadow-lg`}>
-                                {`Welcome, ${user.username}!`}
-                            </p>
+                            <UserMenu/>
                         </li>
                     ) : (
                         <li className={"font-medium transition-all duration-150"}>
