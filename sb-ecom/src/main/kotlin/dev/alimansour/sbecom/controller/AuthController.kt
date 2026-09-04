@@ -63,6 +63,8 @@ class AuthController(
 
         val response = UserInfoResponse(
             id = userDetails.id,
+            firstName = userDetails.firstName,
+            lastName = userDetails.lastName,
             jwtToken = jwtCookie.value,
             username = userDetails.username,
             roles = roles
@@ -89,6 +91,8 @@ class AuthController(
         }
 
         val user = User(
+            firstName = signUpRequest.firstName,
+            lastName = signUpRequest.lastName,
             username = signUpRequest.username,
             email = signUpRequest.email,
             password = encoder.encode(signUpRequest.password)
@@ -145,6 +149,8 @@ class AuthController(
 
         val response = UserInfoResponse(
             id = userDetails.id,
+            firstName = userDetails.firstName,
+            lastName = userDetails.lastName,
             username = userDetails.username,
             roles = roles
         )
