@@ -43,3 +43,12 @@ export const useSignIn = () => {
         }
     })
 };
+
+export const useSignOut = () => {
+    return useMutation({
+        mutationFn: async () => {
+            const {data} = await api.post("/auth/signout");
+            return data;
+        }
+    })
+};
