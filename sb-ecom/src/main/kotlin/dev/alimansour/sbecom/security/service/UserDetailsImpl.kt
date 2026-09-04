@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails
 
 class UserDetailsImpl(
     val id: Long? = null,
+    val firstName: String = "",
+    val lastName: String = "",
     private val username: String = "",
     val email: String = "",
     @JsonIgnore
@@ -49,6 +51,8 @@ class UserDetailsImpl(
 
             return UserDetailsImpl(
                 id = user.id,
+                firstName = user.firstName,
+                lastName = user.lastName,
                 username = user.username,
                 email = user.email,
                 password = user.password,
