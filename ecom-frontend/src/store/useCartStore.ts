@@ -1,8 +1,7 @@
-import {CartItem} from "../types/CartItem.ts";
+import {CartItem} from "../types";
 import toast from "react-hot-toast";
 import {create} from "zustand";
-
-const CART_STORAGE_KEY: string = "cartItems";
+import {CART_STORAGE_KEY} from "../utils/constant.ts";
 
 export interface CartState {
     cart: CartItem[],

@@ -11,3 +11,8 @@ export {
     placeholder,
     contactUs
 }
+
+export const CART_STORAGE_KEY: string = "cartItems";
+export const AUTH_STORAGE_KEY: string = "auth";
+export const CHECKOUT_ADDRESS_STORAGE_KEY: string = "checkoutAddress";
+export const CLIENT_SECRET_STORAGE_KEY: string = "clientSecret";

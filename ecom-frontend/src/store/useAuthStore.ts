@@ -1,11 +1,11 @@
-import {User} from "../types";
-import {Address} from "../types";
+import {Address, User} from "../types";
 import {create} from "zustand";
-
-const CART_STORAGE_KEY: string = "cartItems";
-const AUTH_STORAGE_KEY: string = "auth";
-const CHECKOUT_ADDRESS_STORAGE_KEY: string = "checkoutAddress";
-const CLIENT_SECRET_STORAGE_KEY: string = "clientSecret";
+import {
+    AUTH_STORAGE_KEY,
+    CART_STORAGE_KEY,
+    CHECKOUT_ADDRESS_STORAGE_KEY,
+    CLIENT_SECRET_STORAGE_KEY
+} from "../utils/constant.ts";
 
 interface AuthState {
     user: User | null;
