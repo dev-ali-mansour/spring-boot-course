@@ -8,6 +8,7 @@ import Contact from "./components/Contact.tsx";
 import {Toaster} from "react-hot-toast";
 import Cart from "./components/cart/Cart.tsx";
 import SignIn from "./components/auth/SignIn.tsx";
+import PrivateRouter from "./components/PrivateRouter.tsx";
 
 const App: React.FC = () => {
     return (
@@ -15,12 +16,14 @@ const App: React.FC = () => {
             <Router>
                 <Navbar/>
                 <Routes>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="/products" element={<Products/>}/>
-                    <Route path="/about" element={<About/>}/>
-                    <Route path="/contact" element={<Contact/>}/>
-                    <Route path="/cart" element={<Cart/>}/>
-                    <Route path="/signin" element={<SignIn/>}/>
+                    <Route path={"/"} element={<Home/>}/>
+                    <Route path={"/products"} element={<Products/>}/>
+                    <Route path={"/about"} element={<About/>}/>
+                    <Route path={"/contact"} element={<Contact/>}/>
+                    <Route path={"/cart"} element={<Cart/>}/>
+                    <Route path={"/"} element={<PrivateRouter isPublicPage={true}/>}>
+                        <Route path="/signin" element={<SignIn/>}/>
+                    </Route>
                 </Routes>
             </Router>
             <Toaster position={"bottom-center"}/>
