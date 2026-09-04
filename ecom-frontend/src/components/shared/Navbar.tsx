@@ -4,8 +4,7 @@ import {Badge} from "@mui/material";
 import React, {useState} from "react";
 import {RxCross2} from "react-icons/rx";
 import {IoIosMenu} from "react-icons/io";
-import {useCartStore} from "../../store";
-import {useAuthStore} from "../../store/useAuthStore.ts";
+import {useAuthStore, useCartStore} from "../../store";
 import UserMenu from "./UserMenu.tsx";
 
 const Navbar: React.FC = () => {
