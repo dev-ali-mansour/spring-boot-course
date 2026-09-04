@@ -129,6 +129,8 @@ class WebSecurityConfig(
             // Create users if not already present
             if (!userRepository.existsByUsername("user1")) {
                 val user1 = User(
+                    firstName = "First",
+                    lastName = "User",
                     username = "user1",
                     email = "user1@example.com",
                     password = checkNotNull(passwordEncoder.encode("P@ss4user")) {
@@ -140,6 +142,8 @@ class WebSecurityConfig(
 
             if (!userRepository.existsByUsername("seller1")) {
                 val seller1 = User(
+                    firstName = "Seller",
+                    lastName = "User",
                     username = "seller1",
                     email = "seller1@example.com",
                     password = checkNotNull(passwordEncoder.encode("P@ss4seller")) {
@@ -151,6 +155,8 @@ class WebSecurityConfig(
 
             if (!userRepository.existsByUsername("admin")) {
                 val admin = User(
+                    firstName = "Admin",
+                    lastName = "User",
                     username = "admin",
                     email = "admin@example.com",
                     password = checkNotNull(passwordEncoder.encode("P@ss4admin")) {
