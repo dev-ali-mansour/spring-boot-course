@@ -11,6 +11,7 @@ export interface InputFieldProps {
     message?: string;
     className?: string;
     min?: number;
+    max?: number;
     placeholder?: string;
 }
 
@@ -25,6 +26,7 @@ const InputField: React.FC<InputFieldProps> = (
         message,
         className,
         min,
+        max,
         placeholder,
     }: InputFieldProps
 ) => {
@@ -47,16 +49,25 @@ const InputField: React.FC<InputFieldProps> = (
                         minLength: min
                             ? {value: min, message: `Minimum ${min} character is required`}
                             : undefined,
+                        maxLength: max
+                            ? {value: max, message: `Maximum ${max} character is allowed`}
+                            : undefined,
                         pattern:
                             type === "email"
                                 ? {
                                     value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                                     message: "Invalid email"
-                                } : type === "url"
+                                } : type === "password"
                                     ? {
-                                        value: /^(https?:\/\/)?(([a-zA-Z0-9\u00a1-\uffff-]+\.)+[a-zA-Z\u00a1-\uffff]{2,})(:\d{2,5})?(\/[^\s]*)?$/,
-                                        message: "Please enter a valid URL"
-                                    } : undefined
+                                        value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,120}$/,
+                                        message: `Password must be at least 8 characters,at most 120 characters, 
+                                                    contain at least one lowercase, at least one uppercase, 
+                                                    at least one digit, and at least one special character!`
+                                    } : type === "url"
+                                        ? {
+                                            value: /^(https?:\/\/)?(([a-zA-Z0-9\u00a1-\uffff-]+\.)+[a-zA-Z\u00a1-\uffff]{2,})(:\d{2,5})?(\/[^\s]*)?$/,
+                                            message: "Please enter a valid URL"
+                                        } : undefined
                     }
                 )}/>
             {errors[id]?.message && (
