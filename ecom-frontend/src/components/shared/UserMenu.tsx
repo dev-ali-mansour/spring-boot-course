@@ -7,6 +7,7 @@ import {FaShoppingCart} from "react-icons/fa";
 import {useSignOut} from "../../hooks/useQueries.ts";
 import {IoExitOutline} from "react-icons/io5";
 import truncateText from "../../utils/truncateText.tsx";
+import BackDrop from "./BackDrop.tsx";
 
 const UserMenu: React.FC = () => {
     const id = React.useId();
@@ -91,6 +92,8 @@ const UserMenu: React.FC = () => {
                     </div>
                 </MenuItem>
             </Menu>
+
+            {open && <BackDrop/>}
         </div>
     );
 };
