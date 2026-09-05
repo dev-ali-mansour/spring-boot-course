@@ -51,6 +51,7 @@ class JwtUtils(
             .path("/api")
             .maxAge(24 * 60 * 60)
             .httpOnly(false)
+            .secure(false) //Todo For development, set to true in production
             .build()
     }
 
