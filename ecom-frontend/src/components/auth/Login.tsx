@@ -18,7 +18,7 @@ const Login: React.FC = () => {
             handleSubmit,
             reset,
             formState: {errors},
-        } = useForm({
+        } = useForm<LoginCredentials>({
             mode: "onTouched",
         });
 

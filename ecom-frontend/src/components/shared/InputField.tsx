@@ -1,12 +1,11 @@
-import React from "react";
-import {FieldErrors, FieldValues, UseFormRegister} from "react-hook-form";
+import {FieldErrors, FieldValues, Path, UseFormRegister} from "react-hook-form";
 
-export interface InputFieldProps {
+export interface InputFieldProps<TFieldValues extends FieldValues> {
     label: string;
-    id: string;
+    id: Path<TFieldValues>;
     type?: string;
-    errors: FieldErrors;
-    register: UseFormRegister<FieldValues>;
+    errors: FieldErrors<TFieldValues>;
+    register: UseFormRegister<TFieldValues>;
     required?: boolean;
     message?: string;
     className?: string;
@@ -15,7 +14,7 @@ export interface InputFieldProps {
     placeholder?: string;
 }
 
-const InputField: React.FC<InputFieldProps> = (
+const InputField = <TFieldValues extends FieldValues>(
     {
         label,
         id,
@@ -28,7 +27,7 @@ const InputField: React.FC<InputFieldProps> = (
         min,
         max,
         placeholder,
-    }: InputFieldProps
+    }: InputFieldProps<TFieldValues>
 ) => {
     return (
         <div className={"flex flex-col gap-1 w-full"}>

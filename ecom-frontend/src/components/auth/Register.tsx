@@ -1,7 +1,6 @@
 import React from "react";
 import {useForm} from "react-hook-form";
 import {Link, useNavigate} from "react-router-dom";
-import {useAuthStore} from "../../store";
 import InputField from "../shared/InputField.tsx";
 import {getErrorMessage, RegistrationData, useRegister} from "../../hooks/useQueries.ts";
 import toast from "react-hot-toast";
@@ -9,7 +8,6 @@ import {FaUserPlus} from "react-icons/fa";
 
 const Register: React.FC = () => {
     const navigate = useNavigate();
-    const setUser = useAuthStore((state) => state.setUser);
     const registerMutation = useRegister();
 
     const {
@@ -17,7 +15,7 @@ const Register: React.FC = () => {
         handleSubmit,
         reset,
         formState: {errors},
-    } = useForm({
+    } = useForm<RegistrationData>({
         mode: "onTouched",
     });
 
