@@ -41,4 +41,3 @@ application-secret.properties
 credentials.json
 *.pem
 *.key
-/images/
