@@ -62,7 +62,8 @@ const Cart: React.FC = () => {
                             onClick={() => {
                             }}
                             className={`font-semibold w-75 py-2 px-4 rounded-sm bg-custom-blue text-white flex 
-                            items-center justify-center gap-2 hover:text-gray-300 transition duration-500`}>
+                                        items-center justify-center gap-2 hover:text-gray-300 transition 
+                                        duration-500 cursor-pointer`}>
                             <MdShoppingCart size={20}/>
                             Checkout
                         </button>

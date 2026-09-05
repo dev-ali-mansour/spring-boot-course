@@ -16,7 +16,7 @@ const EmptyCart: React.FC = () => {
             </div>
             <div className={"mt-6"}>
                 <Link
-                    to={"/"}
+                    to={"/products"}
                     className={"flex gap-2 items-center text-blue-500 hover:text-blue-600 transition"}>
                     <MdArrowBack size={24}/>
                     <span className={"font-medium"}>Start Shopping</span>
