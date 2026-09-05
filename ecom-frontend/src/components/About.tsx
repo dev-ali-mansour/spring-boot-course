@@ -1,4 +1,4 @@
-import {placeholder} from "../utils/constant.ts";
+import aboutUsImage from "../assets/images/about-us.jpg";
 import ProductCard from "./shared/ProductCard.tsx";
 import {Product} from "../types";
 import React from "react";
@@ -6,30 +6,30 @@ import React from "react";
 const products: Product[] = [
     {
         id: 1,
-        image: placeholder,
-        name: "iPhone 13 Pro Max",
+        image: "http://localhost:8080/images/6f4237b8-545f-445f-8c41-3e68643f23a6.webp",
+        name: "iPhone 13 Pro",
         description:
-            "The iPhone 13 Pro Max offers exceptional performance with its A15 Bionic chip, stunning Super Retina XDR display, and advanced camera features for breathtaking photos.",
+            "The iPhone 13 Pro is a cutting-edge smartphone with a powerful camera system, high-performance chip, and stunning display. It offers advanced features for users who demand top-notch technology.",
         specialPrice: 720,
         price: 780,
         quantity: 10,
     },
     {
         id: 2,
-        image: placeholder,
-        name: "Samsung Galaxy S21",
+        image: "http://localhost:8080/images/f6e8c16a-2282-412d-a0cf-d222f70733f1.webp",
+        name: "Samsung Galaxy S10",
         description:
-            "Experience the brilliance of the Samsung Galaxy S21 with its vibrant AMOLED display, powerful camera, and sleek design that fits perfectly in your hand.",
+            "The Samsung Galaxy S10 is a flagship device featuring a dynamic AMOLED display, versatile camera system, and powerful performance. It represents innovation and excellence in smartphone technology.",
         specialPrice: 699,
         price: 799,
         quantity: 8,
     },
     {
         id: 3,
-        image: placeholder,
-        name: "Google Pixel 6",
+        image: "http://localhost:8080/images/7f3ab88a-75d5-435d-8705-ae4f545bcdbc.webp",
+        name: "Durango SXT RWD",
         description:
-            "The Google Pixel 6 boasts cutting-edge AI features, exceptional photo quality, and a stunning display, making it a perfect choice for Android enthusiasts.",
+            "The Durango SXT RWD is a spacious and versatile SUV, known for its strong performance and family-friendly features.",
         price: 599,
         specialPrice: 400,
         quantity: 5,
@@ -55,7 +55,7 @@ const About: React.FC = () => {
 
                 <div className={"w-full md:w-1/2 mb-6 md:mb-0"}>
                     <img
-                        src={placeholder}
+                        src={aboutUsImage}
                         alt={"About Us"}
                         className={`w-full h-auto rounded-lg shadow-lg transform transition-transform 
                                     duration-300 hover:scale-105`}/>
