@@ -82,3 +82,31 @@ export const useLogout = (): UseMutationResult<unknown, Error, void> => {
         }
     })
 };
+
+export const useGetUserAddresses = (): UseQueryResult<Address[], Error> => {
+    return useQuery<Address[], Error>({
+        queryKey: ["userAddresses"],
+        queryFn: async () => {
+            const {data} = await api.get<Address[]>("/addresses");
+            return data;
+        }
+    });
+};
+
+export const useAddUpdateAddress = (): UseMutationResult<Address, Error, AddressMutationParams> => {
+    const queryClient = useQueryClient();
+    return useMutation<Address, Error, AddressMutationParams>({
+        mutationFn: async ({addressId, addressData}: AddressMutationParams) => {
+            if (!addressId) {
+                const {data} = await api.post<Address>("/addresses", addressData);
+                return data;
+            } else {
+                const {data} = await api.put<Address>(`/addresses/${addressId}`, addressData);
+                return data;
+            }
+        },
+        onSuccess: () => {
+            return queryClient.invalidateQueries({queryKey: ["userAddresses"]});
+        },
+    });
+};
