@@ -1,6 +1,10 @@
-import {useMutation, useQuery} from "@tanstack/react-query";
+import {useMutation, UseMutationResult, useQuery, useQueryClient, UseQueryResult} from "@tanstack/react-query";
 import {api} from "../api/api";
+import {Address, Category, Pagination, Product, User} from "../types";
 
+export interface PaginatedResponse<T> extends Pagination {
+    content: T[];
+}
 
 export interface LoginCredentials {
     username?: string;
@@ -16,6 +20,11 @@ export interface RegistrationData {
     role?: string[];
 }
 
+export interface AddressMutationParams {
+    addressId?: number | string;
+    addressData: Partial<Address>;
+}
+
 export const getErrorMessage = (error: any) => {
     return error?.response?.data?.message ||
         error?.response?.data?.error ||
@@ -24,48 +33,48 @@ export const getErrorMessage = (error: any) => {
         "An error occurred!";
 };
 
-export const useProducts = (queryString: string = "") => {
-    return useQuery({
+export const useProducts = (queryString: string = ""): UseQueryResult<PaginatedResponse<Product>, Error> => {
+    return useQuery<PaginatedResponse<Product>, Error>({
         queryKey: ["products", queryString],
         queryFn: async () => {
-            const {data} = await api.get(`/public/products${queryString ? `?${queryString}` : ""}`);
+            const {data} = await api.get<PaginatedResponse<Product>>(`/public/products${queryString ? `?${queryString}` : ""}`);
             return data;
         }
     });
 };
 
-export const useCategories = () => {
-    return useQuery({
+export const useCategories = (): UseQueryResult<PaginatedResponse<Category>, Error> => {
+    return useQuery<PaginatedResponse<Category>, Error>({
         queryKey: ["categories"],
         queryFn: async () => {
-            const {data} = await api.get("/public/categories");
+            const {data} = await api.get<PaginatedResponse<Category>>("/public/categories");
             return data;
         }
     });
 };
 
-export const useLogin = () => {
-    return useMutation({
+export const useLogin = (): UseMutationResult<User, Error, LoginCredentials> => {
+    return useMutation<User, Error, LoginCredentials>({
         mutationKey: ["login"],
         mutationFn: async (credentials: LoginCredentials) => {
-            const {data} = await api.post("/auth/signin", credentials);
+            const {data} = await api.post<User>("/auth/signin", credentials);
             return data;
         }
     })
 };
 
-export const useRegister = () => {
-    return useMutation({
+export const useRegister = (): UseMutationResult<{ message?: string }, Error, RegistrationData> => {
+    return useMutation<{ message?: string }, Error, RegistrationData>({
         mutationKey: ["register"],
         mutationFn: async (registrationData: RegistrationData) => {
-            const {data} = await api.post("/auth/signup", registrationData);
+            const {data} = await api.post<{ message?: string }>("/auth/signup", registrationData);
             return data;
         }
     })
 };
 
-export const useLogout = () => {
-    return useMutation({
+export const useLogout = (): UseMutationResult<unknown, Error, void> => {
+    return useMutation<unknown, Error, void>({
         mutationKey: ["logout"],
         mutationFn: async () => {
             const {data} = await api.post("/auth/signout");
