@@ -6,6 +6,7 @@ import {
     CHECKOUT_ADDRESS_STORAGE_KEY,
     CLIENT_SECRET_STORAGE_KEY
 } from "../utils/constant.ts";
+import {devtools} from "zustand/middleware";
 
 interface AuthState {
     user: User | null;
@@ -47,53 +48,58 @@ const getInitialClientSecret = (): string | null => {
     }
 };
 
-export const useAuthStore = create<AuthState>((set) => ({
-    user: getInitialUser(),
-    selectedUserCheckoutAddress: getInitialAddress(),
-    clientSecret: getInitialClientSecret(),
-    setUser: (user) => {
-        if (user) {
-            localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
-        } else {
-            localStorage.removeItem(AUTH_STORAGE_KEY);
-        }
-        set({user});
-    },
-    clearUser: () => {
-        localStorage.removeItem(AUTH_STORAGE_KEY);
-        localStorage.removeItem(CHECKOUT_ADDRESS_STORAGE_KEY);
-        localStorage.removeItem(CLIENT_SECRET_STORAGE_KEY);
-        set({user: null, selectedUserCheckoutAddress: null, clientSecret: null});
-    },
-    setSelectedUserCheckoutAddress: (address) => {
-        if (address) {
-            localStorage.setItem(CHECKOUT_ADDRESS_STORAGE_KEY, JSON.stringify(address));
-        } else {
-            localStorage.removeItem(CHECKOUT_ADDRESS_STORAGE_KEY);
-        }
-        set({selectedUserCheckoutAddress: address});
+export const useAuthStore = create<AuthState>()(
+    devtools(
+        (set) => ({
+            user: getInitialUser(),
+            selectedUserCheckoutAddress: getInitialAddress(),
+            clientSecret: getInitialClientSecret(),
+            setUser: (user) => {
+                if (user) {
+                    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
+                } else {
+                    localStorage.removeItem(AUTH_STORAGE_KEY);
+                }
+                set({user}, false, "setUser");
+            },
+            clearUser: () => {
+                localStorage.removeItem(AUTH_STORAGE_KEY);
+                localStorage.removeItem(CHECKOUT_ADDRESS_STORAGE_KEY);
+                localStorage.removeItem(CLIENT_SECRET_STORAGE_KEY);
+                set({user: null, selectedUserCheckoutAddress: null, clientSecret: null}, false, "clearUser");
+            },
+            setSelectedUserCheckoutAddress: (address) => {
+                if (address) {
+                    localStorage.setItem(CHECKOUT_ADDRESS_STORAGE_KEY, JSON.stringify(address));
+                } else {
+                    localStorage.removeItem(CHECKOUT_ADDRESS_STORAGE_KEY);
+                }
+                set({selectedUserCheckoutAddress: address}, false, "setSelectedUserCheckoutAddress");
 
-    },
-    clearCheckoutAddress: () => {
-        localStorage.removeItem(CHECKOUT_ADDRESS_STORAGE_KEY);
-        set({selectedUserCheckoutAddress: null});
-    },
-    setClientSecret: (clientSecret) => {
-        if (clientSecret) {
-            localStorage.setItem(CLIENT_SECRET_STORAGE_KEY, JSON.stringify(clientSecret));
-        } else {
-            localStorage.removeItem(CLIENT_SECRET_STORAGE_KEY);
-        }
-        set({clientSecret: clientSecret});
-    },
-    clearClientSecret: () => {
-        localStorage.removeItem(CLIENT_SECRET_STORAGE_KEY);
-        set({clientSecret: null});
-    },
-    clearCheckoutSession: () => {
-        localStorage.removeItem(CHECKOUT_ADDRESS_STORAGE_KEY);
-        localStorage.removeItem(CLIENT_SECRET_STORAGE_KEY);
-        localStorage.removeItem(CART_STORAGE_KEY);
-        set({selectedUserCheckoutAddress: null, clientSecret: null});
-    },
-}))
+            },
+            clearCheckoutAddress: () => {
+                localStorage.removeItem(CHECKOUT_ADDRESS_STORAGE_KEY);
+                set({selectedUserCheckoutAddress: null}, false, "clearCheckoutAddress");
+            },
+            setClientSecret: (clientSecret) => {
+                if (clientSecret) {
+                    localStorage.setItem(CLIENT_SECRET_STORAGE_KEY, JSON.stringify(clientSecret));
+                } else {
+                    localStorage.removeItem(CLIENT_SECRET_STORAGE_KEY);
+                }
+                set({clientSecret: clientSecret}, false, "setClientSecret");
+            },
+            clearClientSecret: () => {
+                localStorage.removeItem(CLIENT_SECRET_STORAGE_KEY);
+                set({clientSecret: null}, false, "clearClientSecret");
+            },
+            clearCheckoutSession: () => {
+                localStorage.removeItem(CHECKOUT_ADDRESS_STORAGE_KEY);
+                localStorage.removeItem(CLIENT_SECRET_STORAGE_KEY);
+                localStorage.removeItem(CART_STORAGE_KEY);
+                set({selectedUserCheckoutAddress: null, clientSecret: null}, false, "clearCheckoutSession");
+            },
+        }),
+        {name: "AuthStore"}
+    ),
+)
