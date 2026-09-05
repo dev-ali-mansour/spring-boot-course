@@ -110,3 +110,17 @@ export const useAddUpdateAddress = (): UseMutationResult<Address, Error, Address
         },
     });
 };
+
+
+export const useDeleteAddress = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async (addressId: number | string) => {
+            const {data} = await api.delete(`/addresses/${addressId}`);
+            return data;
+        },
+        onSuccess: () => {
+            return queryClient.invalidateQueries({queryKey: ["userAddresses"]});
+        },
+    });
+};
