@@ -46,6 +46,7 @@ export const useCategories = () => {
 
 export const useLogin = () => {
     return useMutation({
+        mutationKey: ["login"],
         mutationFn: async (credentials: LoginCredentials) => {
             const {data} = await api.post("/auth/signin", credentials);
             return data;
@@ -55,6 +56,7 @@ export const useLogin = () => {
 
 export const useRegister = () => {
     return useMutation({
+        mutationKey: ["register"],
         mutationFn: async (registrationData: RegistrationData) => {
             const {data} = await api.post("/auth/signup", registrationData);
             return data;
@@ -64,6 +66,7 @@ export const useRegister = () => {
 
 export const useLogout = () => {
     return useMutation({
+        mutationKey: ["logout"],
         mutationFn: async () => {
             const {data} = await api.post("/auth/signout");
             return data;
