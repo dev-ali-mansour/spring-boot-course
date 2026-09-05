@@ -6,6 +6,7 @@ import {AiOutlineLogin} from "react-icons/ai";
 import InputField from "../shared/InputField.tsx";
 import {getErrorMessage, LoginCredentials, useLogin} from "../../hooks/useQueries.ts";
 import toast from "react-hot-toast";
+import {Oval,} from "react-loader-spinner";
 
 const Login: React.FC = () => {
 
@@ -77,7 +78,22 @@ const Login: React.FC = () => {
                                 text-white w-full py-2 hover:text-slate-400 transition-colors 
                                 duration-100 rounded-xs my-3 cursor-pointer`}
                         type={"submit"}>
-                        {loginMutation.isPending ? "Loading..." : "Login"}
+                        {loginMutation.isPending ? (
+                            <>
+                                <Oval
+                                    visible={true}
+                                    height="20"
+                                    width="20"
+                                    color="#FFFFFF"
+                                    ariaLabel="oval-loading"
+                                    wrapperStyle={{}}
+                                    wrapperClass=""
+                                />
+                                Loading...
+                            </>
+                        ) : (
+                            <>Login</>
+                        )}
                     </button>
 
                     <p className={"text-center text-sm text-slate-700 mt-6"}>

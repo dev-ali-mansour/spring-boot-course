@@ -5,6 +5,7 @@ import InputField from "../shared/InputField.tsx";
 import {getErrorMessage, RegistrationData, useRegister} from "../../hooks/useQueries.ts";
 import toast from "react-hot-toast";
 import {FaUserPlus} from "react-icons/fa";
+import {Oval} from "react-loader-spinner";
 
 const Register: React.FC = () => {
     const navigate = useNavigate();
@@ -111,7 +112,22 @@ const Register: React.FC = () => {
                                 text-white w-full py-2 hover:text-slate-400 transition-colors 
                                 duration-100 rounded-xs my-3 cursor-pointer`}
                     type={"submit"}>
-                    {registerMutation.isPending ? "Loading..." : "Register"}
+                    {registerMutation.isPending ? (
+                        <>
+                            <Oval
+                                visible={true}
+                                height="20"
+                                width="20"
+                                color="#FFFFFF"
+                                ariaLabel="oval-loading"
+                                wrapperStyle={{}}
+                                wrapperClass=""
+                            />
+                            Loading...
+                        </>
+                    ) : (
+                        "Register"
+                    )}
                 </button>
 
                 <p className={"text-center text-sm text-slate-700 mt-6"}>
