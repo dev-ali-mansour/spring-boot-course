@@ -1,13 +1,42 @@
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import {FormControl, FormControlLabel, Radio, RadioGroup} from "@mui/material";
-import {usePaymentStore} from "../../store";
+import {useCartStore, usePaymentStore} from "../../store";
+import {getErrorMessage, useCreateUserCart} from "../../hooks/useQueries.ts";
+import toast from "react-hot-toast";
 
 const PaymentMethod: React.FC = () => {
     const {paymentMethod, setPaymentMethod} = usePaymentStore();
+    const {cart, cartId} = useCartStore();
+    const createUserCartMutation = useCreateUserCart();
+    const hasInitialized = useRef(false);
+
+    useEffect(() => {
+        const createCart = async () => {
+            if (cart.length > 0 && !cartId && !hasInitialized.current) {
+                hasInitialized.current = true;
+                const sendCartItems = cart.map((item) => {
+                    return {
+                        productId: item.id,
+                        quantity: item.quantity,
+                    };
+                });
+
+                try {
+                    await createUserCartMutation.mutateAsync(sendCartItems);
+                } catch (error: unknown) {
+                    console.error("Failed to create user cart:", error);
+                    toast.error(getErrorMessage(error) || "Failed to create user cart. Please try again.");
+                }
+            }
+        };
+
+        createCart().then(() => console.log("Cart creation process completed."));
+    }, [cartId, cart, createUserCartMutation]);
 
     const paymentMethodHandler = (method: string) => {
         setPaymentMethod(method);
     }
+    
     return (
         <div className={"max-w-md mx-auto p-5 bg-white shadow-md rounded-lg mt-16 border"}>
             <h1 className={"text-2xl font-semibold mb-4"}>Select Payment Method</h1>
