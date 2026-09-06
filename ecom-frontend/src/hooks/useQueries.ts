@@ -87,7 +87,7 @@ export const useGetUserAddresses = (): UseQueryResult<Address[], Error> => {
     return useQuery<Address[], Error>({
         queryKey: ["userAddresses"],
         queryFn: async () => {
-            const {data} = await api.get<Address[]>("/addresses");
+            const {data} = await api.get<Address[]>("/users/addresses");
             return data;
         }
     });
