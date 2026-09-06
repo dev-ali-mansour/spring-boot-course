@@ -205,6 +205,7 @@ class CartServiceImpl(
         return cartRepository.save(this)
     }
 
+    @Transactional
     override fun createOrUpdateCartWithItems(cartItems: List<CartItemDTO>): String {
         val cart = cartRepository.findCartByUserId(authUtil.loggedInUserId())
             ?.let { existingCart ->
