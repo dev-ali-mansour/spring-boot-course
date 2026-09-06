@@ -1,6 +1,7 @@
 import {useMutation, UseMutationResult, useQuery, useQueryClient, UseQueryResult} from "@tanstack/react-query";
 import {api} from "../api/api";
-import {Address, Category, Pagination, Product, User} from "../types";
+import {Address, Cart, Category, Pagination, Product, User} from "../types";
+import {useCartStore} from "../store";
 
 export interface PaginatedResponse<T> extends Pagination {
     content: T[];
@@ -23,6 +24,11 @@ export interface RegistrationData {
 export interface AddressMutationParams {
     addressId?: number | string;
     addressData: Partial<Address>;
+}
+
+export interface CreateUserCartItem {
+    productId?: number | string;
+    quantity: number;
 }
 
 export const getErrorMessage = (error: any) => {
@@ -112,7 +118,7 @@ export const useAddUpdateAddress = (): UseMutationResult<Address, Error, Address
 };
 
 
-export const useDeleteAddress = () => {
+export const useDeleteAddress = (): UseMutationResult<string, Error, number | string> => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (addressId: number | string) => {
@@ -121,6 +127,24 @@ export const useDeleteAddress = () => {
         },
         onSuccess: () => {
             return queryClient.invalidateQueries({queryKey: ["userAddresses"]});
+        },
+    });
+};
+
+export const useCreateUserCart = (): UseMutationResult<Cart, Error, CreateUserCartItem[]> => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async (cartItems: CreateUserCartItem[]) => {
+            await api.post("/carts/users/cart", cartItems);
+            // Immediately fetch the created cart to get the cartId
+            const {data} = await api.get<Cart>("/carts/users/cart");
+            return data;
+        },
+        onSuccess: (data) => {
+            // 1. Update React Query Cache
+            queryClient.setQueryData(["userCart"], data);
+            // 2. Event-driven sync to Zustand store
+            useCartStore.getState().setCart(data.products || [], data.totalPrice || 0, data.cartId);
         },
     });
 };
