@@ -6,15 +6,15 @@ import toast from "react-hot-toast";
 
 const PaymentMethod: React.FC = () => {
     const {paymentMethod, setPaymentMethod} = usePaymentStore();
-    const {cart, cartId} = useCartStore();
+    const {cartItems, cartId} = useCartStore();
     const createUserCartMutation = useCreateUserCart();
     const hasInitialized = useRef(false);
 
     useEffect(() => {
         const createCart = async () => {
-            if (cart.length > 0 && !cartId && !hasInitialized.current) {
+            if (cartItems.length > 0 && !cartId && !hasInitialized.current) {
                 hasInitialized.current = true;
-                const sendCartItems = cart.map((item) => {
+                const sendCartItems = cartItems.map((item) => {
                     return {
                         productId: item.id,
                         quantity: item.quantity,
@@ -24,14 +24,14 @@ const PaymentMethod: React.FC = () => {
                 try {
                     await createUserCartMutation.mutateAsync(sendCartItems);
                 } catch (error: unknown) {
-                    console.error("Failed to create user cart:", error);
-                    toast.error(getErrorMessage(error) || "Failed to create user cart. Please try again.");
+                    console.error("Failed to create user cartItems:", error);
+                    toast.error(getErrorMessage(error) || "Failed to create user cartItems. Please try again.");
                 }
             }
         };
 
         createCart().then(() => console.log("Cart creation process completed."));
-    }, [cartId, cart, createUserCartMutation]);
+    }, [cartId, cartItems, createUserCartMutation]);
 
     const paymentMethodHandler = (method: string) => {
         setPaymentMethod(method);

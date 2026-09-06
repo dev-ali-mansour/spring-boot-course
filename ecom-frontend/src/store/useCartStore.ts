@@ -5,7 +5,7 @@ import {CART_STORAGE_KEY} from "../utils/constant.ts";
 import {devtools} from "zustand/middleware";
 
 export interface CartState {
-    cart: CartItem[],
+    cartItems: CartItem[],
     totalPrice: number,
     cartId: number | string | null,
     addToCart: (cartItem: CartItem, quantity?: number, customToast?: typeof toast) => void,
@@ -16,7 +16,7 @@ export interface CartState {
     clearCart: () => void
 }
 
-const getInitialCart = (): CartItem[] => {
+const getInitialCartItems = (): CartItem[] => {
     try {
         const item = localStorage.getItem(CART_STORAGE_KEY);
         return item ? JSON.parse(item) : [];
@@ -35,12 +35,12 @@ const calculateTotalPrice = (items: CartItem[]): number => {
 export const useCartStore = create<CartState>()(
     devtools(
         (set, get) => ({
-            cart: getInitialCart(),
-            totalPrice: calculateTotalPrice(getInitialCart()),
+            cartItems: getInitialCartItems(),
+            totalPrice: calculateTotalPrice(getInitialCartItems()),
             cartId: null,
             addToCart: (cartItem, quantity = 1, customToast) => {
                 const activeToast = customToast || toast;
-                const currentCart = get().cart;
+                const currentCart = get().cartItems;
                 const existingItem = currentCart.find((item) => (item.id) === cartItem.id);
                 const existingQuantity = existingItem ? existingItem.quantity : 0;
                 const totalRequestedQuantity = existingQuantity + quantity;
@@ -51,9 +51,9 @@ export const useCartStore = create<CartState>()(
                     return;
                 }
 
-                let updatedCart: CartItem[];
+                let updatedCartItems: CartItem[];
                 if (existingItem) {
-                    updatedCart = currentCart.map((item) => {
+                    updatedCartItems = currentCart.map((item) => {
                         if (item.id === cartItem.id) {
                             return {...item, quantity: totalRequestedQuantity}
                         }
@@ -65,17 +65,17 @@ export const useCartStore = create<CartState>()(
                         stock: cartItem.quantity ? Number(cartItem.quantity) : 0,
                         quantity: quantity
                     };
-                    updatedCart = [...currentCart, newItem];
+                    updatedCartItems = [...currentCart, newItem];
                 }
 
-                const newTotalPrice = calculateTotalPrice(updatedCart);
-                localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCart));
+                const newTotalPrice = calculateTotalPrice(updatedCartItems);
+                localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCartItems));
                 activeToast.success("Added to the cart");
-                set({cart: updatedCart, totalPrice: newTotalPrice}, false, "addToCart");
+                set({cartItems: updatedCartItems, totalPrice: newTotalPrice}, false, "addToCart");
             },
             increaseCartQuantity: (cartItem, customToast, currentQuantity, setCurrentQuantity) => {
                 const activeToast = customToast || toast;
-                const currentCart = get().cart;
+                const currentCart = get().cartItems;
                 const existingItem = currentCart.find((item) => item.id == cartItem.id);
                 const currentQty = currentQuantity !== undefined
                     ? currentQuantity : existingItem ? Number(existingItem.quantity) : 1;
@@ -101,10 +101,10 @@ export const useCartStore = create<CartState>()(
                 });
                 const newTotalPrice = calculateTotalPrice(updatedCart);
                 localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCart));
-                set({cart: updatedCart, totalPrice: newTotalPrice}, false, "increaseCartQuantity");
+                set({cartItems: updatedCart, totalPrice: newTotalPrice}, false, "increaseCartQuantity");
             },
             decreaseCartQuantity: (cartItem, newQuantity) => {
-                const currentCart = get().cart;
+                const currentCart = get().cartItems;
 
                 const updatedCart = currentCart.map((item) => {
                     if (item.id === cartItem.id) {
@@ -115,26 +115,26 @@ export const useCartStore = create<CartState>()(
 
                 const newTotalPrice = calculateTotalPrice(updatedCart);
                 localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCart));
-                set({cart: updatedCart, totalPrice: newTotalPrice}, false, "decreaseCartQuantity");
+                set({cartItems: updatedCart, totalPrice: newTotalPrice}, false, "decreaseCartQuantity");
             },
             removeFromCart: (cartItem, customToast) => {
                 const activeToast = customToast || toast;
-                const currentCart = get().cart;
+                const currentCart = get().cartItems;
 
                 const updatedCart = currentCart.filter((item) => item.id !== cartItem.id);
 
                 const newTotalPrice = calculateTotalPrice(updatedCart);
                 localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCart));
                 activeToast.success(`${cartItem.name} Removed from the cart`);
-                set({cart: updatedCart, totalPrice: newTotalPrice}, false, "removeFromCart");
+                set({cartItems: updatedCart, totalPrice: newTotalPrice}, false, "removeFromCart");
             },
             setCart: (cart, totalPrice, cartId) => {
                 localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
-                set({cart: cart, totalPrice: totalPrice, cartId: cartId}, false, "setCart");
+                set({cartItems: cart, totalPrice: totalPrice, cartId: cartId}, false, "setCart");
             },
             clearCart: () => {
                 localStorage.removeItem(CART_STORAGE_KEY);
-                set({cart: [], totalPrice: 0, cartId: null}, false, "clearCart");
+                set({cartItems: [], totalPrice: 0, cartId: null}, false, "clearCart");
             }
         }),
         {name: "CartStore"}

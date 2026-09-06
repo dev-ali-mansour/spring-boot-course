@@ -7,9 +7,9 @@ import EmptyCart from "./EmptyCart.tsx";
 import {formatPrice} from "../../utils/formatPrice.ts";
 
 const Cart: React.FC = () => {
-    const {cart, totalPrice} = useCartStore();
+    const {cartItems, totalPrice} = useCartStore();
 
-    if (!cart || cart.length === 0) return <EmptyCart/>;
+    if (!cartItems || cartItems.length === 0) return <EmptyCart/>;
 
     return (
         <div className={"lg:px-14 sm:px-8 px-4 py-10"}>
@@ -37,8 +37,8 @@ const Cart: React.FC = () => {
             </div>
 
             <div>
-                {cart && cart.length > 0 &&
-                    cart.map((item, index) => <ItemContent key={index} {...item}/>)}
+                {cartItems && cartItems.length > 0 &&
+                    cartItems.map((item, index) => <ItemContent key={index} {...item}/>)}
             </div>
 
             <div

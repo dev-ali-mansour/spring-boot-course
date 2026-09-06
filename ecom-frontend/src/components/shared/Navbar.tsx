@@ -10,7 +10,7 @@ import UserMenu from "../UserMenu.tsx";
 const Navbar: React.FC = () => {
     const path = useLocation().pathname;
     const [navbarOpen, setNavbarOpen] = useState(false);
-    const cart = useCartStore(state => state.cart);
+    const cartItems = useCartStore(state => state.cartItems);
     const user = useAuthStore(state => state.user);
 
     return (
@@ -65,7 +65,7 @@ const Navbar: React.FC = () => {
                               to={"/cart"}>
                             <Badge
                                 showZero
-                                badgeContent={cart?.length || 0}
+                                badgeContent={cartItems?.length || 0}
                                 color={"primary"}
                                 overlap={"circular"}
                                 anchorOrigin={{vertical: 'top', horizontal: 'right'}}>
