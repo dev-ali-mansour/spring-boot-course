@@ -5,6 +5,7 @@ import {getErrorMessage, useGetUserAddresses} from "../../hooks/useQueries.ts";
 import {useAuthStore} from "../../store";
 import toast from "react-hot-toast";
 import Skeleton from "../shared/Skeleton.tsx";
+import ErrorPage from "../shared/ErrorPage.tsx";
 
 const steps = [
     "Address",
@@ -46,7 +47,7 @@ const Checkout: React.FC = () => {
                 ))}
             </Stepper>
 
-            {isLoading || true ? (
+            {isLoading ? (
                 <div className={"lg:w-[80%] mx-auto py-5"}>
                     <Skeleton/>
                 </div>
@@ -86,6 +87,8 @@ const Checkout: React.FC = () => {
                     </button>
                 )}
             </div>
+
+            {errorMessage && <ErrorPage message={errorMessage}/>}
         </div>
     );
 };
