@@ -20,6 +20,7 @@ class CartServiceImpl(
     private val cartRepository: CartRepository,
     private val productRepository: ProductRepository,
     private val cartItemRepository: CartItemRepository,
+    private val fileService: FileService,
     private val authUtil: AuthUtil,
 ) : CartService {
     override fun addProductToCart(productId: Long, quantity: Int): CartDTO {
@@ -75,7 +76,14 @@ class CartServiceImpl(
         val userCart = cartRepository.findCartByUserId(userId)
             ?: throw ResourceNotFoundException(resourceName = "Cart", field = "userId", fieldId = userId)
 
-        return userCart.toDTO()
+        return userCart.toDTO().copy(products = userCart.cartItems.map { item ->
+            requireNotNull(item.product) { "Cart item must not be null!" }
+                .toDTO()
+                .copy(
+                    quantity = item.quantity,
+                    image = fileService.constructImageUrl(item.product?.image ?: "")
+                )
+        })
     }
 
     @Transactional
