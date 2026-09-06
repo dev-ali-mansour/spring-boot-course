@@ -7,6 +7,7 @@ import dev.alimansour.sbecom.model.Cart
 import dev.alimansour.sbecom.model.CartItem
 import dev.alimansour.sbecom.model.Product
 import dev.alimansour.sbecom.payload.CartDTO
+import dev.alimansour.sbecom.payload.CartItemDTO
 import dev.alimansour.sbecom.repository.CartItemRepository
 import dev.alimansour.sbecom.repository.CartRepository
 import dev.alimansour.sbecom.repository.ProductRepository
@@ -202,6 +203,46 @@ class CartServiceImpl(
 
         totalPrice = cartItems.sumOf { it.price * it.quantity }
         return cartRepository.save(this)
+    }
+
+    override fun createOrUpdateCartWithItems(cartItems: List<CartItemDTO>): String {
+        val cart = cartRepository.findCartByUserId(authUtil.loggedInUserId())
+            ?.let { existingCart ->
+                val cartId = requireNotNull(existingCart.id) { "Cart ID must not be null!" }
+                cartItemRepository.deleteAllByCartId(cartId)
+                existingCart
+            } ?: run {
+            val newCart = Cart(totalPrice = 0.0, user = authUtil.loggedInUser())
+            cartRepository.save(newCart)
+        }
+
+        var totalPrice = 0.0
+
+        cartItems.forEach { itemDTO ->
+            val productId = itemDTO.productId
+            val quantity = itemDTO.quantity
+            val product = productRepository.findById(productId)
+                .orElseThrow {
+                    ResourceNotFoundException(resourceName = "Product", field = "id", fieldId = itemDTO.productId)
+                }
+
+            /* I commented the following line to delay updating the product quantity until the order is placed */
+//            product.quantity -= quantity
+            totalPrice += product.specialPrice * quantity
+
+            val cartItem = CartItem(
+                cart = cart,
+                product = product,
+                quantity = quantity,
+                discount = product.discount,
+                price = product.specialPrice,
+            )
+            cartItemRepository.save(cartItem)
+        }
+
+        cart.totalPrice = totalPrice
+        cartRepository.save(cart)
+        return "Cart has been created/updated with the new items successfully!"
     }
 
     private fun createCart(): Cart {

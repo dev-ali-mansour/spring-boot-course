@@ -1,6 +1,7 @@
 package dev.alimansour.sbecom.service
 
 import dev.alimansour.sbecom.payload.CartDTO
+import dev.alimansour.sbecom.payload.CartItemDTO
 
 interface CartService {
     fun addProductToCart(productId: Long, quantity: Int): CartDTO
@@ -11,4 +12,5 @@ interface CartService {
     fun deleteProductFromCurrentUserCart(productId: Long): String
     fun deleteProductFromAllCarts(productId: Long)
     fun updateProductInCarts(cartId: Long, productId: Long)
+    fun createOrUpdateCartWithItems(cartItems: List<CartItemDTO>): String
 }
