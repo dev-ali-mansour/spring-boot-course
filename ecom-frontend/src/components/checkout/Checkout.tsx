@@ -2,11 +2,12 @@ import React, {useState} from "react";
 import {Button, Step, StepLabel, Stepper} from "@mui/material";
 import AddressInfo from "./AddressInfo.tsx";
 import {getErrorMessage, useGetUserAddresses} from "../../hooks/useQueries.ts";
-import {useAuthStore, usePaymentStore} from "../../store";
+import {useAuthStore, useCartStore, usePaymentStore} from "../../store";
 import toast from "react-hot-toast";
 import Skeleton from "../shared/Skeleton.tsx";
 import ErrorPage from "../shared/ErrorPage.tsx";
 import PaymentMethod from "./PaymentMethod.tsx";
+import OrderSummary from "./OrderSummary.tsx";
 
 const steps = [
     "Address",
@@ -19,6 +20,7 @@ const Checkout: React.FC = () => {
     const [activeStep, setActiveStep] = useState(0);
     const {data: addresses = [], isLoading, error} = useGetUserAddresses();
     const errorMessage = error ? getErrorMessage(error) : null;
+    const {cartItems, totalPrice} = useCartStore();
     const {selectedUserCheckoutAddress} = useAuthStore();
     const {paymentMethod} = usePaymentStore();
 
@@ -56,6 +58,13 @@ const Checkout: React.FC = () => {
                 <div className={"mt-5"}>
                     {activeStep === 0 && <AddressInfo addresses={addresses}/>}
                     {activeStep === 1 && <PaymentMethod/>}
+                    {activeStep === 2 &&
+                        <OrderSummary
+                            totalPrice={totalPrice}
+                            cartItems={cartItems}
+                            address={selectedUserCheckoutAddress}
+                            paymentMethod={paymentMethod}
+                        />}
                 </div>
             )}
             <div
