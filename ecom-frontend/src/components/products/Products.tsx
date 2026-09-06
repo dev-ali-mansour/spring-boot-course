@@ -6,13 +6,13 @@ import Filter from "./Filter.tsx";
 import useProductFilter from "../../hooks/useProductFilter.ts";
 import Loader from "../shared/Loader.tsx";
 import PaginationComponent from "../shared/PaginationComponent.tsx";
-import {useProducts, useCategories, getErrorMessage} from "../../hooks/useQueries.ts";
+import {useGetProducts, useGetCategories, getErrorMessage} from "../../hooks/useQueries.ts";
 import {useProductModalStore} from "../../store";
 
 export default function Products() {
     const queryString = useProductFilter();
-    const { data: productsData, isLoading: isProductsLoading, error: productsError } = useProducts(queryString);
-    const { data: categoriesData } = useCategories();
+    const { data: productsData, isLoading: isProductsLoading, error: productsError } = useGetProducts(queryString);
+    const { data: categoriesData } = useGetCategories();
     
     const { selectedProduct, isModalOpen, openModal, closeModal } = useProductModalStore();
 

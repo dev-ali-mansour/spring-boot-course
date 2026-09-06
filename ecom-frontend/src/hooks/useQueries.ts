@@ -33,7 +33,7 @@ export const getErrorMessage = (error: any) => {
         "An error occurred!";
 };
 
-export const useProducts = (queryString: string = ""): UseQueryResult<PaginatedResponse<Product>, Error> => {
+export const useGetProducts = (queryString: string = ""): UseQueryResult<PaginatedResponse<Product>, Error> => {
     return useQuery<PaginatedResponse<Product>, Error>({
         queryKey: ["products", queryString],
         queryFn: async () => {
@@ -43,7 +43,7 @@ export const useProducts = (queryString: string = ""): UseQueryResult<PaginatedR
     });
 };
 
-export const useCategories = (): UseQueryResult<PaginatedResponse<Category>, Error> => {
+export const useGetCategories = (): UseQueryResult<PaginatedResponse<Category>, Error> => {
     return useQuery<PaginatedResponse<Category>, Error>({
         queryKey: ["categories"],
         queryFn: async () => {

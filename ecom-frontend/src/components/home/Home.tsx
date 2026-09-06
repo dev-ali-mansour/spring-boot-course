@@ -4,12 +4,12 @@ import ProductCard from "../shared/ProductCard.tsx";
 import ProductViewModal from "../shared/ProductViewModal.tsx";
 import Loader from "../shared/Loader.tsx";
 import {FaExclamationTriangle} from "react-icons/fa";
-import {getErrorMessage, useProducts} from "../../hooks/useQueries.ts";
+import {getErrorMessage, useGetProducts} from "../../hooks/useQueries.ts";
 import {useProductModalStore} from "../../store";
 import React from "react";
 
 const Home: React.FC = () => {
-    const {data, isLoading: isProductsLoading, error} = useProducts("");
+    const {data, isLoading: isProductsLoading, error} = useGetProducts("");
     const {selectedProduct, isModalOpen, openModal, closeModal} = useProductModalStore();
 
     const products: Product[] | undefined = data?.content;
