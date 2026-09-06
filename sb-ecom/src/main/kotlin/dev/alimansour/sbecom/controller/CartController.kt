@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*
 class CartController(private val cartService: CartService) {
 
     @Tag(name = "Cart APIs", description = "APIs for managing carts")
-    @PostMapping("/carts/create")
+    @PostMapping("/carts/users/cart")
     fun createOrUpdateCart(
         @RequestBody cartItems: List<CartItemDTO>
     ): ResponseEntity<String> {
