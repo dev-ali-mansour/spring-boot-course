@@ -8,6 +8,8 @@ import Skeleton from "../shared/Skeleton.tsx";
 import ErrorPage from "../shared/ErrorPage.tsx";
 import PaymentMethod from "./PaymentMethod.tsx";
 import OrderSummary from "./OrderSummary.tsx";
+import StripePayment from "./StripePayment.tsx";
+import PayPalPayment from "./PayPalPayment.tsx";
 
 const steps = [
     "Address",
@@ -65,6 +67,15 @@ const Checkout: React.FC = () => {
                             address={selectedUserCheckoutAddress}
                             paymentMethod={paymentMethod}
                         />}
+                    {activeStep === 3 &&
+                        <>
+                            {paymentMethod === "Stripe" ? (
+                                <StripePayment/>
+                            ) : (
+                                <PayPalPayment/>
+                            )}
+                        </>
+                    }
                 </div>
             )}
             <div
