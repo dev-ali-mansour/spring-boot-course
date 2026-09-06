@@ -2,10 +2,11 @@ import React, {useState} from "react";
 import {Button, Step, StepLabel, Stepper} from "@mui/material";
 import AddressInfo from "./AddressInfo.tsx";
 import {getErrorMessage, useGetUserAddresses} from "../../hooks/useQueries.ts";
-import {useAuthStore} from "../../store";
+import {useAuthStore, usePaymentStore} from "../../store";
 import toast from "react-hot-toast";
 import Skeleton from "../shared/Skeleton.tsx";
 import ErrorPage from "../shared/ErrorPage.tsx";
+import PaymentMethod from "./PaymentMethod.tsx";
 
 const steps = [
     "Address",
@@ -19,7 +20,7 @@ const Checkout: React.FC = () => {
     const {data: addresses = [], isLoading, error} = useGetUserAddresses();
     const errorMessage = error ? getErrorMessage(error) : null;
     const {selectedUserCheckoutAddress} = useAuthStore();
-    const paymentMethod = false;
+    const {paymentMethod} = usePaymentStore();
 
     const handleBack = () => {
         setActiveStep((prevStep) => prevStep - 1);
@@ -54,6 +55,7 @@ const Checkout: React.FC = () => {
             ) : (
                 <div className={"mt-5"}>
                     {activeStep === 0 && <AddressInfo addresses={addresses}/>}
+                    {activeStep === 1 && <PaymentMethod/>}
                 </div>
             )}
             <div
@@ -74,7 +76,7 @@ const Checkout: React.FC = () => {
                                 : activeStep === 1 ? !paymentMethod
                                     : false
                         )}
-                        className={`bg-custom-blue font-semibold px-6 h-10 rounded-md text-white
+                        className={`bg-custom-blue font-semibold px-6 h-10 rounded-md text-white cursor-pointer
                        ${
                             errorMessage ||
                             (activeStep === 0 && !selectedUserCheckoutAddress) ||
