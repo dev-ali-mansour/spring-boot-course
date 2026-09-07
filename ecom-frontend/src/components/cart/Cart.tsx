@@ -2,7 +2,7 @@
 
 import {MdArrowBack, MdShoppingCart} from "react-icons/md";
 import Link from "next/link";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useCartStore} from "@/store";
 import ItemContent from "@/components/cart/ItemContent";
 import EmptyCart from "@/components/cart/EmptyCart";
@@ -10,8 +10,13 @@ import {formatPrice} from "@/utils/formatPrice";
 
 const Cart: React.FC = () => {
     const {cartItems, totalPrice} = useCartStore();
+    const [isMounted, setIsMounted] = useState(false);
 
-    if (!cartItems || cartItems.length === 0) return <EmptyCart/>;
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!isMounted || !cartItems || cartItems.length === 0) return <EmptyCart/>;
 
     return (
         <div className={"lg:px-14 sm:px-8 px-4 py-10"}>

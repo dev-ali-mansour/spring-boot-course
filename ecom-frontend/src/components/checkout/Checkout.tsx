@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {Button, Step, StepLabel, Stepper} from "@mui/material";
 import AddressInfo from "@/components/checkout/AddressInfo";
 import {getErrorMessage, useGetUserAddresses} from "@/hooks/useQueries";
@@ -27,6 +27,11 @@ const Checkout: React.FC = () => {
     const {cartItems, totalPrice} = useCartStore();
     const {selectedUserCheckoutAddress} = useAuthStore();
     const {paymentMethod} = usePaymentStore();
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     const handleBack = () => {
         setActiveStep((prevStep) => prevStep - 1);
@@ -43,6 +48,8 @@ const Checkout: React.FC = () => {
         }
         setActiveStep((prevStep) => prevStep + 1);
     };
+
+    if (!isMounted) return <div className={"lg:w-[80%] mx-auto py-5"}><Skeleton/></div>;
 
     return (
         <div className={"py-14 min-h-[calc(100vh-100px)]"}>

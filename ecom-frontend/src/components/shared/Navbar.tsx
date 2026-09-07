@@ -4,7 +4,7 @@ import Link from "next/link";
 import {usePathname} from "next/navigation";
 import {FaShoppingCart, FaSignInAlt, FaStore} from "react-icons/fa";
 import {Badge} from "@mui/material";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {RxCross2} from "react-icons/rx";
 import {IoIosMenu} from "react-icons/io";
 import {useAuthStore, useCartStore} from "@/store";
@@ -15,6 +15,11 @@ const Navbar: React.FC = () => {
     const [navbarOpen, setNavbarOpen] = useState(false);
     const cartItems = useCartStore(state => state.cartItems);
     const user = useAuthStore(state => state.user);
+
+    const [isMounted, setIsMounted] = useState(false);
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     return (
         <div className={"h-17.5 bg-custom-gradient text-white z-50 flex items-center sticky top-0"}>
@@ -68,7 +73,7 @@ const Navbar: React.FC = () => {
                               href={"/cart"}>
                             <Badge
                                 showZero
-                                badgeContent={cartItems?.length || 0}
+                                badgeContent={isMounted ? (cartItems?.length || 0) : 0}
                                 color={"primary"}
                                 overlap={"circular"}
                                 anchorOrigin={{vertical: 'top', horizontal: 'right'}}>
@@ -76,7 +81,7 @@ const Navbar: React.FC = () => {
                             </Badge>
                         </Link>
                     </li>
-                    {(user && user.id) ? (
+                    {(isMounted && user && user.id) ? (
                         <li className={"font-medium transition-all duration-150"}>
                             <UserMenu/>
                         </li>
