@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  sb-ecom:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: sb-ecom
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env.dev
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - DB_URL=jdbc:postgresql://host.docker.internal:5432/ecommerce
+    volumes:
+      - ./images:/app/images
