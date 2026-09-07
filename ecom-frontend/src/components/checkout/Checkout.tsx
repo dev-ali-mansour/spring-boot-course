@@ -2,16 +2,16 @@
 
 import React, {useState} from "react";
 import {Button, Step, StepLabel, Stepper} from "@mui/material";
-import AddressInfo from "./AddressInfo";
-import {getErrorMessage, useGetUserAddresses} from "../../hooks/useQueries";
-import {useAuthStore, useCartStore, usePaymentStore} from "../../store";
+import AddressInfo from "@/components/checkout/AddressInfo";
+import {getErrorMessage, useGetUserAddresses} from "@/hooks/useQueries";
+import {useAuthStore, useCartStore, usePaymentStore} from "@/store";
 import toast from "react-hot-toast";
-import Skeleton from "../shared/Skeleton";
-import ErrorPage from "../shared/ErrorPage";
-import PaymentMethod from "./PaymentMethod";
-import OrderSummary from "./OrderSummary";
-import StripePayment from "./StripePayment";
-import PayPalPayment from "./PayPalPayment";
+import Skeleton from "@/components/shared/Skeleton";
+import ErrorPage from "@/components/shared/ErrorPage";
+import PaymentMethod from "@/components/checkout/PaymentMethod";
+import OrderSummary from "@/components/checkout/OrderSummary";
+import StripePayment from "@/components/checkout/StripePayment";
+import PayPalPayment from "@/components/checkout/PayPalPayment";
 
 const steps = [
     "Address",

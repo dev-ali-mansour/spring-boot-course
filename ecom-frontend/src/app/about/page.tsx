@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import React from "react";
-import aboutUsImage from "../../assets/images/about-us.jpg";
-import ProductCard from "../../components/shared/ProductCard";
-import { Product } from "../../types";
+import aboutUsImage from "@/assets/images/about-us.jpg";
+import ProductCard from "@/components/shared/ProductCard";
+import { Product } from "@/types";
 
 export const metadata: Metadata = {
   title: "About Us",

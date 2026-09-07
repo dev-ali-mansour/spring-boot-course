@@ -1,4 +1,4 @@
-import {CartItem} from "./CartItem";
+import {CartItem} from "@/types/CartItem";
 
 export interface Cart {
     cartId: number | string;

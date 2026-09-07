@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Login from "../../components/auth/Login";
-import AuthGuard from "../../components/shared/AuthGuard";
+import Login from "@/components/auth/Login";
+import AuthGuard from "@/components/shared/AuthGuard";
 
 export const metadata: Metadata = {
   title: "Login",

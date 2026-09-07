@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 import {FiArrowDown, FiArrowUp, FiRefreshCw, FiSearch} from "react-icons/fi";
 import {Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Tooltip} from "@mui/material";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
-import {Category} from "../../types";
+import {Category} from "@/types";
 
 const Filter: React.FC<{ categories: Category[] }> = ({categories}) => {
     const searchParams = useSearchParams();

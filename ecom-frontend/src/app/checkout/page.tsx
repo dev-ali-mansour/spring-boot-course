@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Checkout from "../../components/checkout/Checkout";
-import AuthGuard from "../../components/shared/AuthGuard";
+import Checkout from "@/components/checkout/Checkout";
+import AuthGuard from "@/components/shared/AuthGuard";
 
 export const metadata: Metadata = {
   title: "Secure Checkout",

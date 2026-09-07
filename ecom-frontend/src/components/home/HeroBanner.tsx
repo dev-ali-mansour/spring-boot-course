@@ -2,7 +2,7 @@
 
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {Autoplay, EffectFade, Navigation, Pagination} from "swiper/modules";
-import {bannerLists} from "../../utils";
+import {bannerLists} from "@/utils";
 import Link from "next/link";
 
 import 'swiper/css';

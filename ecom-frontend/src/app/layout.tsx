@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import "../index.css";
-import Providers from "./providers";
-import Navbar from "../components/shared/Navbar";
+import "@/index.css";
+import Providers from "@/app/providers";
+import Navbar from "@/components/shared/Navbar";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),

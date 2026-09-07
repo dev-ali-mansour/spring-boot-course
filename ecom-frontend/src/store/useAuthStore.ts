@@ -1,11 +1,11 @@
-import {Address, User} from "../types";
+import {Address, User} from "@/types";
 import {create} from "zustand";
 import {
     AUTH_STORAGE_KEY,
     CART_STORAGE_KEY,
     CHECKOUT_ADDRESS_STORAGE_KEY,
     CLIENT_SECRET_STORAGE_KEY
-} from "../utils/constant";
+} from "@/utils/constant";
 import {devtools} from "zustand/middleware";
 
 interface AuthState {

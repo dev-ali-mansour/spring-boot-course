@@ -7,8 +7,8 @@ import {Badge} from "@mui/material";
 import React, {useState} from "react";
 import {RxCross2} from "react-icons/rx";
 import {IoIosMenu} from "react-icons/io";
-import {useAuthStore, useCartStore} from "../../store";
-import UserMenu from "../UserMenu";
+import {useAuthStore, useCartStore} from "@/store";
+import UserMenu from "@/components/UserMenu";
 
 const Navbar: React.FC = () => {
     const path = usePathname();

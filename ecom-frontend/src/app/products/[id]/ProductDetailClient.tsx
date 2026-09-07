@@ -2,8 +2,8 @@
 
 import React from "react";
 import { FaShoppingCart, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
-import { formatPrice } from "../../../utils/formatPrice";
-import { useCartStore } from "../../../store";
+import { formatPrice } from "@/utils/formatPrice";
+import { useCartStore } from "@/store";
 import toast from "react-hot-toast";
 
 interface ProductDetailClientProps {

@@ -1,4 +1,4 @@
-import {Product} from "./Product";
+import {Product} from "@/types/Product";
 
 export interface CartItem extends Product {
     cartItemId?: number | string;

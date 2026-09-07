@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FaArrowLeft, FaShoppingCart, FaTag } from "react-icons/fa";
-import { formatPrice } from "../../../utils/formatPrice";
-import ProductDetailClient from "./ProductDetailClient";
+import { formatPrice } from "@/utils/formatPrice";
+import ProductDetailClient from "@/app/products/[id]/ProductDetailClient";
 
 interface Props {
   params: Promise<{ id: string }>;

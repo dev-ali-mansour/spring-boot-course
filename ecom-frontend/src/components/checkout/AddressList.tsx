@@ -1,8 +1,8 @@
 import React from "react";
-import {Address} from "../../types";
+import {Address} from "@/types";
 import {FaBuilding, FaCheckCircle, FaEdit, FaStreetView, FaTrash} from "react-icons/fa";
 import {MdLocationCity, MdPinDrop, MdPublic} from "react-icons/md";
-import {useAuthStore} from "../../store";
+import {useAuthStore} from "@/store";
 
 interface AddressListProps {
     addresses: Address[];

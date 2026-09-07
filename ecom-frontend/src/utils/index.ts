@@ -1,4 +1,4 @@
-import {bannerImageOne, bannerImageThree, bannerImageTwo} from "./constant";
+import {bannerImageOne, bannerImageThree, bannerImageTwo} from "@/utils/constant";
 
 export const bannerLists = [
     {

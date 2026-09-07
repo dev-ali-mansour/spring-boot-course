@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import React from "react";
 import {FaEnvelope, FaPhone} from "react-icons/fa6";
 import {FaMapMarkedAlt} from "react-icons/fa";
-import {contactUs} from "../../utils/constant";
+import {contactUs} from "@/utils/constant";
 
 export const metadata: Metadata = {
   title: "Contact Us",

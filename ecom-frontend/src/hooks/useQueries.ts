@@ -1,7 +1,7 @@
 import {useMutation, UseMutationResult, useQuery, useQueryClient, UseQueryResult} from "@tanstack/react-query";
-import {api} from "../api/api";
-import {Address, Cart, Category, Pagination, Product, User} from "../types";
-import {useCartStore} from "../store";
+import {api} from "@/api/api";
+import {Address, Cart, Category, Pagination, Product, User} from "@/types";
+import {useCartStore} from "@/store";
 
 export interface PaginatedResponse<T> extends Pagination {
     content: T[];

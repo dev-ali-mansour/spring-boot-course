@@ -3,7 +3,7 @@
 import {Pagination as MuiPagination} from "@mui/material";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import * as React from "react";
-import {Pagination} from "../../types";
+import {Pagination} from "@/types";
 
 const PaginationComponent: React.FC<{ pagination: Partial<Pagination> }> = ({pagination}) => {
     const searchParams = useSearchParams();

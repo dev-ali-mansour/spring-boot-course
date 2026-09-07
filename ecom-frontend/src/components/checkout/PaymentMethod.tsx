@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from "react";
 import {FormControl, FormControlLabel, Radio, RadioGroup} from "@mui/material";
-import {useCartStore, usePaymentStore} from "../../store";
-import {getErrorMessage, useCreateUserCart} from "../../hooks/useQueries";
+import {useCartStore, usePaymentStore} from "@/store";
+import {getErrorMessage, useCreateUserCart} from "@/hooks/useQueries";
 import toast from "react-hot-toast";
 
 const PaymentMethod: React.FC = () => {

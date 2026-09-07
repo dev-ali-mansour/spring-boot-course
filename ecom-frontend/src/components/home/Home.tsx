@@ -1,13 +1,13 @@
 "use client";
 
-import HeroBanner from "./HeroBanner";
-import {Product} from "../../types";
-import ProductCard from "../shared/ProductCard";
-import ProductViewModal from "../shared/ProductViewModal";
-import Loader from "../shared/Loader";
+import HeroBanner from "@/components/home/HeroBanner";
+import {Product} from "@/types";
+import ProductCard from "@/components/shared/ProductCard";
+import ProductViewModal from "@/components/shared/ProductViewModal";
+import Loader from "@/components/shared/Loader";
 import {FaExclamationTriangle} from "react-icons/fa";
-import {getErrorMessage, useGetProducts} from "../../hooks/useQueries";
-import {useProductModalStore} from "../../store";
+import {getErrorMessage, useGetProducts} from "@/hooks/useQueries";
+import {useProductModalStore} from "@/store";
 import React from "react";
 
 const Home: React.FC = () => {

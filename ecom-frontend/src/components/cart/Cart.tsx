@@ -3,10 +3,10 @@
 import {MdArrowBack, MdShoppingCart} from "react-icons/md";
 import Link from "next/link";
 import React from "react";
-import {useCartStore} from "../../store";
-import ItemContent from "./ItemContent";
-import EmptyCart from "./EmptyCart";
-import {formatPrice} from "../../utils/formatPrice";
+import {useCartStore} from "@/store";
+import ItemContent from "@/components/cart/ItemContent";
+import EmptyCart from "@/components/cart/EmptyCart";
+import {formatPrice} from "@/utils/formatPrice";
 
 const Cart: React.FC = () => {
     const {cartItems, totalPrice} = useCartStore();

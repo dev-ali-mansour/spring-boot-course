@@ -5,12 +5,12 @@ import {Avatar, IconButton, Menu, MenuItem} from "@mui/material";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import {BiUser} from "react-icons/bi";
-import {useAuthStore} from "../store";
+import {useAuthStore} from "@/store";
 import {FaShoppingCart} from "react-icons/fa";
-import {useLogout} from "../hooks/useQueries";
+import {useLogout} from "@/hooks/useQueries";
 import {IoExitOutline} from "react-icons/io5";
-import truncateText from "../utils/truncateText";
-import BackDrop from "./shared/BackDrop";
+import truncateText from "@/utils/truncateText";
+import BackDrop from "@/components/shared/BackDrop";
 
 const UserMenu: React.FC = () => {
     const id = React.useId();

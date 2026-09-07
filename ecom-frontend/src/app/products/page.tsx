@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import Products from "../../components/products/Products";
-import Loader from "../../components/shared/Loader";
+import Products from "@/components/products/Products";
+import Loader from "@/components/shared/Loader";
 
 export const metadata: Metadata = {
   title: "Products",

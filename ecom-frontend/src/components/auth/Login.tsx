@@ -4,10 +4,10 @@ import React from "react";
 import {useForm} from "react-hook-form";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
-import {useAuthStore} from "../../store";
+import {useAuthStore} from "@/store";
 import {AiOutlineLogin} from "react-icons/ai";
-import InputField from "../shared/InputField";
-import {getErrorMessage, LoginCredentials, useLogin} from "../../hooks/useQueries";
+import InputField from "@/components/shared/InputField";
+import {getErrorMessage, LoginCredentials, useLogin} from "@/hooks/useQueries";
 import toast from "react-hot-toast";
 import {Oval} from "react-loader-spinner";
 

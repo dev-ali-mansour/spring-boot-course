@@ -1,7 +1,7 @@
-import {CartItem} from "../types";
+import {CartItem} from "@/types";
 import toast from "react-hot-toast";
 import {create} from "zustand";
-import {CART_STORAGE_KEY} from "../utils/constant";
+import {CART_STORAGE_KEY} from "@/utils/constant";
 import {devtools} from "zustand/middleware";
 
 export interface CartState {
