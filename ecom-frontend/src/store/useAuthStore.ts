@@ -5,7 +5,7 @@ import {
     CART_STORAGE_KEY,
     CHECKOUT_ADDRESS_STORAGE_KEY,
     CLIENT_SECRET_STORAGE_KEY
-} from "../utils/constant.ts";
+} from "../utils/constant";
 import {devtools} from "zustand/middleware";
 
 interface AuthState {
@@ -22,6 +22,7 @@ interface AuthState {
 }
 
 const getInitialUser = (): User | null => {
+    if (typeof window === "undefined") return null;
     try {
         const item = localStorage.getItem(AUTH_STORAGE_KEY);
         return item ? JSON.parse(item) : null;
@@ -31,6 +32,7 @@ const getInitialUser = (): User | null => {
 };
 
 const getInitialAddress = (): Address | null => {
+    if (typeof window === "undefined") return null;
     try {
         const item = localStorage.getItem(CHECKOUT_ADDRESS_STORAGE_KEY);
         return item ? JSON.parse(item) : null;
@@ -40,6 +42,7 @@ const getInitialAddress = (): Address | null => {
 };
 
 const getInitialClientSecret = (): string | null => {
+    if (typeof window === "undefined") return null;
     try {
         const item = localStorage.getItem(CLIENT_SECRET_STORAGE_KEY);
         return item ? JSON.parse(item) : null;

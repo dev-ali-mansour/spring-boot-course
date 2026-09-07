@@ -1,7 +1,7 @@
 import {CartItem} from "../types";
 import toast from "react-hot-toast";
 import {create} from "zustand";
-import {CART_STORAGE_KEY} from "../utils/constant.ts";
+import {CART_STORAGE_KEY} from "../utils/constant";
 import {devtools} from "zustand/middleware";
 
 export interface CartState {
@@ -17,6 +17,7 @@ export interface CartState {
 }
 
 const getInitialCartItems = (): CartItem[] => {
+    if (typeof window === "undefined") return [];
     try {
         const item = localStorage.getItem(CART_STORAGE_KEY);
         return item ? JSON.parse(item) : [];
