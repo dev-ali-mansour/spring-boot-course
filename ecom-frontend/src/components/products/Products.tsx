@@ -1,12 +1,14 @@
+"use client";
+
 import {FaExclamationTriangle} from "react-icons/fa";
-import ProductCard from "../shared/ProductCard.tsx";
-import ProductViewModal from "../shared/ProductViewModal.tsx";
+import ProductCard from "../shared/ProductCard";
+import ProductViewModal from "../shared/ProductViewModal";
 import {Product} from "../../types";
-import Filter from "./Filter.tsx";
-import useProductFilter from "../../hooks/useProductFilter.ts";
-import Loader from "../shared/Loader.tsx";
-import PaginationComponent from "../shared/PaginationComponent.tsx";
-import {useGetProducts, useGetCategories, getErrorMessage} from "../../hooks/useQueries.ts";
+import Filter from "./Filter";
+import useProductFilter from "../../hooks/useProductFilter";
+import Loader from "../shared/Loader";
+import PaginationComponent from "../shared/PaginationComponent";
+import {useGetProducts, useGetCategories, getErrorMessage} from "../../hooks/useQueries";
 import {useProductModalStore} from "../../store";
 
 export default function Products() {

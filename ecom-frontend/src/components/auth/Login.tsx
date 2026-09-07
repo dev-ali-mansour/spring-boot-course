@@ -1,16 +1,19 @@
+"use client";
+
 import React from "react";
 import {useForm} from "react-hook-form";
-import {Link, useNavigate} from "react-router-dom";
+import Link from "next/link";
+import {useRouter} from "next/navigation";
 import {useAuthStore} from "../../store";
 import {AiOutlineLogin} from "react-icons/ai";
-import InputField from "../shared/InputField.tsx";
-import {getErrorMessage, LoginCredentials, useLogin} from "../../hooks/useQueries.ts";
+import InputField from "../shared/InputField";
+import {getErrorMessage, LoginCredentials, useLogin} from "../../hooks/useQueries";
 import toast from "react-hot-toast";
-import {Oval,} from "react-loader-spinner";
+import {Oval} from "react-loader-spinner";
 
 const Login: React.FC = () => {
 
-        const navigate = useNavigate();
+        const router = useRouter();
         const setUser = useAuthStore((state) => state.setUser);
         const loginMutation = useLogin();
 
@@ -29,7 +32,7 @@ const Login: React.FC = () => {
                 setUser(userData);
                 reset();
                 toast.success("Successful Login");
-                navigate("/");
+                router.push("/");
             } catch (error) {
                 console.error(error);
                 toast.error(getErrorMessage(error));
@@ -100,7 +103,7 @@ const Login: React.FC = () => {
                         Don't have an account?
                         <Link
                             className={"font-semibold underline hover:text-black"}
-                            to="/register">
+                            href="/register">
                             <span className={"ml-1"}>Register</span>
                         </Link>
                     </p>

@@ -1,20 +1,22 @@
+"use client";
+
 import {Pagination as MuiPagination} from "@mui/material";
-import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
+import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import * as React from "react";
 import {Pagination} from "../../types";
 
 const PaginationComponent: React.FC<{ pagination: Partial<Pagination> }> = ({pagination}) => {
-    const [searchParams] = useSearchParams();
-    const params = new URLSearchParams(searchParams);
-    const pathName = useLocation().pathname;
-    const navigate = useNavigate();
+    const searchParams = useSearchParams();
+    const params = new URLSearchParams(searchParams.toString());
+    const pathName = usePathname();
+    const router = useRouter();
     const paramValue = searchParams.get("page")
         ? Number(searchParams.get("page"))
         : 1;
 
     const onChangeHandler = (_: React.ChangeEvent<unknown>, value: number) => {
         params.set("page", value.toString());
-        navigate(`${pathName}?${decodeURIComponent(params.toString())}`);
+        router.push(`${pathName}?${decodeURIComponent(params.toString())}`);
     }
 
     return (

@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import {CartItem} from "../../types";
-import truncateText from "../../utils/truncateText.tsx";
+import truncateText from "../../utils/truncateText";
 import {HiOutlineTrash} from "react-icons/hi";
-import SetQuantity from "./SetQuantity.tsx";
+import SetQuantity from "./SetQuantity";
 import {useCartStore} from "../../store";
 import toast from "react-hot-toast";
-import {formatPrice} from "../../utils/formatPrice.ts";
+import {formatPrice} from "../../utils/formatPrice";
 
 const ItemContent: React.FC<CartItem> = (item) => {
     const [currentQuantity, setCurrentQuantity] = useState<number>(item.quantity);

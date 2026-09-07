@@ -1,7 +1,9 @@
+"use client";
+
 import {Swiper, SwiperSlide} from 'swiper/react';
 import {Autoplay, EffectFade, Navigation, Pagination} from "swiper/modules";
 import {bannerLists} from "../../utils";
-import {Link} from "react-router-dom";
+import Link from "next/link";
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -45,13 +47,13 @@ const HeroBanner: React.FC = () => {
                                         </p>
                                         <Link
                                             className={"mt-6 inline-block bg-black text-white py-2 px-4 rounded hover:bg-gray-800"}
-                                            to={"/products"}>
+                                            href={"/products"}>
                                             Shop
                                         </Link>
                                     </div>
                                 </div>
                                 <div className={"w-full flex justify-center lg:w-1/2 p-4"}>
-                                    <img src={item.image} alt={item.title}/>
+                                    <img src={(item.image as any)?.src || item.image} alt={item.title}/>
                                 </div>
                             </div>
                         </div>

@@ -1,13 +1,16 @@
+"use client";
+
 import React from "react";
 import {Avatar, IconButton, Menu, MenuItem} from "@mui/material";
-import {Link, useNavigate} from "react-router-dom";
+import Link from "next/link";
+import {useRouter} from "next/navigation";
 import {BiUser} from "react-icons/bi";
 import {useAuthStore} from "../store";
 import {FaShoppingCart} from "react-icons/fa";
-import {useLogout} from "../hooks/useQueries.ts";
+import {useLogout} from "../hooks/useQueries";
 import {IoExitOutline} from "react-icons/io5";
-import truncateText from "../utils/truncateText.tsx";
-import BackDrop from "./shared/BackDrop.tsx";
+import truncateText from "../utils/truncateText";
+import BackDrop from "./shared/BackDrop";
 
 const UserMenu: React.FC = () => {
     const id = React.useId();
@@ -17,7 +20,7 @@ const UserMenu: React.FC = () => {
     const open = Boolean(anchorEl);
     const {user, clearUser} = useAuthStore();
     const logoutMutation = useLogout();
-    const navigate = useNavigate();
+    const router = useRouter();
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -33,7 +36,7 @@ const UserMenu: React.FC = () => {
             console.log("Failed to logout on the server", error);
         }
         clearUser();
-        navigate("/login");
+        router.push("/login");
     }
 
     return (
@@ -59,7 +62,7 @@ const UserMenu: React.FC = () => {
                     },
                 }}
             >
-                <Link to={"/profile"}>
+                <Link href={"/profile"}>
                     <MenuItem
                         className={"flex gap-2"}
                         onClick={handleClose}>
@@ -69,7 +72,7 @@ const UserMenu: React.FC = () => {
                         </span>
                     </MenuItem>
                 </Link>
-                <Link to={"/order"}>
+                <Link href={"/order"}>
                     <MenuItem
                         className={"flex gap-2"}
                         onClick={handleClose}>

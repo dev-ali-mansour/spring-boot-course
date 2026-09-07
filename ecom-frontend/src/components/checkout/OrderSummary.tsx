@@ -1,6 +1,6 @@
 import React from "react";
 import {Address, CartItem} from "../../types";
-import {formatPriceCalculation} from "../../utils/formatPrice.ts";
+import {formatPriceCalculation} from "../../utils/formatPrice";
 
 
 export interface OrderSummaryProps {

@@ -1,8 +1,8 @@
-import {useSearchParams} from "react-router-dom";
+import {useSearchParams} from "next/navigation";
 import {useMemo} from "react";
 
 export default function useProductFilter() {
-    const [searchParams] = useSearchParams();
+    const searchParams = useSearchParams();
 
     return useMemo(() => {
         const params = new URLSearchParams();

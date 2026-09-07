@@ -1,14 +1,17 @@
+"use client";
+
 import React from "react";
 import {useForm} from "react-hook-form";
-import {Link, useNavigate} from "react-router-dom";
-import InputField from "../shared/InputField.tsx";
-import {getErrorMessage, RegistrationData, useRegister} from "../../hooks/useQueries.ts";
+import Link from "next/link";
+import {useRouter} from "next/navigation";
+import InputField from "../shared/InputField";
+import {getErrorMessage, RegistrationData, useRegister} from "../../hooks/useQueries";
 import toast from "react-hot-toast";
 import {FaUserPlus} from "react-icons/fa";
 import {Oval} from "react-loader-spinner";
 
 const Register: React.FC = () => {
-    const navigate = useNavigate();
+    const router = useRouter();
     const registerMutation = useRegister();
 
     const {
@@ -27,7 +30,7 @@ const Register: React.FC = () => {
             toast.success(response?.message || "User Registered Successfully! Please login to continue.",
                 {duration: 5000}
             );
-            navigate("/login");
+            router.push("/login");
         } catch (error: unknown) {
             console.error(error);
             toast.error(getErrorMessage(error));
@@ -134,7 +137,7 @@ const Register: React.FC = () => {
                     Already have an account?
                     <Link
                         className={"font-semibold underline hover:text-black"}
-                        to="/login">
+                        href="/login">
                         <span className={"ml-1"}>Login</span>
                     </Link>
                 </p>

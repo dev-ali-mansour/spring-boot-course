@@ -1,5 +1,5 @@
 import aboutUsImage from "../assets/images/about-us.jpg";
-import ProductCard from "./shared/ProductCard.tsx";
+import ProductCard from "./shared/ProductCard";
 import {Product} from "../types";
 import React from "react";
 
@@ -55,7 +55,7 @@ const About: React.FC = () => {
 
                 <div className={"w-full md:w-1/2 mb-6 md:mb-0"}>
                     <img
-                        src={aboutUsImage}
+                        src={(aboutUsImage as any)?.src || aboutUsImage}
                         alt={"About Us"}
                         className={`w-full h-auto rounded-lg shadow-lg transform transition-transform 
                                     duration-300 hover:scale-105`}/>

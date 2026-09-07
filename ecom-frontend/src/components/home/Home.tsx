@@ -1,10 +1,12 @@
-import HeroBanner from "./HeroBanner.tsx";
+"use client";
+
+import HeroBanner from "./HeroBanner";
 import {Product} from "../../types";
-import ProductCard from "../shared/ProductCard.tsx";
-import ProductViewModal from "../shared/ProductViewModal.tsx";
-import Loader from "../shared/Loader.tsx";
+import ProductCard from "../shared/ProductCard";
+import ProductViewModal from "../shared/ProductViewModal";
+import Loader from "../shared/Loader";
 import {FaExclamationTriangle} from "react-icons/fa";
-import {getErrorMessage, useGetProducts} from "../../hooks/useQueries.ts";
+import {getErrorMessage, useGetProducts} from "../../hooks/useQueries";
 import {useProductModalStore} from "../../store";
 import React from "react";
 

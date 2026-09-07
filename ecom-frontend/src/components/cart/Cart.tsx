@@ -1,10 +1,12 @@
+"use client";
+
 import {MdArrowBack, MdShoppingCart} from "react-icons/md";
-import {Link} from "react-router-dom";
+import Link from "next/link";
 import React from "react";
 import {useCartStore} from "../../store";
-import ItemContent from "./ItemContent.tsx";
-import EmptyCart from "./EmptyCart.tsx";
-import {formatPrice} from "../../utils/formatPrice.ts";
+import ItemContent from "./ItemContent";
+import EmptyCart from "./EmptyCart";
+import {formatPrice} from "../../utils/formatPrice";
 
 const Cart: React.FC = () => {
     const {cartItems, totalPrice} = useCartStore();
@@ -57,7 +59,7 @@ const Cart: React.FC = () => {
 
                     <Link
                         className={"w-full flex justify-end"}
-                        to={"/checkout"}>
+                        href={"/checkout"}>
                         <button
                             onClick={() => {
                             }}
@@ -71,7 +73,7 @@ const Cart: React.FC = () => {
 
                     <Link
                         className={"flex gap-2 items-center mt-2 text-slate-500"}
-                        to={"/products"}>
+                        href={"/products"}>
                         <MdArrowBack/>
                         Continue Shopping
                     </Link>

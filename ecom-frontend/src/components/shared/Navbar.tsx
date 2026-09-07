@@ -1,14 +1,17 @@
-import {Link, useLocation} from "react-router-dom";
+"use client";
+
+import Link from "next/link";
+import {usePathname} from "next/navigation";
 import {FaShoppingCart, FaSignInAlt, FaStore} from "react-icons/fa";
 import {Badge} from "@mui/material";
 import React, {useState} from "react";
 import {RxCross2} from "react-icons/rx";
 import {IoIosMenu} from "react-icons/io";
 import {useAuthStore, useCartStore} from "../../store";
-import UserMenu from "../UserMenu.tsx";
+import UserMenu from "../UserMenu";
 
 const Navbar: React.FC = () => {
-    const path = useLocation().pathname;
+    const path = usePathname();
     const [navbarOpen, setNavbarOpen] = useState(false);
     const cartItems = useCartStore(state => state.cartItems);
     const user = useAuthStore(state => state.user);
@@ -16,7 +19,7 @@ const Navbar: React.FC = () => {
     return (
         <div className={"h-17.5 bg-custom-gradient text-white z-50 flex items-center sticky top-0"}>
             <div className={"lg:px-14 sm:px-8 px-4 w-full flex justify-between"}>
-                <Link to={"/"} className={"flex items-center text-2xl font-bold"}>
+                <Link href={"/"} className={"flex items-center text-2xl font-bold"}>
                     <FaStore className={"mr-2 text-3xl"}/>
                     <span className={"font-[Poppins]"}>E-Shop</span>
                 </Link>
@@ -30,7 +33,7 @@ const Navbar: React.FC = () => {
                     <li className={"font-medium transition-all duration-150"}>
                         <Link className=
                                   {`${path === "/" ? "text-white font-semibold" : "text-gray-200"}`}
-                              to={"/"}>
+                              href={"/"}>
                             Home
                         </Link>
                     </li>
@@ -38,7 +41,7 @@ const Navbar: React.FC = () => {
                     <li className={"font-medium transition-all duration-150"}>
                         <Link className=
                                   {`${path === "/products" ? "text-white font-semibold" : "text-gray-200"}`}
-                              to={"/products"}>
+                              href={"/products"}>
                             Products
                         </Link>
                     </li>
@@ -46,7 +49,7 @@ const Navbar: React.FC = () => {
                     <li className={"font-medium transition-all duration-150"}>
                         <Link className=
                                   {`${path === "/about" ? "text-white font-semibold" : "text-gray-200"}`}
-                              to={"/about"}>
+                              href={"/about"}>
                             About
                         </Link>
                     </li>
@@ -54,7 +57,7 @@ const Navbar: React.FC = () => {
                     <li className={"font-medium transition-all duration-150"}>
                         <Link className=
                                   {`${path === "/contact" ? "text-white font-semibold" : "text-gray-200"}`}
-                              to={"/contact"}>
+                              href={"/contact"}>
                             Contact
                         </Link>
                     </li>
@@ -62,7 +65,7 @@ const Navbar: React.FC = () => {
                     <li className={"font-medium transition-all duration-150"}>
                         <Link className=
                                   {`${path === "/cart" ? "text-white font-semibold" : "text-gray-200"}`}
-                              to={"/cart"}>
+                              href={"/cart"}>
                             <Badge
                                 showZero
                                 badgeContent={cartItems?.length || 0}
@@ -84,7 +87,7 @@ const Navbar: React.FC = () => {
                                     text-white font-semibold rounded-md shadow-lg 
                                     hover:from-purple-500 hover:to-red-400 transition 
                                     duration-300 ease-in-out transform`}
-                                  to={"/login"}>
+                                  href={"/login"}>
                                 <FaSignInAlt/>
                                 <span>Login</span>
                             </Link>

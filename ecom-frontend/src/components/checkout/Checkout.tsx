@@ -1,15 +1,17 @@
+"use client";
+
 import React, {useState} from "react";
 import {Button, Step, StepLabel, Stepper} from "@mui/material";
-import AddressInfo from "./AddressInfo.tsx";
-import {getErrorMessage, useGetUserAddresses} from "../../hooks/useQueries.ts";
+import AddressInfo from "./AddressInfo";
+import {getErrorMessage, useGetUserAddresses} from "../../hooks/useQueries";
 import {useAuthStore, useCartStore, usePaymentStore} from "../../store";
 import toast from "react-hot-toast";
-import Skeleton from "../shared/Skeleton.tsx";
-import ErrorPage from "../shared/ErrorPage.tsx";
-import PaymentMethod from "./PaymentMethod.tsx";
-import OrderSummary from "./OrderSummary.tsx";
-import StripePayment from "./StripePayment.tsx";
-import PayPalPayment from "./PayPalPayment.tsx";
+import Skeleton from "../shared/Skeleton";
+import ErrorPage from "../shared/ErrorPage";
+import PaymentMethod from "./PaymentMethod";
+import OrderSummary from "./OrderSummary";
+import StripePayment from "./StripePayment";
+import PayPalPayment from "./PayPalPayment";
 
 const steps = [
     "Address",

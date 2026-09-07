@@ -1,4 +1,4 @@
-import {Product} from "./Product.ts";
+import {Product} from "./Product";
 
 export interface CartItem extends Product {
     cartItemId?: number | string;

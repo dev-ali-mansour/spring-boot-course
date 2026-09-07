@@ -1,6 +1,8 @@
+"use client";
+
 import {Dialog, DialogBackdrop, DialogPanel, DialogTitle} from '@headlessui/react';
 import {Divider} from "@mui/material";
-import Status from "./Status.tsx";
+import Status from "./Status";
 import {MdClose, MdDone} from "react-icons/md";
 import {Product} from "../../types";
 import React from "react";

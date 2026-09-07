@@ -1,13 +1,15 @@
+"use client";
+
 import React, {useEffect, useState} from "react";
 import {FiArrowDown, FiArrowUp, FiRefreshCw, FiSearch} from "react-icons/fi";
 import {Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Tooltip} from "@mui/material";
-import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
+import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import {Category} from "../../types";
 
 const Filter: React.FC<{ categories: Category[] }> = ({categories}) => {
-    const [searchParams] = useSearchParams();
-    const pathName = useLocation().pathname;
-    const navigate = useNavigate();
+    const searchParams = useSearchParams();
+    const pathName = usePathname();
+    const router = useRouter();
 
     // Derived values from URL (no duplicate state / avoids extra re-render cycles)
     const category = searchParams.get("category") || "all";
@@ -27,40 +29,40 @@ const Filter: React.FC<{ categories: Category[] }> = ({categories}) => {
             const currentKeyword = searchParams.get("keyword") || "";
             if (searchTerm === currentKeyword) return;
 
-            const params = new URLSearchParams(searchParams);
+            const params = new URLSearchParams(searchParams.toString());
             if (searchTerm.trim()) {
                 params.set("keyword", searchTerm.trim());
             } else {
                 params.delete("keyword");
             }
-            navigate(`${pathName}?${decodeURIComponent(params.toString())}`);
+            router.push(`${pathName}?${decodeURIComponent(params.toString())}`);
         }, 700);
 
         return () => clearTimeout(handler);
-    }, [searchTerm, searchParams, navigate, pathName]);
+    }, [searchTerm, searchParams, router, pathName]);
 
     const handleCategoryChange = (event: SelectChangeEvent) => {
         const selectedCategory = event.target.value;
-        const params = new URLSearchParams(searchParams);
+        const params = new URLSearchParams(searchParams.toString());
         if (selectedCategory === "all") {
             params.delete("category");
         } else {
             params.delete("page");
             params.set("category", selectedCategory);
         }
-        navigate(`${pathName}?${decodeURIComponent(params.toString())}`);
+        router.push(`${pathName}?${decodeURIComponent(params.toString())}`);
     };
 
     const toggleSortOrder = () => {
         const newOrder = sort.endsWith("asc") ? "price,desc" : "price,asc";
-        const params = new URLSearchParams(searchParams);
+        const params = new URLSearchParams(searchParams.toString());
         params.set("sort", newOrder);
-        navigate(`${pathName}?${decodeURIComponent(params.toString())}`);
+        router.push(`${pathName}?${decodeURIComponent(params.toString())}`);
     };
 
     const handleClearFilters = () => {
         setSearchTerm("");
-        navigate({pathname: pathName});
+        router.push(pathName);
     };
 
     return (

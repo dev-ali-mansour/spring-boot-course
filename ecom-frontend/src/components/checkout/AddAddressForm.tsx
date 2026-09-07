@@ -1,8 +1,8 @@
 import React from "react";
-import InputField from "../shared/InputField.tsx";
+import InputField from "../shared/InputField";
 import {Oval} from "react-loader-spinner";
 import {useForm} from "react-hook-form";
-import {getErrorMessage, useAddUpdateAddress} from "../../hooks/useQueries.ts";
+import {getErrorMessage, useAddUpdateAddress} from "../../hooks/useQueries";
 import toast from "react-hot-toast";
 import {FaAddressCard} from "react-icons/fa";
 import {Address} from "../../types";

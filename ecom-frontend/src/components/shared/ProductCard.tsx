@@ -1,6 +1,8 @@
+"use client";
+
 import {FaShoppingCart} from "react-icons/fa";
 import {Product} from "../../types";
-import truncateText from "../../utils/truncateText.tsx";
+import truncateText from "../../utils/truncateText";
 import {useCartStore} from "../../store";
 import React from "react";
 

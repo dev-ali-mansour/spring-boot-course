@@ -1,12 +1,12 @@
 import React, {useState} from "react";
-import Skeleton from "../shared/Skeleton.tsx";
+import Skeleton from "../shared/Skeleton";
 import {FaAddressBook} from "react-icons/fa";
-import AddressInfoModal from "./AddressInfoModal.tsx";
-import AddAddressForm from "./AddAddressForm.tsx";
+import AddressInfoModal from "./AddressInfoModal";
+import AddAddressForm from "./AddAddressForm";
 import {Address} from "../../types";
-import AddressList from "./AddressList.tsx";
-import DeleteAddressModal from "./DeleteAddressModal.tsx";
-import {getErrorMessage, useDeleteAddress} from "../../hooks/useQueries.ts";
+import AddressList from "./AddressList";
+import DeleteAddressModal from "./DeleteAddressModal";
+import {getErrorMessage, useDeleteAddress} from "../../hooks/useQueries";
 import {useAuthStore} from "../../store";
 import toast from "react-hot-toast";
 
