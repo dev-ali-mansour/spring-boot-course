@@ -31,6 +31,25 @@ export interface CreateUserCartItem {
     quantity: number;
 }
 
+export interface StripePaymentParams {
+    amount: number;
+    currency: string;
+    email: string;
+    name: string;
+    address: Address | null;
+    description: string;
+    metadata: Record<string, string>;
+}
+
+export interface StripeConfirmationParams {
+    addressId?: number | string;
+    pgName: string;
+    pgPaymentId: string;
+    pgStatus: string;
+    pgResponseMessage: string;
+}
+
+
 export const getErrorMessage = (error: any) => {
     return error?.response?.data?.message ||
         error?.response?.data?.error ||
@@ -145,6 +164,31 @@ export const useCreateUserCart = (): UseMutationResult<Cart, Error, CreateUserCa
             queryClient.setQueryData(["userCart"], data);
             // 2. Event-driven sync to Zustand store
             useCartStore.getState().setCart(data.products || [], data.totalPrice || 0, data.cartId);
+        },
+    });
+};
+
+export const useCreateStripeClientSecret = (paymentData: StripePaymentParams | null): UseQueryResult<{
+    clientSecret: string
+}, Error> => {
+    return useQuery({
+        queryKey: ["stripeClientSecret", paymentData?.amount, paymentData?.address?.id],
+        queryFn: async () => {
+            if (!paymentData) return null;
+            const {data} = await api.post("/orders/stripe-client-secret", paymentData);
+            return typeof data === "string" ? {clientSecret: data} : data;
+        },
+        enabled: !!paymentData,
+        staleTime: Infinity,
+        gcTime: 0,
+    });
+};
+
+export const useStripePaymentConfirmation = (): UseMutationResult<unknown, Error, StripeConfirmationParams> => {
+    return useMutation({
+        mutationFn: async (confirmationData: StripeConfirmationParams) => {
+            const {data} = await api.post("/orders/users/payments/online", confirmationData);
+            return data;
         },
     });
 };
