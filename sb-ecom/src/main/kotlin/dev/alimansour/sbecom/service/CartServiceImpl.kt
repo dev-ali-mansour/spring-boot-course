@@ -14,6 +14,12 @@ import dev.alimansour.sbecom.repository.ProductRepository
 import dev.alimansour.sbecom.util.AuthUtil
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
+import java.math.BigDecimal
+import java.math.RoundingMode
+
+fun Double.roundToTwoDecimals(): Double {
+    return BigDecimal(this).setScale(2, RoundingMode.HALF_UP).toDouble()
+}
 
 @Service
 class CartServiceImpl(
@@ -62,7 +68,7 @@ class CartServiceImpl(
         cartItemRepository.save(newCartItem)
         cart.cartItems.add(newCartItem)
 
-        cart.totalPrice += (product.specialPrice * quantity)
+        cart.totalPrice = (cart.totalPrice + (product.specialPrice * quantity)).roundToTwoDecimals()
         val updatedCart = cartRepository.save(cart)
 
         return updatedCart.toDTO()
@@ -177,7 +183,7 @@ class CartServiceImpl(
         cartItem.price = product.specialPrice
         val newItemPrice = cartItem.price * cartItem.quantity
 
-        cart.totalPrice += (newItemPrice - oldItemPrice)
+        cart.totalPrice = (cart.totalPrice + (newItemPrice - oldItemPrice)).roundToTwoDecimals()
 
         cartItemRepository.save(cartItem)
         cartRepository.save(cart)
@@ -209,7 +215,7 @@ class CartServiceImpl(
             cartItemRepository.save(cartItem)
         }
 
-        totalPrice = cartItems.sumOf { it.price * it.quantity }
+        totalPrice = cartItems.sumOf { it.price * it.quantity }.roundToTwoDecimals()
         return cartRepository.save(this)
     }
 
@@ -249,7 +255,7 @@ class CartServiceImpl(
             cartItemRepository.save(cartItem)
         }
 
-        cart.totalPrice = totalPrice
+        cart.totalPrice = totalPrice.roundToTwoDecimals()
         cartRepository.save(cart)
         return "Cart has been created/updated with the new items successfully!"
     }
