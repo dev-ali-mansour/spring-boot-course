@@ -29,7 +29,7 @@ const getInitialCartItems = (): CartItem[] => {
 const calculateTotalPrice = (items: CartItem[]): number => {
     return items.reduce((acc, item) => {
         const price = item.specialPrice ? Number(item.specialPrice) : Number(item.price);
-        return acc + price * Number(item.quantity);
+        return acc + price * Number(item.quantity || 1);
     }, 0);
 };
 
