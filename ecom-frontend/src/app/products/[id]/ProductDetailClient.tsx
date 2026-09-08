@@ -5,9 +5,10 @@ import { FaShoppingCart, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import { formatPrice } from "@/utils/formatPrice";
 import { useCartStore } from "@/store";
 import toast from "react-hot-toast";
+import {Product} from "@/types";
 
 interface ProductDetailClientProps {
-  product: any;
+  product: Product;
 }
 
 export default function ProductDetailClient({ product }: ProductDetailClientProps) {
@@ -25,7 +26,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
         {product.image ? (
           <img
             src={product.image}
-            alt={product.name || product.productName}
+            alt={product.name}
             className="max-h-96 w-auto object-contain rounded-lg shadow-sm"
           />
         ) : (
@@ -37,7 +38,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
       <div className="flex flex-col justify-between">
         <div>
           <h1 className="text-3xl font-bold text-slate-900 mb-4">
-            {product.name || product.productName}
+            {product.name}
           </h1>
 
           <div className="flex items-center gap-4 mb-6">
