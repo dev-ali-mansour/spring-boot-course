@@ -32,7 +32,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-montserrat antialiased bg-gray-50 text-slate-900 min-h-screen flex flex-col">
+      <body 
+        className="font-montserrat antialiased bg-gray-50 text-slate-900 min-h-screen flex flex-col"
+        suppressHydrationWarning
+      >
         <Providers>
           <Navbar />
           <main className="flex-1">{children}</main>
