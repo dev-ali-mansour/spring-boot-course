@@ -11,27 +11,18 @@ const PaymentMethod: React.FC = () => {
     const hasInitialized = useRef(false);
 
     useEffect(() => {
-        const createCart = async () => {
-            if (cartItems.length > 0 && !cartId && !hasInitialized.current) {
-                hasInitialized.current = true;
-                const sendCartItems = cartItems.map((item) => {
-                    return {
-                        productId: item.id,
-                        quantity: item.quantity,
-                    };
-                });
+        if (cartItems.length > 0 && !cartId && !hasInitialized.current) {
+            hasInitialized.current = true;
+            const sendCartItems = cartItems.map((item) => {
+                return {
+                    productId: item.id,
+                    quantity: item.quantity,
+                };
+            });
 
-                try {
-                    await createUserCartMutation.mutateAsync(sendCartItems);
-                } catch (error: unknown) {
-                    console.error("Failed to create user cartItems:", error);
-                    toast.error(getErrorMessage(error) || "Failed to create user cartItems. Please try again.");
-                }
-            }
-        };
-
-        createCart().then(() => console.log("Cart creation process completed."));
-    }, [cartId, cartItems, createUserCartMutation]);
+            createUserCartMutation.mutate(sendCartItems);
+        }
+    }, [cartId, cartItems, createUserCartMutation.mutate]);
 
     const paymentMethodHandler = (method: string) => {
         setPaymentMethod(method);
