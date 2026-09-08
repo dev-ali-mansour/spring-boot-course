@@ -52,7 +52,7 @@ const Checkout: React.FC = () => {
     if (!isMounted) return <div className={"lg:w-[80%] mx-auto py-5"}><Skeleton/></div>;
 
     return (
-        <div className={"py-14 min-h-[calc(100vh-100px)]"}>
+        <div className={"pt-14 pb-36 min-h-[calc(100vh-100px)]"}>
             <Stepper activeStep={activeStep} alternativeLabel>
                 {steps.map((label, index) => (
                     <Step key={index}>
