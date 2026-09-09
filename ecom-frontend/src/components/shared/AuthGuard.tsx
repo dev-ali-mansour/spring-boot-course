@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from "react";
 import {useAuthStore} from "@/store";
-import {useRouter} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import Loader from "@/components/shared/Loader";
 
 interface AuthGuardProps {
@@ -14,6 +14,7 @@ interface AuthGuardProps {
 const AuthGuard = ({children, isPublicPage = false, adminOnly = false}: AuthGuardProps) => {
     const user = useAuthStore((state) => state.user);
     const router = useRouter();
+    const pathname = usePathname();
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
@@ -21,14 +22,34 @@ const AuthGuard = ({children, isPublicPage = false, adminOnly = false}: AuthGuar
     }, []);
 
     useEffect(() => {
-        if (!isMounted) return;
+            if (!isMounted) return;
 
-        if (isPublicPage && user) {
-            router.replace("/");
-        } else if (!isPublicPage && !user) {
-            router.replace("/login");
-        }
-    }, [isMounted, user, isPublicPage, router]);
+            if (isPublicPage && user) {
+                router.replace("/");
+            } else if (!isPublicPage && !user) {
+                router.replace("/login");
+            }
+
+            if (adminOnly) {
+                const isAdmin = user?.roles?.includes("ROLE_ADMIN");
+                const isSeller = user?.roles?.includes("ROLE_SELLER");
+
+                if (isSeller && !isAdmin) {
+                    const sellerAllowedPaths = ["/admin/orders", "/admin/products"];
+                    const sellerAllowed = sellerAllowedPaths.some(path =>
+                        pathname.startsWith(path));
+
+                    if (!sellerAllowed) {
+                        router.replace("/");
+                    }
+                } else if (!isAdmin && !isSeller) {
+                    router.replace("/");
+                }
+            }
+
+        }, [isMounted, user, isPublicPage, adminOnly, pathname, router]
+    )
+    ;
 
     if (!isMounted) {
         return <Loader text="Loading..."/>;
@@ -40,6 +61,23 @@ const AuthGuard = ({children, isPublicPage = false, adminOnly = false}: AuthGuar
 
     if (!isPublicPage && !user) {
         return null;
+    }
+
+    if (adminOnly && user) {
+        const isAdmin = user?.roles?.includes("ROLE_ADMIN");
+        const isSeller = user?.roles?.includes("ROLE_SELLER");
+
+        if (isSeller && !isAdmin) {
+            const sellerAllowedPaths = ["/admin/orders", "/admin/products"];
+            const sellerAllowed = sellerAllowedPaths.some(path =>
+                pathname.startsWith(path));
+
+            if (!sellerAllowed) {
+                return null;
+            }
+        } else if (!isAdmin && !isSeller) {
+            return null;
+        }
     }
 
     return <>{children}</>;
