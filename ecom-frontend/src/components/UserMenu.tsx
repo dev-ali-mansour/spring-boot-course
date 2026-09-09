@@ -6,7 +6,7 @@ import Link from "next/link";
 import {useRouter} from "next/navigation";
 import {BiUser} from "react-icons/bi";
 import {useAuthStore} from "@/store";
-import {FaShoppingCart} from "react-icons/fa";
+import {FaShoppingCart, FaUserShield} from "react-icons/fa";
 import {useLogout} from "@/hooks/useQueries";
 import {IoExitOutline} from "react-icons/io5";
 import truncateText from "@/utils/truncateText";
@@ -21,6 +21,9 @@ const UserMenu: React.FC = () => {
     const {user, clearUser} = useAuthStore();
     const logoutMutation = useLogout();
     const router = useRouter();
+
+    const isAdmin = user?.roles?.includes("ROLE_ADMIN");
+    const isSeller = user?.roles?.includes("ROLE_SELLER");
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -82,6 +85,17 @@ const UserMenu: React.FC = () => {
                         </span>
                     </MenuItem>
                 </Link>
+                {(isAdmin || isSeller) && (
+                    <Link href={isAdmin ? "/admin" : "/admin/orders"}>
+                        <MenuItem
+                            className={"flex gap-2"}
+                            onClick={handleClose}>
+                            <FaUserShield className={"text-xl"}/>
+                            <span className={"font-semibold"}>
+                        {isAdmin ? "Admin Panel" : "Seller Panel"}
+                        </span>
+                        </MenuItem>
+                    </Link>)}
                 <MenuItem
                     className={"flex gap-2"}
                     onClick={logoutHandler}>
