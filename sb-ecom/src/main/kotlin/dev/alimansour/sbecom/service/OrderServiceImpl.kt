@@ -7,9 +7,11 @@ import dev.alimansour.sbecom.mapper.toDto
 import dev.alimansour.sbecom.model.*
 import dev.alimansour.sbecom.payload.OrderDTO
 import dev.alimansour.sbecom.payload.OrderRequestDTO
+import dev.alimansour.sbecom.payload.OrderResponse
 import dev.alimansour.sbecom.repository.*
 import dev.alimansour.sbecom.util.AuthUtil
 import jakarta.transaction.Transactional
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 
@@ -82,6 +84,19 @@ class OrderServiceImpl(
         return orderDto
     }
 
+    override fun getAllOrders(pageable: Pageable): OrderResponse {
+        val page = orderRepository.findAll(pageable)
+        val orders = page.content.map { it.toDTO() }
+        return OrderResponse(
+            content = orders,
+            pageNumber = page.number,
+            pageSize = page.size,
+            totalPages = page.totalPages,
+            totalElements = page.totalElements,
+            lastPage = page.isLast
+        )
+    }
+
     @Transactional
     fun Cart.updateProductQuantityAndDelete() {
         val cartItemsCopy = cartItems.toList()
@@ -91,7 +106,7 @@ class OrderServiceImpl(
             productRepository.save(product)
 
             cartService.deleteProductFromCart(
-                cartId = requireNotNull(id) { "Cart ID must not be null" }, 
+                cartId = requireNotNull(id) { "Cart ID must not be null" },
                 productId = requireNotNull(product.id) { "Product ID must not be null" }
             )
         }
