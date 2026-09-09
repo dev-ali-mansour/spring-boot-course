@@ -3,6 +3,7 @@ import {api} from "@/api/api";
 import {Address, Cart, Category, Pagination, Product, User} from "@/types";
 import {useCartStore} from "@/store";
 import {AnalyticsResponse} from "@/types/AnalyticsResponse";
+import {Order} from "@/types/Order";
 
 export interface PaginatedResponse<T> extends Pagination {
     content: T[];
@@ -203,3 +204,13 @@ export const useGetAnalyticsData = (): UseQueryResult<AnalyticsResponse, Error> 
         }
     });
 }
+
+export const useOrders = (queryString: string = ""): UseQueryResult<PaginatedResponse<Order>, Error> => {
+    return useQuery<PaginatedResponse<Order>, Error>({
+        queryKey: ["orders", queryString],
+        queryFn: async () => {
+            const {data} = await api.get<PaginatedResponse<Order>>(`/admin/orders${queryString ? `?${queryString}` : ""}`);
+            return data;
+        }
+    });
+};
