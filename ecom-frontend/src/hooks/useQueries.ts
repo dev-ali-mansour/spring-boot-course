@@ -2,6 +2,7 @@ import {useMutation, UseMutationResult, useQuery, useQueryClient, UseQueryResult
 import {api} from "@/api/api";
 import {Address, Cart, Category, Pagination, Product, User} from "@/types";
 import {useCartStore} from "@/store";
+import {AnalyticsResponse} from "@/types/AnalyticsResponse";
 
 export interface PaginatedResponse<T> extends Pagination {
     content: T[];
@@ -192,3 +193,13 @@ export const useStripePaymentConfirmation = (): UseMutationResult<unknown, Error
         },
     });
 };
+
+export const useGetAnalyticsData = (): UseQueryResult<AnalyticsResponse, Error> => {
+    return useQuery<AnalyticsResponse, Error>({
+        queryKey: ["analyticsData"],
+        queryFn: async () => {
+            const {data} = await api.get<AnalyticsResponse>("/admin/app/analytics");
+            return data;
+        }
+    });
+}
