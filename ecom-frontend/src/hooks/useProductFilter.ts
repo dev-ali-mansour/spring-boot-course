@@ -1,7 +1,7 @@
 import {useSearchParams} from "next/navigation";
 import {useMemo} from "react";
 
-export default function useProductFilter() {
+const useProductFilter = () => {
     const searchParams = useSearchParams();
 
     return useMemo(() => {
@@ -27,3 +27,5 @@ export default function useProductFilter() {
         return decodeURIComponent(params.toString());
     }, [searchParams]);
 }
+
+export default useProductFilter;

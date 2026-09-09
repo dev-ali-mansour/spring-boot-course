@@ -11,7 +11,7 @@ interface ProductDetailClientProps {
   product: Product;
 }
 
-export default function ProductDetailClient({ product }: ProductDetailClientProps) {
+const ProductDetailClient = ({ product }: ProductDetailClientProps) => {
   const addToCart = useCartStore((state) => state.addToCart);
   const isAvailable = product.quantity && Number(product.quantity) > 0;
 
@@ -84,4 +84,6 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
       </div>
     </div>
   );
-}
+};
+
+export default ProductDetailClient;

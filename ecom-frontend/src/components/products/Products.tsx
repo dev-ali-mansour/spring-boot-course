@@ -8,15 +8,16 @@ import Filter from "@/components/products/Filter";
 import useProductFilter from "@/hooks/useProductFilter";
 import Loader from "@/components/shared/Loader";
 import PaginationComponent from "@/components/shared/PaginationComponent";
-import {useGetProducts, useGetCategories, getErrorMessage} from "@/hooks/useQueries";
+import {getErrorMessage, useGetCategories, useGetProducts} from "@/hooks/useQueries";
 import {useProductModalStore} from "@/store";
+import React from "react";
 
-export default function Products() {
+const Products: React.FC = () => {
     const queryString = useProductFilter();
-    const { data: productsData, isLoading: isProductsLoading, error: productsError } = useGetProducts(queryString);
-    const { data: categoriesData } = useGetCategories();
-    
-    const { selectedProduct, isModalOpen, openModal, closeModal } = useProductModalStore();
+    const {data: productsData, isLoading: isProductsLoading, error: productsError} = useGetProducts(queryString);
+    const {data: categoriesData} = useGetCategories();
+
+    const {selectedProduct, isModalOpen, openModal, closeModal} = useProductModalStore();
 
     const products = productsData?.content;
     const pagination = productsData || {};
@@ -65,3 +66,5 @@ export default function Products() {
         </div>
     );
 }
+
+export default Products;
