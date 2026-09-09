@@ -21,7 +21,7 @@ class StripeServiceImpl(
         client = StripeClient(secretKey)
     }
 
-    override fun paymentIntent(stripePaymentDTO: StripePaymentDTO): PaymentIntent {
+    override fun createPaymentIntent(stripePaymentDTO: StripePaymentDTO): PaymentIntent {
         val params =
             PaymentIntentCreateParams.builder()
                 .setAmount(stripePaymentDTO.amount)

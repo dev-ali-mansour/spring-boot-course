@@ -3,5 +3,5 @@ import com.stripe.model.PaymentIntent
 import dev.alimansour.sbecom.payload.StripePaymentDTO
 
 interface StripeService {
-    fun paymentIntent(stripePaymentDTO: StripePaymentDTO): PaymentIntent
+    fun createPaymentIntent(stripePaymentDTO: StripePaymentDTO): PaymentIntent
 }

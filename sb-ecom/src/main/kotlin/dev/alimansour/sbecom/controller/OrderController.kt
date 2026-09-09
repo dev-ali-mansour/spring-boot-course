@@ -34,7 +34,7 @@ class OrderController(
     fun createStripeClientSecret(
         @Validated @RequestBody stripePaymentDTO: StripePaymentDTO
     ): ResponseEntity<String> {
-        val paymentIntent: PaymentIntent = stripeService.paymentIntent(stripePaymentDTO)
+        val paymentIntent: PaymentIntent = stripeService.createPaymentIntent(stripePaymentDTO)
         return ResponseEntity(paymentIntent.clientSecret, HttpStatus.CREATED)
     }
 }
