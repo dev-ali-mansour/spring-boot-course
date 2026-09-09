@@ -67,6 +67,7 @@ class AuthController(
             lastName = userDetails.lastName,
             jwtToken = jwtCookie.value,
             username = userDetails.username,
+            email = userDetails.email,
             roles = roles
         )
 
@@ -152,6 +153,7 @@ class AuthController(
             firstName = userDetails.firstName,
             lastName = userDetails.lastName,
             username = userDetails.username,
+            email = userDetails.email,
             roles = roles
         )
 

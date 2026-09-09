@@ -6,5 +6,6 @@ data class UserInfoResponse(
     val lastName: String,
     val jwtToken: String? = null,
     val username: String,
+    val email: String,
     val roles: List<String>,
 )
