@@ -1,4 +1,5 @@
 import {bannerImageOne, bannerImageThree, bannerImageTwo} from "@/utils/constant";
+import {FaBoxOpen, FaHome, FaShoppingCart, FaStore, FaThList} from "react-icons/fa";
 
 export const bannerLists = [
     {
@@ -21,5 +22,42 @@ export const bannerLists = [
         title: "Home Comfort",
         subtitle: "Living Room",
         description: "Upgrade your space with cozy and stylish sofas",
+    }
+];
+
+export const adminNavigation = [
+    {
+        name: "Dashboard",
+        href: "/admin",
+        icon: FaHome,
+        current: true
+    }, {
+        name: "Orders",
+        href: "/admin/orders",
+        icon: FaShoppingCart,
+    }, {
+        name: "Products",
+        href: "/admin/products",
+        icon: FaBoxOpen,
+    }, {
+        name: "Categories",
+        href: "/admin/categories",
+        icon: FaThList,
+    }, {
+        name: "Sellers",
+        href: "/admin/sellers",
+        icon: FaStore,
+    },
+];
+
+export const sellerNavigation = [
+    {
+        name: "Orders",
+        href: "/admin/orders",
+        icon: FaShoppingCart,
+    }, {
+        name: "Products",
+        href: "/admin/products",
+        icon: FaBoxOpen,
     }
 ];
