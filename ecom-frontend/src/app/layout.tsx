@@ -31,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body 
         className="font-montserrat antialiased bg-gray-50 text-slate-900 min-h-screen flex flex-col"
         suppressHydrationWarning
