@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <AuthGuard isPublicPage={true}>
+    <AuthGuard requireGuest={true}>
       <Login />
     </AuthGuard>
   );

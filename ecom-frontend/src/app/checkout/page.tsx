@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function CheckoutPage() {
   return (
-    <AuthGuard isPublicPage={false}>
+    <AuthGuard>
       <Checkout />
     </AuthGuard>
   );

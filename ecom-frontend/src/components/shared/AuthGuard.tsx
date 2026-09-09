@@ -7,11 +7,11 @@ import Loader from "@/components/shared/Loader";
 
 interface AuthGuardProps {
     children: React.ReactNode;
-    isPublicPage?: boolean;
+    requireGuest?: boolean;
     adminOnly?: boolean;
 }
 
-const AuthGuard = ({children, isPublicPage = false, adminOnly = false}: AuthGuardProps) => {
+const AuthGuard = ({children, requireGuest = false, adminOnly = false}: AuthGuardProps) => {
     const user = useAuthStore((state) => state.user);
     const router = useRouter();
     const pathname = usePathname();
@@ -24,9 +24,9 @@ const AuthGuard = ({children, isPublicPage = false, adminOnly = false}: AuthGuar
     useEffect(() => {
             if (!isMounted) return;
 
-            if (isPublicPage && user) {
+            if (requireGuest && user) {
                 router.replace("/");
-            } else if (!isPublicPage && !user) {
+            } else if (!requireGuest && !user) {
                 router.replace("/login");
             }
 
@@ -47,7 +47,7 @@ const AuthGuard = ({children, isPublicPage = false, adminOnly = false}: AuthGuar
                 }
             }
 
-        }, [isMounted, user, isPublicPage, adminOnly, pathname, router]
+        }, [isMounted, user, requireGuest, adminOnly, pathname, router]
     )
     ;
 
@@ -55,12 +55,12 @@ const AuthGuard = ({children, isPublicPage = false, adminOnly = false}: AuthGuar
         return <Loader text="Loading..."/>;
     }
 
-    if (isPublicPage && user) {
-        return null;
+    if (requireGuest && user) {
+        return <Loader text="Redirecting..."/>;
     }
 
-    if (!isPublicPage && !user) {
-        return null;
+    if (!requireGuest && !user) {
+        return <Loader text="Redirecting..."/>;
     }
 
     if (adminOnly && user) {
@@ -73,10 +73,10 @@ const AuthGuard = ({children, isPublicPage = false, adminOnly = false}: AuthGuar
                 pathname.startsWith(path));
 
             if (!sellerAllowed) {
-                return null;
+                return <Loader text="Redirecting..."/>;
             }
         } else if (!isAdmin && !isSeller) {
-            return null;
+            return <Loader text="Redirecting..."/>;
         }
     }
 
