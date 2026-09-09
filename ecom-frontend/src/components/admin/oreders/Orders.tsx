@@ -1,10 +1,33 @@
+"use client";
 import React from "react";
+import useOrderFilter from "@/hooks/useOrderFilter";
+import {getErrorMessage, useOrders} from "@/hooks/useQueries";
+import {FaShoppingCart} from "react-icons/fa";
+import OrderTable from "@/components/admin/oreders/OrderTable";
+import Loader from "@/components/shared/Loader";
+import ErrorPage from "@/components/shared/ErrorPage";
 
 const Orders: React.FC = () => {
+    const queryString = useOrderFilter();
+    const {data: orderData, isLoading, error} = useOrders(queryString);
+    const orders = orderData?.content || [];
+    const pagination = orderData;
+
+    if (isLoading) return <Loader/>;
+    if (error) return <ErrorPage message={getErrorMessage(error)}/>;
+
+    const isEmptyOrders = !orderData || orderData?.content?.length === 0;
+
     return (
-        <div>
-            <h1>Orders</h1>
-            <p>Manage your orders in the Admin Panel.</p>
+        <div className={"pb-6 pt-20"}>
+            {isEmptyOrders ? (
+                <div className={"flex flex-col items-center justify-center text-gray-600 py-10"}>
+                    <FaShoppingCart size={50} className={"mb-3"}/>
+                    <h2 className={"text-2xl font-semibold"}>No Orders Placed Yet</h2>
+                </div>
+            ) : (
+                <OrderTable orders={orders} pagination={pagination}/>
+            )}
         </div>
     );
 };
