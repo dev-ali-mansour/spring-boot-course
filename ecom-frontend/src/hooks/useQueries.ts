@@ -288,3 +288,18 @@ export const useUpdateProduct = (isAdmin: boolean = true): UseMutationResult<Pro
         },
     });
 };
+
+export const useDeleteProduct = (isAdmin: boolean = true): UseMutationResult<string, Error, number | string> => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async (productId: number | string) => {
+            const endpoint = isAdmin ? `/admin/products/${productId}` : `/seller/products/${productId}`;
+            const response = await api.delete(endpoint);
+            return response.data;
+        },
+        onSuccess: () => {
+            return queryClient.invalidateQueries({queryKey: ["dashboardProducts"]})
+                .then(() => queryClient.invalidateQueries({queryKey: ["products"]}));
+        },
+    });
+};
