@@ -8,6 +8,7 @@ import dev.alimansour.sbecom.model.*
 import dev.alimansour.sbecom.payload.OrderDTO
 import dev.alimansour.sbecom.payload.OrderRequestDTO
 import dev.alimansour.sbecom.payload.OrderResponse
+import dev.alimansour.sbecom.payload.OrderStatusUpdateDTO
 import dev.alimansour.sbecom.repository.*
 import dev.alimansour.sbecom.util.AuthUtil
 import jakarta.transaction.Transactional
@@ -95,6 +96,14 @@ class OrderServiceImpl(
             totalElements = page.totalElements,
             lastPage = page.isLast
         )
+    }
+
+    override fun updateOrder(orderId: Long, orderStatusUpdateDTO: OrderStatusUpdateDTO): OrderDTO {
+        val order = orderRepository.findById(orderId)
+            .orElseThrow { ResourceNotFoundException(resourceName = "Order", field = "id", fieldId = orderId) }
+        order.orderStatus = orderStatusUpdateDTO.status
+        val updatedOrder = orderRepository.save(order)
+        return updatedOrder.toDTO()
     }
 
     @Transactional
