@@ -62,7 +62,7 @@ class OrderServiceImpl(
             orderDate = LocalDate.now(),
             payment = payment,
             totalAmount = cart.totalPrice,
-            orderStatus = "Order Accepted!",
+            orderStatus = "Accepted",
             address = address,
         )
 
