@@ -42,7 +42,7 @@ const UpdateOrderForm: React.FC<UpdateOrderFormProps> = ({setIsOpen, selectedId,
             });
             toast.success("Order status updated successfully");
             setIsOpen(false);
-        } catch (error: Error) {
+        } catch (error: unknown) {
             console.error(error);
             toast.error(getErrorMessage(error));
         }
