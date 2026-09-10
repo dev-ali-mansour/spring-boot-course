@@ -51,6 +51,11 @@ export interface StripeConfirmationParams {
     pgResponseMessage: string;
 }
 
+export interface OrderStatusUpdateParams {
+    orderId: number;
+    status: string;
+}
+
 
 export const getErrorMessage = (error: any) => {
     return error?.response?.data?.message ||
@@ -214,4 +219,20 @@ export const useOrders = (queryString: string = ""): UseQueryResult<PaginatedRes
             return response.data;
         }
     });
+};
+
+export const useUpdateOrderStatus = (isAdmin: Boolean = true): UseMutationResult<Order, Error, OrderStatusUpdateParams> => {
+    const queryClient = useQueryClient();
+    return useMutation<Order, Error, OrderStatusUpdateParams>({
+            mutationFn: async (params: OrderStatusUpdateParams) => {
+                console.log("Updating order status for orderId:", params.orderId, "to status:", params.status);
+                const endpoint = `/admin/orders/${params.orderId}/status`;
+                const response = await api.put<Order>(endpoint, params);
+                return response.data;
+            },
+            onSuccess: () => {
+                return queryClient.invalidateQueries({queryKey: ["orders"]})
+            }
+        }
+    );
 };
