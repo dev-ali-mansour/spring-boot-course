@@ -67,6 +67,11 @@ export interface UpdateProductParams {
     [key: string]: unknown;
 }
 
+export interface UpdateProductImageParams {
+    productId: number | string;
+    formData: FormData;
+}
+
 export const getErrorMessage = (error: any) => {
     return error?.response?.data?.message ||
         error?.response?.data?.error ||
@@ -252,7 +257,7 @@ export const useDashboardProducts = (queryString: string = "", isAdmin: boolean 
         queryKey: ["dashboardProducts", queryString, isAdmin],
         queryFn: async () => {
             const endpoint = isAdmin ? "/admin/products" : "/seller/products";
-            const { data } = await api.get(`${endpoint}${queryString ? `?${queryString}` : ""}`);
+            const {data} = await api.get(`${endpoint}${queryString ? `?${queryString}` : ""}`);
             return data;
         },
     });
@@ -304,15 +309,12 @@ export const useDeleteProduct = (isAdmin: boolean = true): UseMutationResult<str
     });
 };
 
-export const useUpdateProductImage = (isAdmin: boolean = true): UseMutationResult<Product, Error, {
-    productId: number | string;
-    formData: FormData
-}> => {
+export const useUpdateProductImage = (isAdmin: boolean = true): UseMutationResult<Product, Error, UpdateProductImageParams> => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async ({productId, formData}: { productId: number | string; formData: FormData }) => {
-            const endpoint = isAdmin ? `/admin/products/${productId}/image` : `/seller/products/${productId}/image`;
-            const response = await api.put(endpoint, formData);
+        mutationFn: async (params: UpdateProductImageParams) => {
+            const endpoint = isAdmin ? `/admin/products/${params.productId}/image` : `/seller/products/${params.productId}/image`;
+            const response = await api.put(endpoint, params.formData);
             return response.data;
         },
         onSuccess: () => {
