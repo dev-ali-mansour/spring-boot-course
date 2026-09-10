@@ -2,10 +2,7 @@ package dev.alimansour.sbecom.controller
 
 import com.stripe.model.PaymentIntent
 import dev.alimansour.sbecom.config.AppConstants
-import dev.alimansour.sbecom.payload.OrderDTO
-import dev.alimansour.sbecom.payload.OrderRequestDTO
-import dev.alimansour.sbecom.payload.OrderResponse
-import dev.alimansour.sbecom.payload.StripePaymentDTO
+import dev.alimansour.sbecom.payload.*
 import dev.alimansour.sbecom.service.OrderService
 import dev.alimansour.sbecom.service.StripeService
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -54,5 +51,14 @@ class OrderController(
     ): ResponseEntity<OrderResponse> {
         val orders: OrderResponse = orderService.getAllOrders(pageable)
         return ResponseEntity(orders, HttpStatus.OK)
+    }
+
+    @PutMapping("/admin/orders/{orderId}/status")
+    fun updateOrderStatus(
+        @PathVariable orderId: Long,
+        @RequestBody orderStatusUpdateDTO: OrderStatusUpdateDTO,
+    ): ResponseEntity<OrderDTO> {
+        val updatedOrder: OrderDTO = orderService.updateOrder(orderId, orderStatusUpdateDTO)
+        return ResponseEntity(updatedOrder, HttpStatus.OK)
     }
 }
