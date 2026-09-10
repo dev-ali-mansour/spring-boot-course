@@ -65,7 +65,7 @@ export const getErrorMessage = (error: any) => {
         "An error occurred!";
 };
 
-export const useGetProducts = (queryString: string = ""): UseQueryResult<PaginatedResponse<Product>, Error> => {
+export const useProducts = (queryString: string = ""): UseQueryResult<PaginatedResponse<Product>, Error> => {
     return useQuery<PaginatedResponse<Product>, Error>({
         queryKey: ["products", queryString],
         queryFn: async () => {
@@ -75,7 +75,7 @@ export const useGetProducts = (queryString: string = ""): UseQueryResult<Paginat
     });
 };
 
-export const useGetCategories = (): UseQueryResult<PaginatedResponse<Category>, Error> => {
+export const useCategories = (): UseQueryResult<PaginatedResponse<Category>, Error> => {
     return useQuery<PaginatedResponse<Category>, Error>({
         queryKey: ["categories"],
         queryFn: async () => {
@@ -226,7 +226,7 @@ export const useUpdateOrderStatus = (isAdmin: Boolean = true): UseMutationResult
     return useMutation<Order, Error, OrderStatusUpdateParams>({
             mutationFn: async (params: OrderStatusUpdateParams) => {
                 console.log("Updating order status for orderId:", params.orderId, "to status:", params.status);
-                const endpoint = `/admin/orders/${params.orderId}/status`;
+                const endpoint = isAdmin ? `/admin/orders/${params.orderId}/status` : `/seller/orders/${params.orderId}/status`;
                 const response = await api.put<Order>(endpoint, params);
                 return response.data;
             },
