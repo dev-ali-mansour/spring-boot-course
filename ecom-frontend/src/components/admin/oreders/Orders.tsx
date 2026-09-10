@@ -3,7 +3,7 @@ import React from "react";
 import useOrderFilter from "@/hooks/useOrderFilter";
 import {getErrorMessage, useOrders} from "@/hooks/useQueries";
 import {FaShoppingCart} from "react-icons/fa";
-import OrderTable from "@/components/admin/oreders/OrderTable";
+import OrdersTable from "@/components/admin/oreders/OrdersTable";
 import Loader from "@/components/shared/Loader";
 import ErrorPage from "@/components/shared/ErrorPage";
 
@@ -26,7 +26,7 @@ const Orders: React.FC = () => {
                     <h2 className={"text-2xl font-semibold"}>No Orders Placed Yet</h2>
                 </div>
             ) : (
-                <OrderTable orders={orders} pagination={pagination}/>
+                <OrdersTable orders={orders} pagination={pagination}/>
             )}
         </div>
     );
