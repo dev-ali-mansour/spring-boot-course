@@ -272,3 +272,19 @@ export const useCreateProduct = (isAdmin: boolean = true): UseMutationResult<Pro
         },
     });
 };
+
+export const useUpdateProduct = (isAdmin: boolean = true): UseMutationResult<Product, Error, UpdateProductParams> => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async (productData: UpdateProductParams) => {
+            const id = productData.id ?? productData.productId;
+            const endpoint = isAdmin ? `/admin/products/${id}` : `/seller/products/${id}`;
+            const response = await api.put(endpoint, productData);
+            return response.data;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ["dashboardProducts"]})
+                .then(() => queryClient.invalidateQueries({queryKey: ["products"]}));
+        },
+    });
+};
