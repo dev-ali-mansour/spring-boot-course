@@ -56,6 +56,16 @@ export interface OrderStatusUpdateParams {
     status: string;
 }
 
+export interface CreateProductParams {
+    categoryId: number | string;
+    productData: Partial<Product> | FormData | Record<string, unknown>;
+}
+
+export interface UpdateProductParams {
+    id?: number | string;
+
+    [key: string]: unknown;
+}
 
 export const getErrorMessage = (error: any) => {
     return error?.response?.data?.message ||
@@ -235,4 +245,15 @@ export const useUpdateOrderStatus = (isAdmin: Boolean = true): UseMutationResult
             }
         }
     );
+};
+
+export const useDashboardProducts = (queryString: string = "", isAdmin: boolean = true): UseQueryResult<PaginatedResponse<Product>, Error> => {
+    return useQuery({
+        queryKey: ["dashboardProducts", queryString, isAdmin],
+        queryFn: async () => {
+            const endpoint = isAdmin ? "/admin/products" : "/seller/products";
+            const { data } = await api.get(`${endpoint}${queryString ? `?${queryString}` : ""}`);
+            return data;
+        },
+    });
 };
