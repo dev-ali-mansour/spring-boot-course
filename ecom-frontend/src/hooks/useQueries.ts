@@ -257,3 +257,18 @@ export const useDashboardProducts = (queryString: string = "", isAdmin: boolean 
         },
     });
 };
+
+export const useCreateProduct = (isAdmin: boolean = true): UseMutationResult<Product, Error, CreateProductParams> => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async ({categoryId, productData}: CreateProductParams) => {
+            const endpoint = isAdmin ? `/admin/categories/${categoryId}/product` : `/seller/categories/${categoryId}/product`;
+            const response = await api.post(endpoint, productData);
+            return response.data;
+        },
+        onSuccess: () => {
+            return queryClient.invalidateQueries({queryKey: ["dashboardProducts"]})
+                .then(() => queryClient.invalidateQueries({queryKey: ["products"]}));
+        },
+    });
+};
