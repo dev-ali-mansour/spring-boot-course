@@ -24,12 +24,12 @@ export interface RegistrationData {
 }
 
 export interface AddressMutationParams {
-    addressId?: number | string;
+    addressId?: number;
     addressData: Partial<Address>;
 }
 
 export interface CreateUserCartItem {
-    productId?: number | string;
+    productId?: number;
     quantity: number;
 }
 
@@ -64,8 +64,8 @@ export const useGetProducts = (queryString: string = ""): UseQueryResult<Paginat
     return useQuery<PaginatedResponse<Product>, Error>({
         queryKey: ["products", queryString],
         queryFn: async () => {
-            const {data} = await api.get<PaginatedResponse<Product>>(`/public/products${queryString ? `?${queryString}` : ""}`);
-            return data;
+            const response = await api.get<PaginatedResponse<Product>>(`/public/products${queryString ? `?${queryString}` : ""}`);
+            return response.data;
         }
     });
 };
@@ -74,8 +74,8 @@ export const useGetCategories = (): UseQueryResult<PaginatedResponse<Category>, 
     return useQuery<PaginatedResponse<Category>, Error>({
         queryKey: ["categories"],
         queryFn: async () => {
-            const {data} = await api.get<PaginatedResponse<Category>>("/public/categories");
-            return data;
+            const response = await api.get<PaginatedResponse<Category>>("/public/categories");
+            return response.data;
         }
     });
 };
@@ -84,8 +84,8 @@ export const useLogin = (): UseMutationResult<User, Error, LoginCredentials> => 
     return useMutation<User, Error, LoginCredentials>({
         mutationKey: ["login"],
         mutationFn: async (credentials: LoginCredentials) => {
-            const {data} = await api.post<User>("/auth/signin", credentials);
-            return data;
+            const response = await api.post<User>("/auth/signin", credentials);
+            return response.data;
         }
     })
 };
@@ -94,8 +94,8 @@ export const useRegister = (): UseMutationResult<{ message?: string }, Error, Re
     return useMutation<{ message?: string }, Error, RegistrationData>({
         mutationKey: ["register"],
         mutationFn: async (registrationData: RegistrationData) => {
-            const {data} = await api.post<{ message?: string }>("/auth/signup", registrationData);
-            return data;
+            const response = await api.post<{ message?: string }>("/auth/signup", registrationData);
+            return response.data;
         }
     })
 };
@@ -104,8 +104,8 @@ export const useLogout = (): UseMutationResult<unknown, Error, void> => {
     return useMutation<unknown, Error, void>({
         mutationKey: ["logout"],
         mutationFn: async () => {
-            const {data} = await api.post("/auth/signout");
-            return data;
+            const response = await api.post("/auth/signout");
+            return response.data;
         }
     })
 };
@@ -114,8 +114,8 @@ export const useGetUserAddresses = (): UseQueryResult<Address[], Error> => {
     return useQuery<Address[], Error>({
         queryKey: ["userAddresses"],
         queryFn: async () => {
-            const {data} = await api.get<Address[]>("/users/addresses");
-            return data;
+            const response = await api.get<Address[]>("/users/addresses");
+            return response.data;
         }
     });
 };
@@ -123,13 +123,14 @@ export const useGetUserAddresses = (): UseQueryResult<Address[], Error> => {
 export const useAddUpdateAddress = (): UseMutationResult<Address, Error, AddressMutationParams> => {
     const queryClient = useQueryClient();
     return useMutation<Address, Error, AddressMutationParams>({
+        mutationKey: ["addUpdateAddress"],
         mutationFn: async ({addressId, addressData}: AddressMutationParams) => {
             if (!addressId) {
-                const {data} = await api.post<Address>("/addresses", addressData);
-                return data;
+                const response = await api.post<Address>("/addresses", addressData);
+                return response.data;
             } else {
-                const {data} = await api.put<Address>(`/addresses/${addressId}`, addressData);
-                return data;
+                const response = await api.put<Address>(`/addresses/${addressId}`, addressData);
+                return response.data;
             }
         },
         onSuccess: () => {
@@ -143,8 +144,8 @@ export const useDeleteAddress = (): UseMutationResult<string, Error, number | st
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (addressId: number | string) => {
-            const {data} = await api.delete(`/addresses/${addressId}`);
-            return data;
+            const response = await api.delete(`/addresses/${addressId}`);
+            return response.data;
         },
         onSuccess: () => {
             return queryClient.invalidateQueries({queryKey: ["userAddresses"]});
@@ -158,8 +159,8 @@ export const useCreateUserCart = (): UseMutationResult<Cart, Error, CreateUserCa
         mutationFn: async (cartItems: CreateUserCartItem[]) => {
             await api.post("/carts/users/cart", cartItems);
             // Immediately fetch the created cart to get the cartId
-            const {data} = await api.get<Cart>("/carts/users/cart");
-            return data;
+            const response = await api.get<Cart>("/carts/users/cart");
+            return response.data;
         },
         onSuccess: (data) => {
             // 1. Update React Query Cache
@@ -177,8 +178,8 @@ export const useCreateStripeClientSecret = (paymentData: StripePaymentParams | n
         queryKey: ["stripeClientSecret", paymentData?.amount, paymentData?.address?.id],
         queryFn: async () => {
             if (!paymentData) return null;
-            const {data} = await api.post("/orders/stripe-client-secret", paymentData);
-            return typeof data === "string" ? {clientSecret: data} : data;
+            const response = await api.post("/orders/stripe-client-secret", paymentData);
+            return typeof response.data === "string" ? {clientSecret: response.data} : response.data;
         },
         enabled: !!paymentData,
         staleTime: Infinity,
@@ -189,8 +190,8 @@ export const useCreateStripeClientSecret = (paymentData: StripePaymentParams | n
 export const useStripePaymentConfirmation = (): UseMutationResult<unknown, Error, StripeConfirmationParams> => {
     return useMutation({
         mutationFn: async (confirmationData: StripeConfirmationParams) => {
-            const {data} = await api.post("/orders/users/payments/online", confirmationData);
-            return data;
+            const response = await api.post("/orders/users/payments/online", confirmationData);
+            return response.data;
         },
     });
 };
@@ -199,8 +200,8 @@ export const useGetAnalyticsData = (): UseQueryResult<AnalyticsResponse, Error> 
     return useQuery<AnalyticsResponse, Error>({
         queryKey: ["analyticsData"],
         queryFn: async () => {
-            const {data} = await api.get<AnalyticsResponse>("/admin/app/analytics");
-            return data;
+            const response = await api.get<AnalyticsResponse>("/admin/app/analytics");
+            return response.data;
         }
     });
 }
@@ -209,8 +210,8 @@ export const useOrders = (queryString: string = ""): UseQueryResult<PaginatedRes
     return useQuery<PaginatedResponse<Order>, Error>({
         queryKey: ["orders", queryString],
         queryFn: async () => {
-            const {data} = await api.get<PaginatedResponse<Order>>(`/admin/orders${queryString ? `?${queryString}` : ""}`);
-            return data;
+            const response = await api.get<PaginatedResponse<Order>>(`/admin/orders${queryString ? `?${queryString}` : ""}`);
+            return response.data;
         }
     });
 };
