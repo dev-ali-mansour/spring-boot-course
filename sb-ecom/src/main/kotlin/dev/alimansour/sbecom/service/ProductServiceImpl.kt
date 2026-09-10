@@ -166,6 +166,22 @@ class ProductServiceImpl(
         return updatedProduct.toDTO()
     }
 
+    override fun getAllProductsForAdmin(pageable: Pageable): ProductResponse {
+        val page = productRepository.findAll(pageable)
+        val products = page.content.map {
+            it.toDTO().copy(image = fileService.constructImageUrl(it.image))
+        }
+
+        return ProductResponse(
+            content = products,
+            pageNumber = page.number,
+            pageSize = page.size,
+            totalPages = page.totalPages,
+            totalElements = page.totalElements,
+            lastPage = page.isLast
+        )
+    }
+
 
     private fun Product.calculateSpecialPrice(): Double =
         price * (1 - discount * 0.01) //price - ((discount * 0.01) * price)

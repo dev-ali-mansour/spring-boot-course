@@ -13,4 +13,5 @@ interface ProductService {
     fun updateProduct(id: Long, productDTO: ProductDTO): ProductDTO
     fun deleteProduct(id: Long): ProductDTO
     fun updateProductImage(id: Long, image: MultipartFile): ProductDTO
+    fun getAllProductsForAdmin(pageable: Pageable): ProductResponse
 }
