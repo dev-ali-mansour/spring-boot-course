@@ -1,7 +1,7 @@
-import { OrderItem } from "./OrderItem";
+import {OrderItem} from "./OrderItem";
 
 export interface Order {
-    id: number | string;
+    id: number;
     email: string;
     orderItems: OrderItem[];
     orderDate: string;
