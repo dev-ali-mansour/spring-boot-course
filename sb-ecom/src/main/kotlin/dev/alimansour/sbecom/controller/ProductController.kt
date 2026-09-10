@@ -93,4 +93,16 @@ class ProductController(private val productService: ProductService) {
         @RequestParam("image") image: MultipartFile,
     ): ResponseEntity<ProductDTO> =
         ResponseEntity(productService.updateProductImage(id, image), HttpStatus.OK)
+
+    @Tag(name = "Product APIs", description = "APIs for managing products")
+    @GetMapping("/admin/products")
+    fun getAllProductsForAdmin(
+        @PageableDefault(
+            page = AppConstants.PAGE_NUMBER,
+            size = AppConstants.PAGE_SIZE,
+            sort = [AppConstants.SORT_DASHBOARD_PRODUCTS_BY],
+            direction = Sort.Direction.ASC
+        ) pageable: Pageable,
+    ): ResponseEntity<ProductResponse> =
+        ResponseEntity(productService.getAllProductsForAdmin(pageable), HttpStatus.OK)
 }
