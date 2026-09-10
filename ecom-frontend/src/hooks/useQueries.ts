@@ -303,3 +303,21 @@ export const useDeleteProduct = (isAdmin: boolean = true): UseMutationResult<str
         },
     });
 };
+
+export const useUpdateProductImage = (isAdmin: boolean = true): UseMutationResult<Product, Error, {
+    productId: number | string;
+    formData: FormData
+}> => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async ({productId, formData}: { productId: number | string; formData: FormData }) => {
+            const endpoint = isAdmin ? `/admin/products/${productId}/image` : `/seller/products/${productId}/image`;
+            const response = await api.put(endpoint, formData);
+            return response.data;
+        },
+        onSuccess: () => {
+            return queryClient.invalidateQueries({queryKey: ["dashboardProducts"]})
+                .then(() => queryClient.invalidateQueries({queryKey: ["products"]}));
+        },
+    });
+};
