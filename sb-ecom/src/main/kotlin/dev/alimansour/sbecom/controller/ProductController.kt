@@ -25,7 +25,7 @@ class ProductController(private val productService: ProductService) {
         @PathVariable categoryId: Long,
         @Validated @RequestBody product: ProductDTO,
     ): ResponseEntity<ProductDTO> {
-        val productDTO = productService.addProduct(categoryId, product)
+        val productDTO = productService.addProduct(categoryId = categoryId, productDTO = product)
         return ResponseEntity(productDTO, HttpStatus.CREATED)
     }
 
@@ -35,7 +35,7 @@ class ProductController(private val productService: ProductService) {
         @PathVariable categoryId: Long,
         @Validated @RequestBody product: ProductDTO,
     ): ResponseEntity<ProductDTO> {
-        val productDTO = productService.addProduct(categoryId, product)
+        val productDTO = productService.addProduct(categoryId = categoryId, productDTO = product)
         return ResponseEntity(productDTO, HttpStatus.CREATED)
     }
 
@@ -51,7 +51,10 @@ class ProductController(private val productService: ProductService) {
             direction = Sort.Direction.ASC
         ) pageable: Pageable,
     ): ResponseEntity<ProductResponse> =
-        ResponseEntity(productService.getAllProducts(keyword, category, pageable), HttpStatus.OK)
+        ResponseEntity(
+            productService.getAllProducts(keyword = keyword, category = category, pageable = pageable),
+            HttpStatus.OK
+        )
 
     @Tag(name = "Product APIs", description = "APIs for managing products")
     @GetMapping("/public/categories/{categoryId}/products")
@@ -64,7 +67,7 @@ class ProductController(private val productService: ProductService) {
             direction = Sort.Direction.ASC
         ) pageable: Pageable,
     ): ResponseEntity<ProductResponse> =
-        ResponseEntity(productService.searchByCategory(categoryId, pageable), HttpStatus.OK)
+        ResponseEntity(productService.searchByCategory(categoryId = categoryId, pageable = pageable), HttpStatus.OK)
 
     @Tag(name = "Product APIs", description = "APIs for managing products")
     @GetMapping("/public/products/keyword/{keyword}")
@@ -77,24 +80,41 @@ class ProductController(private val productService: ProductService) {
             direction = Sort.Direction.ASC
         ) pageable: Pageable,
     ): ResponseEntity<ProductResponse> =
-        ResponseEntity(productService.searchByKeyword(keyword, pageable), HttpStatus.OK)
+        ResponseEntity(productService.searchByKeyword(keyword = keyword, pageable = pageable), HttpStatus.OK)
 
     @Tag(name = "Product APIs", description = "APIs for managing products")
     @PutMapping("/admin/products/{id}")
     fun updateProduct(
-        @PathVariable id: Long,
-        @Validated @RequestBody productDTO: ProductDTO
+        @PathVariable id: Long, @Validated @RequestBody productDTO: ProductDTO
     ): ResponseEntity<ProductDTO> {
         if (productDTO.id != null && productDTO.id != id) {
             throw APIException(message = "Resource ID mismatch: URL path specifies id $id, but the request body contains ${productDTO.id}")
         }
-        return ResponseEntity(productService.updateProduct(id, productDTO), HttpStatus.OK)
+        return ResponseEntity(productService.updateProduct(id = id, productDTO = productDTO), HttpStatus.OK)
+    }
+
+    @Tag(name = "Product APIs", description = "APIs for managing products")
+    @PutMapping("/seller/products/{id}")
+    fun updateSellerProduct(
+        @PathVariable id: Long, @Validated @RequestBody productDTO: ProductDTO
+    ): ResponseEntity<ProductDTO> {
+        if (productDTO.id != null && productDTO.id != id) {
+            throw APIException(message = "Resource ID mismatch: URL path specifies id $id, but the request body contains ${productDTO.id}")
+        }
+        return ResponseEntity(
+            productService.updateProduct(id = id, productDTO = productDTO, forSeller = true), HttpStatus.OK
+        )
     }
 
     @Tag(name = "Product APIs", description = "APIs for managing products")
     @DeleteMapping("/admin/products/{id}")
     fun deleteProduct(@PathVariable id: Long): ResponseEntity<ProductDTO> =
-        ResponseEntity(productService.deleteProduct(id), HttpStatus.OK)
+        ResponseEntity(productService.deleteProduct(id = id), HttpStatus.OK)
+
+    @Tag(name = "Product APIs", description = "APIs for managing products")
+    @DeleteMapping("/seller/products/{id}")
+    fun deleteSellerProduct(@PathVariable id: Long): ResponseEntity<ProductDTO> =
+        ResponseEntity(productService.deleteProduct(id = id, forSeller = true), HttpStatus.OK)
 
     @Tag(name = "Product APIs", description = "APIs for managing products")
     @PutMapping("/admin/products/{id}/image")
@@ -102,7 +122,15 @@ class ProductController(private val productService: ProductService) {
         @PathVariable id: Long,
         @RequestParam("image") image: MultipartFile,
     ): ResponseEntity<ProductDTO> =
-        ResponseEntity(productService.updateProductImage(id, image), HttpStatus.OK)
+        ResponseEntity(productService.updateProductImage(id = id, image = image), HttpStatus.OK)
+
+    @Tag(name = "Product APIs", description = "APIs for managing products")
+    @PutMapping("/seller/products/{id}/image")
+    fun updateSellerProductImage(
+        @PathVariable id: Long,
+        @RequestParam("image") image: MultipartFile,
+    ): ResponseEntity<ProductDTO> =
+        ResponseEntity(productService.updateProductImage(id = id, image = image, forSeller = true), HttpStatus.OK)
 
     @Tag(name = "Product APIs", description = "APIs for managing products")
     @GetMapping("/admin/products")
@@ -113,8 +141,7 @@ class ProductController(private val productService: ProductService) {
             sort = [AppConstants.SORT_DASHBOARD_PRODUCTS_BY],
             direction = Sort.Direction.ASC
         ) pageable: Pageable,
-    ): ResponseEntity<ProductResponse> =
-        ResponseEntity(productService.getAllProductsForAdmin(pageable), HttpStatus.OK)
+    ): ResponseEntity<ProductResponse> = ResponseEntity(productService.getAllProductsForAdmin(pageable), HttpStatus.OK)
 
     @Tag(name = "Product APIs", description = "APIs for managing products")
     @GetMapping("/seller/products")
@@ -126,5 +153,5 @@ class ProductController(private val productService: ProductService) {
             direction = Sort.Direction.ASC
         ) pageable: Pageable,
     ): ResponseEntity<ProductResponse> =
-        ResponseEntity(productService.getAllProductsForSeller(pageable), HttpStatus.OK)
+        ResponseEntity(productService.getAllProductsForSeller(pageable = pageable), HttpStatus.OK)
 }
