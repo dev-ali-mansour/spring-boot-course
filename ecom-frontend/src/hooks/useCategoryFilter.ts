@@ -9,10 +9,8 @@ const useCategoryFilter = () => {
         const page = searchParams.get("page")
             ? (Number(searchParams.get("page")) - 1).toString()
             : "0";
-        const sort = searchParams.get("sort") || "id,asc";
 
         params.set("page", page);
-        params.set("sort", sort);
 
         return decodeURIComponent(params.toString());
     }, [searchParams]);
