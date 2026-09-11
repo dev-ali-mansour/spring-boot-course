@@ -12,6 +12,7 @@ import dev.alimansour.sbecom.payload.ProductResponse
 import dev.alimansour.sbecom.repository.CartRepository
 import dev.alimansour.sbecom.repository.CategoryRepository
 import dev.alimansour.sbecom.repository.ProductRepository
+import dev.alimansour.sbecom.util.AuthUtil
 import dev.alimansour.sbecom.util.roundToTwoDecimals
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Pageable
@@ -27,10 +28,13 @@ class ProductServiceImpl(
     private val cartRepository: CartRepository,
     private val cartService: CartService,
     private val fileService: FileService,
+    private val authUtil: AuthUtil,
 ) : ProductService {
     override fun addProduct(
         categoryId: Long, productDTO: ProductDTO
     ): ProductDTO {
+        val currentUser = authUtil.loggedInUser()
+
         val category = categoryRepository.findById(categoryId).orElseThrow {
             ResourceNotFoundException(resourceName = "Category", field = "id", fieldId = categoryId)
         }
@@ -44,6 +48,7 @@ class ProductServiceImpl(
         val product = productDTO.toEntity().apply {
             this.image = "default.png"
             this.category = category
+            this.user = currentUser
             this.specialPrice = calculateSpecialPrice()
         }
 
