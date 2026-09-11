@@ -53,6 +53,19 @@ class OrderController(
         return ResponseEntity(orders, HttpStatus.OK)
     }
 
+    @GetMapping("/seller/orders")
+    fun getAllSellerOrders(
+        @PageableDefault(
+            page = AppConstants.PAGE_NUMBER,
+            size = AppConstants.PAGE_SIZE,
+            sort = [AppConstants.SORT_ORDERS_BY],
+            direction = Sort.Direction.ASC
+        ) pageable: Pageable,
+    ): ResponseEntity<OrderResponse> {
+        val orders: OrderResponse = orderService.getAllSellerOrders(pageable)
+        return ResponseEntity(orders, HttpStatus.OK)
+    }
+
     @PutMapping("/admin/orders/{orderId}/status")
     fun updateOrderStatus(
         @PathVariable orderId: Long,
