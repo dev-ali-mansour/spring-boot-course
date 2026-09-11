@@ -71,7 +71,16 @@ class OrderController(
         @PathVariable orderId: Long,
         @RequestBody orderStatusUpdateDTO: OrderStatusUpdateDTO,
     ): ResponseEntity<OrderDTO> {
-        val updatedOrder: OrderDTO = orderService.updateOrder(orderId, orderStatusUpdateDTO)
+        val updatedOrder: OrderDTO = orderService.updateOrderStatus(orderId, orderStatusUpdateDTO)
+        return ResponseEntity(updatedOrder, HttpStatus.OK)
+    }
+
+    @PutMapping("/seller/orders/{orderId}/status")
+    fun updateSellerOrderStatus(
+        @PathVariable orderId: Long,
+        @RequestBody orderStatusUpdateDTO: OrderStatusUpdateDTO,
+    ): ResponseEntity<OrderDTO> {
+        val updatedOrder: OrderDTO = orderService.updateSellerOrderStatus(orderId, orderStatusUpdateDTO)
         return ResponseEntity(updatedOrder, HttpStatus.OK)
     }
 }
