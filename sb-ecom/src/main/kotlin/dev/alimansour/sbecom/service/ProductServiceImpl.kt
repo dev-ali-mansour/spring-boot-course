@@ -138,6 +138,7 @@ class ProductServiceImpl(
             this.id = id
             this.image = existedProduct.image
             this.category = existedProduct.category
+            this.user = existedProduct.user
             this.specialPrice = calculateSpecialPrice()
         }
 
