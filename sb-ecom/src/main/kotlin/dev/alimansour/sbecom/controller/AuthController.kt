@@ -1,11 +1,16 @@
 package dev.alimansour.sbecom.controller
 
+import dev.alimansour.sbecom.config.AppConstants
+import dev.alimansour.sbecom.payload.UsersResponse
 import dev.alimansour.sbecom.security.request.SignInRequest
 import dev.alimansour.sbecom.security.request.SignUpRequest
 import dev.alimansour.sbecom.security.response.MessageResponse
 import dev.alimansour.sbecom.security.response.UserInfoResponse
 import dev.alimansour.sbecom.service.AuthService
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.ok
@@ -52,4 +57,15 @@ class AuthController(private val authService: AuthService) {
             .header(HttpHeaders.SET_COOKIE, cookie.toString())
             .body(MessageResponse("You've been logged out!"))
     }
+
+    @Tag(name = "Authentication APIs", description = "APIs for user authentication")
+    @GetMapping("/sellers")
+    fun getAllSellers(
+        @PageableDefault(
+            page = AppConstants.PAGE_NUMBER,
+            size = AppConstants.PAGE_SIZE,
+            sort = [AppConstants.SORT_USERS_BY],
+            direction = Sort.Direction.ASC
+        ) pageable: Pageable,
+    ): ResponseEntity<UsersResponse> = ok().body(authService.getAllSellers(pageable))
 }
