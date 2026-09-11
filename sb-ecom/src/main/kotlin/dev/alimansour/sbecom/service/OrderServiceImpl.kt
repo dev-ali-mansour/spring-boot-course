@@ -30,8 +30,7 @@ class OrderServiceImpl(
 
     @Transactional
     override fun placeOrder(
-        paymentMethod: String,
-        orderRequestDTO: OrderRequestDTO
+        paymentMethod: String, orderRequestDTO: OrderRequestDTO
     ): OrderDTO {
         val userId = authUtil.loggedInUserId()
         val email = authUtil.loggedInEmail()
@@ -41,11 +40,13 @@ class OrderServiceImpl(
         val pgStatus = orderRequestDTO.pgStatus
         val pgResponseMessage = orderRequestDTO.pgResponseMessage
 
-        val cart = cartRepository.findCartByUserId(userId)
-            ?: throw ResourceNotFoundException(resourceName = "Cart", field = "userId", fieldId = userId)
+        val cart = cartRepository.findCartByUserId(userId) ?: throw ResourceNotFoundException(
+            resourceName = "Cart",
+            field = "userId",
+            fieldId = userId
+        )
 
-        val address = addressRepository.findById(addressId)
-            .orElseThrow {
+        val address = addressRepository.findById(addressId).orElseThrow {
                 ResourceNotFoundException(resourceName = "Address", field = "addressId", fieldId = addressId)
             }
 
@@ -98,6 +99,24 @@ class OrderServiceImpl(
         )
     }
 
+    override fun getAllSellerOrders(pageable: Pageable): OrderResponse {
+        val sellerId = authUtil.loggedInUserId()
+
+        val page = orderRepository.findAll(pageable)
+        val sellerOrders = page.content.filter { order ->
+            order.orderItems.any { it.product?.user?.id == sellerId }
+        }.map { it.toDTO() }
+
+        return OrderResponse(
+            content = sellerOrders,
+            pageNumber = page.number,
+            pageSize = page.size,
+            totalPages = page.totalPages,
+            totalElements = page.totalElements,
+            lastPage = page.isLast
+        )
+    }
+
     override fun updateOrder(orderId: Long, orderStatusUpdateDTO: OrderStatusUpdateDTO): OrderDTO {
         val order = orderRepository.findById(orderId)
             .orElseThrow { ResourceNotFoundException(resourceName = "Order", field = "id", fieldId = orderId) }
@@ -116,15 +135,13 @@ class OrderServiceImpl(
 
             cartService.deleteProductFromCart(
                 cartId = requireNotNull(id) { "Cart ID must not be null" },
-                productId = requireNotNull(product.id) { "Product ID must not be null" }
-            )
+                productId = requireNotNull(product.id) { "Product ID must not be null" })
         }
     }
 
     @Transactional
     fun saveOrderItems(
-        cartItems: MutableList<CartItem>,
-        order: Order
+        cartItems: MutableList<CartItem>, order: Order
     ): List<OrderItem> {
         val orderItems = cartItems.map { cartItem ->
             OrderItem(
