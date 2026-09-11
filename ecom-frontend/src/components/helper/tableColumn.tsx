@@ -202,7 +202,7 @@ export const adminOrderTableColumn = (handleEdit: (order: Order) => void): GridC
         renderHeader: () => <span>Total Amount</span>,
     },
     {
-        field: "status",
+        field: "orderStatus",
         headerName: "Status",
         align: "center",
         minWidth: 120,
