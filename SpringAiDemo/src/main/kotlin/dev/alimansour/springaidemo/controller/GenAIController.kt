@@ -11,4 +11,9 @@ class GenAIController(private val chatService: ChatService) {
     fun getResponse(@RequestParam prompt: String): String? {
         return chatService.getResponse(prompt)
     }
+
+    @GetMapping("/ask-ai-options")
+    fun getResponseOptions(@RequestParam prompt: String): String? {
+        return chatService.getResponseOptions(prompt)
+    }
 }
