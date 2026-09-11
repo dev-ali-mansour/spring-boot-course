@@ -35,7 +35,7 @@ const CategoriesTable: React.FC<CategoriesTableProps> = ({categories, pagination
                 All Categories
             </h1>
 
-            <div className={"max-w-fit mx-auto"}>
+            <div className={"max-w-5xl mx-auto w-full"}>
                 <DataGrid
                     className={"w-full"}
                     columns={categoryTableColumns(handleEdit, handleDelete)}

@@ -46,7 +46,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({orders, pagination}: OrdersTab
                 All Orders
             </h1>
 
-            <div className={"max-w-fit mx-auto"}>
+            <div className={"max-w-6xl mx-auto w-full"}>
                 <DataGrid
                     className={"w-full"}
                     rows={tableRecords}

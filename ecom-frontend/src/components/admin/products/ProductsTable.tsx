@@ -44,7 +44,7 @@ const ProductsTable: React.FC<ProductsTableProps> = (
                 All Products
             </h1>
 
-            <div className={"max-w-fit mx-auto"}>
+            <div className={"w-full"}>
                 <DataGrid
                     className={"w-full"}
                     rows={tableRecords}
