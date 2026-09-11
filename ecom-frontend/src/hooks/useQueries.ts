@@ -129,11 +129,15 @@ export const useRegister = (): UseMutationResult<{ message?: string }, Error, Re
 };
 
 export const useLogout = (): UseMutationResult<unknown, Error, void> => {
+    const queryClient = useQueryClient();
     return useMutation<unknown, Error, void>({
         mutationKey: ["logout"],
         mutationFn: async () => {
             const response = await api.post("/auth/logout");
             return response.data;
+        },
+        onSuccess: () => {
+            queryClient.clear();
         }
     })
 };
@@ -234,11 +238,12 @@ export const useGetAnalyticsData = (): UseQueryResult<AnalyticsResponse, Error> 
     });
 }
 
-export const useOrders = (queryString: string = ""): UseQueryResult<PaginatedResponse<Order>, Error> => {
+export const useOrders = (queryString: string = "", isAdmin: boolean = true): UseQueryResult<PaginatedResponse<Order>, Error> => {
     return useQuery<PaginatedResponse<Order>, Error>({
-        queryKey: ["orders", queryString],
+        queryKey: ["orders", queryString, isAdmin],
         queryFn: async () => {
-            const response = await api.get<PaginatedResponse<Order>>(`/admin/orders${queryString ? `?${queryString}` : ""}`);
+            const endpoint = isAdmin ? "/admin/orders" : "/seller/orders";
+            const response = await api.get<PaginatedResponse<Order>>(`${endpoint}${queryString ? `?${queryString}` : ""}`);
             return response.data;
         }
     });

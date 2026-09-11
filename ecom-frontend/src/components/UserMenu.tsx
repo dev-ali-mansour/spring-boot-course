@@ -5,9 +5,10 @@ import {Avatar, IconButton, Menu, MenuItem} from "@mui/material";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import {BiUser} from "react-icons/bi";
-import {useAuthStore} from "@/store";
+import {useAuthStore, useCartStore} from "@/store";
 import {FaShoppingCart, FaUserShield} from "react-icons/fa";
 import {useLogout} from "@/hooks/useQueries";
+import {useQueryClient} from "@tanstack/react-query";
 import {IoExitOutline} from "react-icons/io5";
 import truncateText from "@/utils/truncateText";
 import BackDrop from "@/components/shared/BackDrop";
@@ -19,10 +20,11 @@ const UserMenu: React.FC = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const {user, clearUser} = useAuthStore();
+    const queryClient = useQueryClient();
     const logoutMutation = useLogout();
     const router = useRouter();
 
-    const isAdmin = user?.roles?.includes("ROLE_ADMIN");
+    const isAdmin = !!(user && user?.roles?.includes("ROLE_ADMIN"));
     const isSeller = user?.roles?.includes("ROLE_SELLER");
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -37,9 +39,12 @@ const UserMenu: React.FC = () => {
             await logoutMutation.mutateAsync();
         } catch (error) {
             console.log("Failed to logout on the server", error);
+        } finally {
+            clearUser();
+            useCartStore.getState().clearCart();
+            queryClient.clear();
+            router.push("/login");
         }
-        clearUser();
-        router.push("/login");
     }
 
     return (
