@@ -47,8 +47,8 @@ class OrderServiceImpl(
         )
 
         val address = addressRepository.findById(addressId).orElseThrow {
-                ResourceNotFoundException(resourceName = "Address", field = "addressId", fieldId = addressId)
-            }
+            ResourceNotFoundException(resourceName = "Address", field = "addressId", fieldId = addressId)
+        }
 
         var payment = Payment(
             paymentMethod = paymentMethod,
@@ -117,9 +117,24 @@ class OrderServiceImpl(
         )
     }
 
-    override fun updateOrder(orderId: Long, orderStatusUpdateDTO: OrderStatusUpdateDTO): OrderDTO {
+    override fun updateOrderStatus(orderId: Long, orderStatusUpdateDTO: OrderStatusUpdateDTO): OrderDTO {
         val order = orderRepository.findById(orderId)
             .orElseThrow { ResourceNotFoundException(resourceName = "Order", field = "id", fieldId = orderId) }
+        order.orderStatus = orderStatusUpdateDTO.status
+        val updatedOrder = orderRepository.save(order)
+        return updatedOrder.toDTO()
+    }
+
+    override fun updateSellerOrderStatus(
+        orderId: Long,
+        orderStatusUpdateDTO: OrderStatusUpdateDTO
+    ): OrderDTO {
+        val sellerId = authUtil.loggedInUserId()
+        val order = orderRepository.findById(orderId)
+            .orElseThrow { ResourceNotFoundException(resourceName = "Order", field = "id", fieldId = orderId) }
+        if (order.orderItems.none { it.product?.user?.id == sellerId }) {
+            throw APIException("You are not the owner of this order!")
+        }
         order.orderStatus = orderStatusUpdateDTO.status
         val updatedOrder = orderRepository.save(order)
         return updatedOrder.toDTO()

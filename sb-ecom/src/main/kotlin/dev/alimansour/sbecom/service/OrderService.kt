@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable
 interface OrderService {
     fun placeOrder(paymentMethod: String, orderRequestDTO: OrderRequestDTO): OrderDTO
     fun getAllOrders(pageable: Pageable): OrderResponse
-    fun updateOrder(orderId: Long, orderStatusUpdateDTO: OrderStatusUpdateDTO): OrderDTO
+    fun updateOrderStatus(orderId: Long, orderStatusUpdateDTO: OrderStatusUpdateDTO): OrderDTO
+    fun updateSellerOrderStatus(orderId: Long, orderStatusUpdateDTO: OrderStatusUpdateDTO): OrderDTO
     fun getAllSellerOrders(pageable: Pageable): OrderResponse
 }
