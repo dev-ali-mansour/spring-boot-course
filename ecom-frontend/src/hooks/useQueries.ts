@@ -76,6 +76,11 @@ export interface CreateCategoryParams {
     name?: string;
 }
 
+export interface UpdateCategoryParams {
+    categoryId: number | string;
+    categoryData: Partial<Category> | Record<string, unknown>;
+}
+
 export const getErrorMessage = (error: any) => {
     return error?.response?.data?.message ||
         error?.response?.data?.error ||
@@ -337,6 +342,19 @@ export const useCreateCategory = (): UseMutationResult<Category, Error, CreateCa
         },
         onSuccess: () => {
            return  queryClient.invalidateQueries({queryKey: ["categories"]});
+        },
+    });
+};
+
+export const useUpdateCategory = (): UseMutationResult<Category, Error, UpdateCategoryParams> => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async ({categoryId, categoryData}: UpdateCategoryParams) => {
+            const response = await api.put(`/admin/categories/${categoryId}`, categoryData);
+            return response.data;
+        },
+        onSuccess: () => {
+            return queryClient.invalidateQueries({queryKey: ["categories"]});
         },
     });
 };
