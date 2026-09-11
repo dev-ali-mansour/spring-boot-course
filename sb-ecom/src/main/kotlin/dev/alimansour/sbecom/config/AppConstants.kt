@@ -7,4 +7,5 @@ object AppConstants {
     const val SORT_DASHBOARD_PRODUCTS_BY: String = "id"
     const val SORT_CATEGORIES_BY: String = "id"
     const val SORT_ORDERS_BY: String = "totalAmount"
+    const val SORT_USERS_BY: String = "id"
 }
