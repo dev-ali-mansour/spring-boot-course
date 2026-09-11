@@ -24,7 +24,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({orders, pagination}: OrdersTab
         id: order.id,
         email: order.email,
         totalAmount: order.totalAmount,
-        status: order.orderStatus,
+        orderStatus: order.orderStatus,
         date: order.orderDate,
     }));
 

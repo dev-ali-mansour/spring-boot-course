@@ -31,7 +31,7 @@ const AuthGuard = ({children, requireGuest = false, adminOnly = false}: AuthGuar
             }
 
             if (adminOnly) {
-                const isAdmin = user?.roles?.includes("ROLE_ADMIN");
+                const isAdmin = !!(user && user?.roles?.includes("ROLE_ADMIN"));
                 const isSeller = user?.roles?.includes("ROLE_SELLER");
 
                 if (isSeller && !isAdmin) {
@@ -64,7 +64,7 @@ const AuthGuard = ({children, requireGuest = false, adminOnly = false}: AuthGuar
     }
 
     if (adminOnly && user) {
-        const isAdmin = user?.roles?.includes("ROLE_ADMIN");
+        const isAdmin = !!(user && user?.roles?.includes("ROLE_ADMIN"));
         const isSeller = user?.roles?.includes("ROLE_SELLER");
 
         if (isSeller && !isAdmin) {

@@ -14,7 +14,7 @@ const Sidebar: React.FC<SidebarProps> = ({isProfileLayout}) => {
     const pathName = usePathname();
     const user = useAuthStore((state) => state.user);
 
-    const isAdmin = user?.roles?.includes("ROLE_ADMIN");
+    const isAdmin = !!(user && user?.roles?.includes("ROLE_ADMIN"));
     const sideBarLayout = isAdmin ? adminNavigation : sellerNavigation;
 
     return (
