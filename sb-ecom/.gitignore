@@ -41,3 +41,6 @@ application-secret.properties
 credentials.json
 *.pem
 *.key
+
+### Logs ###
+logs/
