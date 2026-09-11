@@ -358,3 +358,16 @@ export const useUpdateCategory = (): UseMutationResult<Category, Error, UpdateCa
         },
     });
 };
+
+export const useDeleteCategory = (): UseMutationResult<string, Error, number | string> => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async (categoryId: number | string) => {
+            const response = await api.delete(`/admin/categories/${categoryId}`);
+            return response.data;
+        },
+        onSuccess: () => {
+            return queryClient.invalidateQueries({queryKey: ["categories"]});
+        },
+    });
+};
