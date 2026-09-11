@@ -41,9 +41,10 @@ const ProductsTable: React.FC<ProductsTableProps> = (
     return (
         <div>
             <h1 className={"text-slate-800 text-3xl text-center font-bold pb-6 uppercase"}>
-                All Products</h1>
+                All Products
+            </h1>
 
-            <div>
+            <div className={"max-w-fit mx-auto"}>
                 <DataGrid
                     className={"w-full"}
                     rows={tableRecords}

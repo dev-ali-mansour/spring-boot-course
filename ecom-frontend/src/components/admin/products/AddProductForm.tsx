@@ -20,6 +20,7 @@ export interface ProductFormData {
     discount?: number | string;
     specialPrice?: number | string;
     description: string;
+
     [key: string]: unknown;
 }
 
@@ -54,14 +55,12 @@ const AddProductForm: React.FC<AddProductFormProps> = ({setIsOpen, product, isFo
             price: product?.price ?? "",
             quantity: product?.quantity ?? "",
             discount: product?.discount ?? "",
-            specialPrice: product?.specialPrice ?? "",
             description: product?.description || "",
         } : {
             name: "",
             price: "",
             quantity: "",
             discount: "",
-            specialPrice: "",
             description: "",
         }
     });
@@ -80,11 +79,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({setIsOpen, product, isFo
                 });
                 toast.success("Product added successfully");
             } else {
-                const id = product?.id;
-                await updateProductMutation.mutateAsync({
-                    ...data,
-                    id,
-                });
+                await updateProductMutation.mutateAsync({id: product?.id, productData: data});
                 toast.success("Product updated successfully");
             }
             reset();
@@ -130,6 +125,8 @@ const AddProductForm: React.FC<AddProductFormProps> = ({setIsOpen, product, isFo
                         required
                         id={"price"}
                         type={"number"}
+                        step={"0.01"}
+                        min={0}
                         message={"This field is required*"}
                         placeholder={"Product Price"}
                         register={register}
@@ -141,6 +138,8 @@ const AddProductForm: React.FC<AddProductFormProps> = ({setIsOpen, product, isFo
                         required
                         id={"quantity"}
                         type={"number"}
+                        step={"1"}
+                        min={0}
                         message={"This field is required*"}
                         register={register}
                         placeholder={"Product Quantity"}
@@ -152,20 +151,25 @@ const AddProductForm: React.FC<AddProductFormProps> = ({setIsOpen, product, isFo
                         label={"Discount"}
                         id={"discount"}
                         type={"number"}
+                        step={"0.01"}
+                        min={0}
+                        max={100}
                         message={"This field is required*"}
                         placeholder={"Product Discount"}
                         register={register}
                         errors={errors}
                     />
-                    <InputField
+                    {/* <InputField
                         label={"Special Price"}
                         id={"specialPrice"}
                         type={"number"}
+                        step={"0.01"}
+                        min={0}
                         message={"This field is required*"}
                         placeholder={"Product Special Price"}
                         register={register}
                         errors={errors}
-                    />
+                    />*/}
                 </div>
 
                 <div className={"flex flex-col gap-2 w-full"}>

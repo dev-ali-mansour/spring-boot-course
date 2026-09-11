@@ -43,7 +43,8 @@ const AdminProducts: React.FC = () => {
             <div className={"pt-6 pb-10 flex justify-end"}>
                 <button
                     onClick={() => setIsAddModalOpen(true)}
-                    className={"bg-custom-blue hover:bg-blue-800 text-white font-semibold py-2 px-4 flex items-center gap-2 rounded-md shadow-md transition-colors hover:text-slate-300 duration-300"}>
+                    className={`bg-custom-blue hover:bg-blue-800 text-white font-semibold py-2 px-4 flex 
+                        items-center gap-2 rounded-md shadow-md transition-colors hover:text-slate-300 duration-300`}>
                     <MdAddShoppingCart className={"text-xl"}/>
                     Add Product
                 </button>
