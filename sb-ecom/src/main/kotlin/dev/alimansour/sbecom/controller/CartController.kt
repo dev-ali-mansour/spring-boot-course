@@ -39,7 +39,7 @@ class CartController(private val cartService: CartService) {
     @Tag(name = "Cart APIs", description = "APIs for managing carts")
     @GetMapping("/carts/users/cart")
     fun getUserCart(): ResponseEntity<CartDTO> =
-        ResponseEntity(cartService.getUserCart(), HttpStatus.OK)
+        ResponseEntity(cartService.getCurrentUserCart(), HttpStatus.OK)
 
     @Tag(name = "Cart APIs", description = "APIs for managing carts")
     @PutMapping("/carts/products/{productId}/quantity/{operation}")
