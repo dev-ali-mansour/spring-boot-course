@@ -1,7 +1,8 @@
 import {GridColDef} from "@mui/x-data-grid";
 import {FaEdit, FaEye, FaImage, FaTrashAlt} from "react-icons/fa";
-import {Category, Product} from "@/types";
+import {Category, Product, User} from "@/types";
 import {Order} from "@/types/Order";
+import {MdOutlineEmail} from "react-icons/md";
 
 export const adminProductTableColumn = (
     handleEdit: (product: Product) => void,
@@ -296,6 +297,75 @@ export const categoryTableColumns = (handleEdit: (category: Category) => void, h
                         <FaTrashAlt className="mr-2"/>
                         Delete
                     </button>
+                </div>
+            );
+        },
+    },
+] as GridColDef[];
+
+export const sellerTableColumns =  [
+    {
+        disableColumnMenu: true,
+        field: "id",
+        headerName: "ID",
+        minWidth: 70,
+        flex: 0.5,
+        headerAlign: "center",
+        align: "center",
+        editable: false,
+
+        headerClassName: "text-black font-semibold border",
+        cellClassName: "text-slate-700 font-normal border",
+        renderHeader: () => <span className="text-center">ID</span>,
+    },
+    {
+        disableColumnMenu: true,
+        field: "name",
+        headerName: "Full Name",
+        minWidth: 180,
+        flex: 1,
+        headerAlign: "center",
+        align: "center",
+        editable: false,
+        sortable: false,
+        headerClassName: "text-black font-semibold border",
+        cellClassName: "text-slate-700 font-normal border",
+        renderHeader: () => <span className="text-center">Full Name</span>,
+    },
+    {
+        disableColumnMenu: true,
+        field: "username",
+        headerName: "UserName",
+        minWidth: 180,
+        flex: 1,
+        headerAlign: "center",
+        align: "center",
+        editable: false,
+        sortable: false,
+        headerClassName: "text-black font-semibold border",
+        cellClassName: "text-slate-700 font-normal border",
+        renderHeader: () => <span className="text-center">UserName</span>,
+    },
+    {
+        disableColumnMenu: true,
+        field: "email",
+        headerName: "Email",
+        align: "center",
+        minWidth: 220,
+        flex: 1.5,
+        editable: false,
+        sortable: false,
+        headerAlign: "center",
+        headerClassName: "text-black font-semibold text-center border ",
+        cellClassName: "text-slate-700 font-normal border text-center",
+        renderHeader: () => <span>Email</span>,
+        renderCell: (params) => {
+            return (
+                <div className="flex items-center justify-center gap-1">
+          <span>
+            <MdOutlineEmail className="text-slate-700 text-lg"/>
+          </span>
+                    <span>{params?.row?.email}</span>
                 </div>
             );
         },
