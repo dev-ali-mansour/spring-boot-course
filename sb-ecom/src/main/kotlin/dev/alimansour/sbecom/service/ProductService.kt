@@ -10,9 +10,9 @@ interface ProductService {
     fun getAllProducts(keyword: String, category: String, pageable: Pageable): ProductResponse
     fun searchByCategory(categoryId: Long, pageable: Pageable): ProductResponse
     fun searchByKeyword(keyword: String, pageable: Pageable): ProductResponse
-    fun updateProduct(id: Long, productDTO: ProductDTO): ProductDTO
-    fun deleteProduct(id: Long): ProductDTO
-    fun updateProductImage(id: Long, image: MultipartFile): ProductDTO
+    fun updateProduct(id: Long, productDTO: ProductDTO, forSeller: Boolean = false): ProductDTO
+    fun deleteProduct(id: Long,forSeller: Boolean=false): ProductDTO
+    fun updateProductImage(id: Long, image: MultipartFile, forSeller: Boolean = false): ProductDTO
     fun getAllProductsForAdmin(pageable: Pageable): ProductResponse
     fun getAllProductsForSeller(pageable: Pageable): ProductResponse
 }

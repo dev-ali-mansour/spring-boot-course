@@ -61,8 +61,7 @@ class ProductServiceImpl(
         if (keyword.isNotEmpty()) {
             spec = spec.and { root, _, criteriaBuilder ->
                 criteriaBuilder.like(
-                    criteriaBuilder.lower(root.get("name")),
-                    "%${keyword.lowercase()}%"
+                    criteriaBuilder.lower(root.get("name")), "%${keyword.lowercase()}%"
                 )
             }
         }
@@ -123,9 +122,16 @@ class ProductServiceImpl(
         )
     }
 
-    override fun updateProduct(id: Long, productDTO: ProductDTO): ProductDTO {
+    override fun updateProduct(id: Long, productDTO: ProductDTO, forSeller: Boolean): ProductDTO {
         val existedProduct = productRepository.findById(id).orElseThrow {
             ResourceNotFoundException(resourceName = "Product", field = "id", fieldId = id)
+        }
+
+        if (forSeller) {
+            val currentUser = authUtil.loggedInUser()
+            if (existedProduct.user?.id != currentUser.id) {
+                throw APIException("You are not authorized to update this product.")
+            }
         }
 
         val product = productDTO.toEntity().apply {
@@ -149,9 +155,16 @@ class ProductServiceImpl(
         return updatedProduct.toDTO()
     }
 
-    override fun deleteProduct(id: Long): ProductDTO {
+    override fun deleteProduct(id: Long, forSeller: Boolean): ProductDTO {
         val product = productRepository.findById(id).orElseThrow {
             ResourceNotFoundException(resourceName = "Product", field = "id", fieldId = id)
+        }
+
+        if (forSeller) {
+            val currentUser = authUtil.loggedInUser()
+            if (product.user?.id != currentUser.id) {
+                throw APIException("You are not authorized to delete this product.")
+            }
         }
 
         cartService.deleteProductFromAllCarts(productId = id)
@@ -160,10 +173,16 @@ class ProductServiceImpl(
         return product.toDTO()
     }
 
-    override fun updateProductImage(id: Long, image: MultipartFile): ProductDTO {
+    override fun updateProductImage(id: Long, image: MultipartFile, forSeller: Boolean): ProductDTO {
         val product = productRepository.findById(id)
             .orElseThrow { ResourceNotFoundException(resourceName = "Product", field = "id", fieldId = id) }
 
+        if (forSeller) {
+            val currentUser = authUtil.loggedInUser()
+            if (product.user?.id != currentUser.id) {
+                throw APIException("You are not authorized to update this product's image.")
+            }
+        }
 
         val fileName = fileService.uploadFile(path, image)
         product.image = fileName
