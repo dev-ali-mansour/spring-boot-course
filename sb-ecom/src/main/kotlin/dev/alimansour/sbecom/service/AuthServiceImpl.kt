@@ -1,9 +1,12 @@
 package dev.alimansour.sbecom.service
 
+import dev.alimansour.sbecom.mapper.toDTO
 import dev.alimansour.sbecom.model.AppRole
 import dev.alimansour.sbecom.model.Role
 import dev.alimansour.sbecom.model.User
 import dev.alimansour.sbecom.payload.AuthenticationResult
+import dev.alimansour.sbecom.payload.UserDTO
+import dev.alimansour.sbecom.payload.UsersResponse
 import dev.alimansour.sbecom.repository.RoleRepository
 import dev.alimansour.sbecom.repository.UserRepository
 import dev.alimansour.sbecom.security.jwt.JwtUtils
@@ -12,6 +15,7 @@ import dev.alimansour.sbecom.security.request.SignUpRequest
 import dev.alimansour.sbecom.security.response.UserInfoResponse
 import dev.alimansour.sbecom.security.service.UserDetailsImpl
 import jakarta.transaction.Transactional
+import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseCookie
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -29,6 +33,7 @@ class AuthServiceImpl(
     private val userRepository: UserRepository,
     private val roleRepository: RoleRepository,
     private val encoder: PasswordEncoder,
+    private val cartService: CartService,
 ) : AuthService {
     override fun login(signInRequest: SignInRequest): AuthenticationResult {
         val authentication: Authentication = authenticationManager.authenticate(
@@ -143,4 +148,29 @@ class AuthServiceImpl(
     }
 
     override fun logout(): ResponseCookie = jwtUtils.getCleanJwtCookie()
+
+    override fun getAllSellers(pageable: Pageable): UsersResponse {
+        val page = userRepository.findByRoleName(AppRole.ROLE_SELLER, pageable)
+
+        val sellersDTO = page.content.map { user ->
+            UserDTO(
+                id = user.id,
+                firstName = user.firstName,
+                lastName = user.lastName,
+                username = user.username,
+                email = user.email,
+                roles = user.roles.map { it.name.name },
+                addresses = user.addresses.map { it.toDTO() },
+                cart = cartService.getUserCart(user.id ?: throw RuntimeException("Error: User ID is null!"))
+            )
+        }
+        return UsersResponse(
+            content = sellersDTO,
+            pageNumber = page.number,
+            pageSize = page.size,
+            totalPages = page.totalPages,
+            totalElements = page.totalElements,
+            lastPage = page.isLast
+        )
+    }
 }
