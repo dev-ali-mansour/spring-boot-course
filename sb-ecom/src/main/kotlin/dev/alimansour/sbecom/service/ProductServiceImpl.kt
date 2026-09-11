@@ -12,6 +12,7 @@ import dev.alimansour.sbecom.payload.ProductResponse
 import dev.alimansour.sbecom.repository.CartRepository
 import dev.alimansour.sbecom.repository.CategoryRepository
 import dev.alimansour.sbecom.repository.ProductRepository
+import dev.alimansour.sbecom.util.roundToTwoDecimals
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
@@ -184,5 +185,5 @@ class ProductServiceImpl(
 
 
     private fun Product.calculateSpecialPrice(): Double =
-        price * (1 - discount * 0.01) //price - ((discount * 0.01) * price)
+        (price * (1 - discount * 0.01)).roundToTwoDecimals() //price - ((discount * 0.01) * price)
 }
