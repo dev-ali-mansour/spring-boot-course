@@ -11,6 +11,7 @@ export interface InputFieldProps<TFieldValues extends FieldValues> {
     className?: string;
     min?: number;
     max?: number;
+    step?: number | string;
     placeholder?: string;
 }
 
@@ -26,6 +27,7 @@ const InputField = <TFieldValues extends FieldValues>(
         className,
         min,
         max,
+        step,
         placeholder,
     }: InputFieldProps<TFieldValues>
 ) => {
@@ -40,15 +42,24 @@ const InputField = <TFieldValues extends FieldValues>(
             <input
                 type={type}
                 id={id}
+                step={step}
+                min={type === "number" ? min : undefined}
+                max={type === "number" ? max : undefined}
                 placeholder={placeholder}
                 className={`${className ? className : ""} px-2 py-2 border outline-none bg-transparent 
                 text-slate-800 rounded-md ${errors[id]?.message ? "border-red-500" : "border-slate-700"}`}
                 {...register(id, {
                         required: required ? {value: true, message: message || "This field is required"} : false,
-                        minLength: min
+                        min: type === "number" && min !== undefined
+                            ? {value: min, message: `Minimum value is ${min}`}
+                            : undefined,
+                        max: type === "number" && max !== undefined
+                            ? {value: max, message: `Maximum value is ${max}`}
+                            : undefined,
+                        minLength: type !== "number" && min !== undefined
                             ? {value: min, message: `Minimum ${min} character is required`}
                             : undefined,
-                        maxLength: max
+                        maxLength: type !== "number" && max !== undefined
                             ? {value: max, message: `Maximum ${max} character is allowed`}
                             : undefined,
                         pattern:
