@@ -104,7 +104,7 @@ export const useLogin = (): UseMutationResult<User, Error, LoginCredentials> => 
     return useMutation<User, Error, LoginCredentials>({
         mutationKey: ["login"],
         mutationFn: async (credentials: LoginCredentials) => {
-            const response = await api.post<User>("/auth/signin", credentials);
+            const response = await api.post<User>("/auth/login", credentials);
             return response.data;
         }
     })
@@ -114,7 +114,7 @@ export const useRegister = (): UseMutationResult<{ message?: string }, Error, Re
     return useMutation<{ message?: string }, Error, RegistrationData>({
         mutationKey: ["register"],
         mutationFn: async (registrationData: RegistrationData) => {
-            const response = await api.post<{ message?: string }>("/auth/signup", registrationData);
+            const response = await api.post<{ message?: string }>("/auth/register", registrationData);
             return response.data;
         }
     })
@@ -124,7 +124,7 @@ export const useLogout = (): UseMutationResult<unknown, Error, void> => {
     return useMutation<unknown, Error, void>({
         mutationKey: ["logout"],
         mutationFn: async () => {
-            const response = await api.post("/auth/signout");
+            const response = await api.post("/auth/logout");
             return response.data;
         }
     })
