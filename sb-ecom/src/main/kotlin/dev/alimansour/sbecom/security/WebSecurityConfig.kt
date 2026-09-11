@@ -125,7 +125,6 @@ class WebSecurityConfig(
             val sellerRoles: MutableSet<Role> = mutableSetOf(sellerRole)
             val adminRoles: MutableSet<Role> = mutableSetOf(userRole, sellerRole, adminRole)
 
-
             // Create users if not already present
             if (!userRepository.existsByUsername("user1")) {
                 val user1 = User(
