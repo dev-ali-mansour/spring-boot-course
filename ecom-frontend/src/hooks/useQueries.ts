@@ -63,13 +63,17 @@ export interface CreateProductParams {
 
 export interface UpdateProductParams {
     id?: number | string;
-
     [key: string]: unknown;
 }
 
 export interface UpdateProductImageParams {
     productId: number | string;
     formData: FormData;
+}
+
+export interface CreateCategoryParams {
+    categoryName?: string;
+    name?: string;
 }
 
 export const getErrorMessage = (error: any) => {
@@ -320,6 +324,19 @@ export const useUpdateProductImage = (isAdmin: boolean = true): UseMutationResul
         onSuccess: () => {
             return queryClient.invalidateQueries({queryKey: ["dashboardProducts"]})
                 .then(() => queryClient.invalidateQueries({queryKey: ["products"]}));
+        },
+    });
+};
+
+export const useCreateCategory = (): UseMutationResult<Category, Error, CreateCategoryParams> => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async (categoryData: CreateCategoryParams) => {
+            const response = await api.post("/admin/categories", categoryData);
+            return response.data;
+        },
+        onSuccess: () => {
+           return  queryClient.invalidateQueries({queryKey: ["categories"]});
         },
     });
 };
