@@ -4,12 +4,19 @@ import dev.alimansour.sbecom.payload.APIResponse
 import jakarta.validation.ConstraintViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.AuthenticationException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice
 class GlobalExceptionHandler {
+
+    @ExceptionHandler(AuthenticationException::class)
+    fun authenticationException(e: AuthenticationException): ResponseEntity<APIResponse> {
+        val response = APIResponse(errors = listOf(e.message.orEmpty()))
+        return ResponseEntity(response, HttpStatus.UNAUTHORIZED)
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun methodArgumentNotValidException(e: MethodArgumentNotValidException): ResponseEntity<APIResponse> {
