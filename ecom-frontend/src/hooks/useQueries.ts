@@ -20,7 +20,7 @@ export interface RegistrationData {
     username: string;
     email: string;
     password: string;
-    role?: string[];
+    roles?: string[];
 }
 
 export interface AddressMutationParams {
@@ -72,7 +72,6 @@ export interface UpdateProductImageParams {
 }
 
 export interface CreateCategoryParams {
-    categoryName?: string;
     name?: string;
 }
 
@@ -367,6 +366,30 @@ export const useDeleteCategory = (): UseMutationResult<string, Error, number> =>
         },
         onSuccess: () => {
             return queryClient.invalidateQueries({queryKey: ["categories"]});
+        },
+    });
+};
+
+export const useSellers = (queryString: string = ""): UseQueryResult<PaginatedResponse<User>, Error> => {
+    return useQuery({
+        queryKey: ["sellers", queryString],
+        queryFn: async () => {
+            const {data} = await api.get(`/auth/sellers${queryString ? `?${queryString}` : ""}`);
+            return data;
+        },
+    });
+};
+
+
+export const useCreateSeller = (): UseMutationResult<{ message?: string }, Error, RegistrationData> => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async (sellerData: RegistrationData) => {
+            const {data} = await api.post("/auth/register", sellerData);
+            return data;
+        },
+        onSuccess: () => {
+            return queryClient.invalidateQueries({queryKey: ["sellers"]});
         },
     });
 };
