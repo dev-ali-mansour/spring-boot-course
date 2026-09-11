@@ -6,10 +6,13 @@ import {FaShoppingCart} from "react-icons/fa";
 import OrdersTable from "@/components/admin/oreders/OrdersTable";
 import Loader from "@/components/shared/Loader";
 import ErrorPage from "@/components/shared/ErrorPage";
+import {useAuthStore} from "@/store";
 
 const Orders: React.FC = () => {
     const queryString = useOrderFilter();
-    const {data: orderData, isLoading, error} = useOrders(queryString);
+    const user = useAuthStore((state) => state.user);
+    const isAdmin = !!(user && user?.roles?.includes("ROLE_ADMIN"));
+    const {data: orderData, isLoading, error} = useOrders(queryString, isAdmin);
     const orders = orderData?.content || [];
     const pagination = orderData;
 
