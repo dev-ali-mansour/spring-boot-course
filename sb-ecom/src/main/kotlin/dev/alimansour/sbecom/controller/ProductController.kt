@@ -105,4 +105,16 @@ class ProductController(private val productService: ProductService) {
         ) pageable: Pageable,
     ): ResponseEntity<ProductResponse> =
         ResponseEntity(productService.getAllProductsForAdmin(pageable), HttpStatus.OK)
+
+    @Tag(name = "Product APIs", description = "APIs for managing products")
+    @GetMapping("/seller/products")
+    fun getAllProductsForSeller(
+        @PageableDefault(
+            page = AppConstants.PAGE_NUMBER,
+            size = AppConstants.PAGE_SIZE,
+            sort = [AppConstants.SORT_DASHBOARD_PRODUCTS_BY],
+            direction = Sort.Direction.ASC
+        ) pageable: Pageable,
+    ): ResponseEntity<ProductResponse> =
+        ResponseEntity(productService.getAllProductsForSeller(pageable), HttpStatus.OK)
 }
