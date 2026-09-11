@@ -57,17 +57,17 @@ export interface OrderStatusUpdateParams {
 }
 
 export interface CreateProductParams {
-    categoryId: number | string;
+    categoryId: number;
     productData: Partial<Product> | FormData | Record<string, unknown>;
 }
 
 export interface UpdateProductParams {
-    id?: number | string;
-    [key: string]: unknown;
+    id?: number;
+    productData: Partial<Product> | Record<string, unknown>;
 }
 
 export interface UpdateProductImageParams {
-    productId: number | string;
+    productId: number;
     formData: FormData;
 }
 
@@ -77,7 +77,7 @@ export interface CreateCategoryParams {
 }
 
 export interface UpdateCategoryParams {
-    categoryId: number | string;
+    id: number;
     categoryData: Partial<Category> | Record<string, unknown>;
 }
 
@@ -99,11 +99,11 @@ export const useProducts = (queryString: string = ""): UseQueryResult<PaginatedR
     });
 };
 
-export const useCategories = (): UseQueryResult<PaginatedResponse<Category>, Error> => {
+export const useCategories = (queryString: string = ""): UseQueryResult<PaginatedResponse<Category>, Error> => {
     return useQuery<PaginatedResponse<Category>, Error>({
-        queryKey: ["categories"],
+        queryKey: ["categories", queryString],
         queryFn: async () => {
-            const response = await api.get<PaginatedResponse<Category>>("/public/categories");
+            const response = await api.get<PaginatedResponse<Category>>(`/public/categories${queryString ? `?${queryString}` : ""}`);
             return response.data;
         }
     });
@@ -275,9 +275,9 @@ export const useDashboardProducts = (queryString: string = "", isAdmin: boolean 
 export const useCreateProduct = (isAdmin: boolean = true): UseMutationResult<Product, Error, CreateProductParams> => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async ({categoryId, productData}: CreateProductParams) => {
-            const endpoint = isAdmin ? `/admin/categories/${categoryId}/product` : `/seller/categories/${categoryId}/product`;
-            const response = await api.post(endpoint, productData);
+        mutationFn: async (params: CreateProductParams) => {
+            const endpoint = isAdmin ? `/admin/categories/${params.categoryId}/product` : `/seller/categories/${params.categoryId}/product`;
+            const response = await api.post(endpoint, params.productData);
             return response.data;
         },
         onSuccess: () => {
@@ -290,10 +290,9 @@ export const useCreateProduct = (isAdmin: boolean = true): UseMutationResult<Pro
 export const useUpdateProduct = (isAdmin: boolean = true): UseMutationResult<Product, Error, UpdateProductParams> => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async (productData: UpdateProductParams) => {
-            const id = productData.id ?? productData.productId;
-            const endpoint = isAdmin ? `/admin/products/${id}` : `/seller/products/${id}`;
-            const response = await api.put(endpoint, productData);
+        mutationFn: async (params: UpdateProductParams) => {
+            const endpoint = isAdmin ? `/admin/products/${params.id}` : `/seller/products/${params.id}`;
+            const response = await api.put(endpoint, params.productData);
             return response.data;
         },
         onSuccess: () => {
@@ -341,7 +340,7 @@ export const useCreateCategory = (): UseMutationResult<Category, Error, CreateCa
             return response.data;
         },
         onSuccess: () => {
-           return  queryClient.invalidateQueries({queryKey: ["categories"]});
+            return queryClient.invalidateQueries({queryKey: ["categories"]});
         },
     });
 };
@@ -349,8 +348,8 @@ export const useCreateCategory = (): UseMutationResult<Category, Error, CreateCa
 export const useUpdateCategory = (): UseMutationResult<Category, Error, UpdateCategoryParams> => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async ({categoryId, categoryData}: UpdateCategoryParams) => {
-            const response = await api.put(`/admin/categories/${categoryId}`, categoryData);
+        mutationFn: async (params: UpdateCategoryParams) => {
+            const response = await api.put(`/admin/categories/${params.id}`, params.categoryData);
             return response.data;
         },
         onSuccess: () => {
@@ -359,11 +358,11 @@ export const useUpdateCategory = (): UseMutationResult<Category, Error, UpdateCa
     });
 };
 
-export const useDeleteCategory = (): UseMutationResult<string, Error, number | string> => {
+export const useDeleteCategory = (): UseMutationResult<string, Error, number> => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: async (categoryId: number | string) => {
-            const response = await api.delete(`/admin/categories/${categoryId}`);
+        mutationFn: async (id: number) => {
+            const response = await api.delete(`/admin/categories/${id}`);
             return response.data;
         },
         onSuccess: () => {
