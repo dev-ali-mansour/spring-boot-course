@@ -77,19 +77,23 @@ class CartServiceImpl(
     override fun getAllCarts(): List<CartDTO> =
         cartRepository.findAll().map { it.toDTO() }
 
-    override fun getUserCart(): CartDTO {
-        val userId = authUtil.loggedInUserId()
-        val userCart = cartRepository.findCartByUserId(userId)
-            ?: throw ResourceNotFoundException(resourceName = "Cart", field = "userId", fieldId = userId)
+    override fun getUserCart(userId: Long): CartDTO? {
+        return cartRepository.findCartByUserId(userId)?.let { cart ->
+            cart.toDTO().copy(products = cart.cartItems.map { item ->
+                requireNotNull(item.product) { "Cart item must not be null!" }
+                    .toDTO()
+                    .copy(
+                        quantity = item.quantity,
+                        image = fileService.constructImageUrl(item.product?.image ?: "")
+                    )
+            })
+        }
+    }
 
-        return userCart.toDTO().copy(products = userCart.cartItems.map { item ->
-            requireNotNull(item.product) { "Cart item must not be null!" }
-                .toDTO()
-                .copy(
-                    quantity = item.quantity,
-                    image = fileService.constructImageUrl(item.product?.image ?: "")
-                )
-        })
+    override fun getCurrentUserCart(): CartDTO {
+        val userId = authUtil.loggedInUserId()
+        return getUserCart(userId)
+            ?: throw ResourceNotFoundException(resourceName = "Cart", field = "userId", fieldId = userId)
     }
 
     @Transactional
