@@ -12,14 +12,9 @@ import dev.alimansour.sbecom.repository.CartItemRepository
 import dev.alimansour.sbecom.repository.CartRepository
 import dev.alimansour.sbecom.repository.ProductRepository
 import dev.alimansour.sbecom.util.AuthUtil
+import dev.alimansour.sbecom.util.roundToTwoDecimals
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
-import java.math.BigDecimal
-import java.math.RoundingMode
-
-fun Double.roundToTwoDecimals(): Double {
-    return BigDecimal(this).setScale(2, RoundingMode.HALF_UP).toDouble()
-}
 
 @Service
 class CartServiceImpl(
