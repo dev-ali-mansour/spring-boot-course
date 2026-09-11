@@ -30,6 +30,16 @@ class ProductController(private val productService: ProductService) {
     }
 
     @Tag(name = "Product APIs", description = "APIs for managing products")
+    @PostMapping("/seller/categories/{categoryId}/product")
+    fun addProductBySeller(
+        @PathVariable categoryId: Long,
+        @Validated @RequestBody product: ProductDTO,
+    ): ResponseEntity<ProductDTO> {
+        val productDTO = productService.addProduct(categoryId, product)
+        return ResponseEntity(productDTO, HttpStatus.CREATED)
+    }
+
+    @Tag(name = "Product APIs", description = "APIs for managing products")
     @GetMapping("/public/products")
     fun getAllProducts(
         @RequestParam(value = "keyword", required = false) keyword: String = "",
