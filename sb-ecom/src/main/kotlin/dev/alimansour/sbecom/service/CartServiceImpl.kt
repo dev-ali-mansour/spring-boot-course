@@ -219,11 +219,12 @@ class CartServiceImpl(
     }
 
     @Transactional
-    override fun createOrUpdateCartWithItems(cartItems: List<CartItemDTO>): String {
+    override fun createOrUpdateCartWithItems(cartItems: List<CartItemDTO>): CartDTO {
         val cart = cartRepository.findCartByUserId(authUtil.loggedInUserId())
             ?.let { existingCart ->
                 val cartId = requireNotNull(existingCart.id) { "Cart ID must not be null!" }
                 cartItemRepository.deleteAllByCartId(cartId)
+                existingCart.cartItems.clear()
                 existingCart
             } ?: run {
             val newCart = Cart(totalPrice = 0.0, user = authUtil.loggedInUser())
@@ -252,11 +253,12 @@ class CartServiceImpl(
                 price = product.specialPrice,
             )
             cartItemRepository.save(cartItem)
+            cart.cartItems.add(cartItem)
         }
 
         cart.totalPrice = totalPrice.roundToTwoDecimals()
-        cartRepository.save(cart)
-        return "Cart has been created/updated with the new items successfully!"
+        val savedCart = cartRepository.save(cart)
+        return savedCart.toDTO()
     }
 
     private fun createCart(): Cart {

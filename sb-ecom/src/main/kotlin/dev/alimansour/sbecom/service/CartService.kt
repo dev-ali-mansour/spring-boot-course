@@ -13,5 +13,5 @@ interface CartService {
     fun deleteProductFromCurrentUserCart(productId: Long): String
     fun deleteProductFromAllCarts(productId: Long)
     fun updateProductInCarts(cartId: Long, productId: Long)
-    fun createOrUpdateCartWithItems(cartItems: List<CartItemDTO>): String
+    fun createOrUpdateCartWithItems(cartItems: List<CartItemDTO>): CartDTO
 }
