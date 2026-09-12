@@ -14,10 +14,11 @@ class CartController(private val cartService: CartService) {
 
     @Tag(name = "Cart APIs", description = "APIs for managing carts")
     @PostMapping("/carts/users/cart")
+    @Suppress("JvmTaintAnalysis") // False positive: @RestController serializes response as JSON (HTTP 201), no open redirect
     fun createOrUpdateCart(
         @RequestBody cartItems: List<CartItemDTO>
-    ): ResponseEntity<String> {
-        val response: String = cartService.createOrUpdateCartWithItems(cartItems)
+    ): ResponseEntity<CartDTO> {
+        val response: CartDTO = cartService.createOrUpdateCartWithItems(cartItems)
         return ResponseEntity(response, HttpStatus.CREATED)
     }
 
